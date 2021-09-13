@@ -19,3 +19,4 @@ test:
   host: db
   username: root
   password: password
+  
