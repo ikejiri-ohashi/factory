@@ -1,0 +1,14 @@
+詳細画面
+<%= @job.name %>
+<%= @job.place %>
+<%= @job.deadline %>
+<%= @job.category.name %>
+<%= @job.memo %>
+<%= @job.contact %>
+<br>
+以下仕事に対するコメント<br>
+<% @comment.each do |comment|%>
+  <%= comment.content %>
+<% end %>
+<br>
+<%= link_to "トップページに戻る", root_path, class:"" %>

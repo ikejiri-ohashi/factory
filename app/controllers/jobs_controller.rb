@@ -17,6 +17,11 @@ class JobsController < ApplicationController
     end
   end
 
+  def show
+    @job = Job.find(params[:id])
+    @comment = @job.comments.includes(:user)
+  end
+
   private
 
   def job_params

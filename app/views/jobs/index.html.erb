@@ -1,12 +1,15 @@
 Hello world form index
 
-<%= link_to "加工依頼の登録", new_job_path, class:""%>
+<%= link_to "加工依頼の登録", new_job_path, class:""%><br>
 
 <% @jobs.each do |job|%>
-  <%= job.name %>
-  <%= job.place %>
-  <%= job.deadline %>
-  <%= job.category.name %>
-  <%= job.memo %>
-  <%= job.contact %>
+  <%= link_to job_path(job.id) do %>
+    <%= job.name %>
+    <%= job.place %>
+    <%= job.deadline %>
+    <%= job.category.name %>
+    <%= job.memo %>
+    <%= job.contact %>
+  <% end %>
+  <br>
 <% end %>
