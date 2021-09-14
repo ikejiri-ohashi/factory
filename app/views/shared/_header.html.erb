@@ -1,0 +1,8 @@
+<% if user_signed_in? %>
+  こんにちは、<%= link_to "#{current_user.nickname}さん" %><br>
+  <%= "ログアウトは" %><%= link_to "こちら", destroy_user_session_path, method: :delete, class:"" %>
+<% else %>
+  <%= link_to "新規登録", new_user_registration_path, class:""%>
+  <dt><%= link_to "ログイン", new_user_session_path, class:"" %></dt>
+<% end %>
+<%= link_to "加工依頼の登録", new_job_path, class:""%><br>

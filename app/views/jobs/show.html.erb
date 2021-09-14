@@ -1,3 +1,5 @@
+<%= render "shared/header" %>
+
 詳細画面
 <%= @job.name %>
 <%= @job.place %>
@@ -6,9 +8,12 @@
 <%= @job.memo %>
 <%= @job.contact %>
 <br>
+<%= link_to "コメントする", new_job_comment_path(@job), class:"" %><br>
 以下仕事に対するコメント<br>
 <% @comment.each do |comment|%>
   <%= comment.content %>
 <% end %>
 <br>
 <%= link_to "トップページに戻る", root_path, class:"" %>
+
+<%= render "shared/footer" %>

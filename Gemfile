@@ -57,3 +57,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'devise'
 gem 'bcrypt', '~> 3.1.16'
 gem 'active_hash'
+gem 'rails-i18n'

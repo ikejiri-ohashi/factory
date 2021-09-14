@@ -1,6 +1,4 @@
-Hello world form index
-
-<%= link_to "加工依頼の登録", new_job_path, class:""%><br>
+<%= render "shared/header" %>
 
 <% @jobs.each do |job|%>
   <%= link_to job_path(job.id) do %>
@@ -13,3 +11,5 @@ Hello world form index
   <% end %>
   <br>
 <% end %>
+
+<%= render "shared/footer" %>
