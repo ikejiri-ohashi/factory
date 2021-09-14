@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 2021_09_14_012215) do
     t.string "name", null: false
     t.string "place", null: false
     t.string "deadline", null: false
-    t.integer "category", null: false
+    t.integer "category_id", null: false
     t.string "memo", null: false
     t.string "contact", null: false
     t.bigint "user_id", null: false
