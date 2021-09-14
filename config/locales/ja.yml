@@ -1,0 +1,14 @@
+ja:
+  activerecord:
+    attributes:
+      user:
+        nickname: ニックネーム
+      job:
+        name: 仕事概要
+        place: 納品場所
+        deadline: 納期
+        category_id: カテゴリー
+        memo: 備考
+        contact: 連絡先
+      comment:
+        content: コメント
