@@ -6,6 +6,7 @@ class User < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to_active_hash :genre
   has_many :jobs, dependent: :destroy
+  has_many :comments, dependent: :destroy
 
   validates :nickname, presence: true
 end
