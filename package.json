@@ -1,14 +1,31 @@
 {
   "name": "factory",
-  "private": true,
-  "dependencies": {
-    "@rails/actioncable": "^6.0.0",
-    "@rails/activestorage": "^6.0.0",
-    "@rails/ujs": "^6.0.0",
-    "@rails/webpacker": "5.4.2",
-    "turbolinks": "^5.2.0",
-    "webpack": "^4.46.0",
-    "webpack-cli": "^3.3.12"
+  "version": "1.0.0",
+  "description": "This README would normally document whatever steps are necessary to get the application up and running.",
+  "main": "babel.config.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
   },
-  "version": "0.1.0"
+  "scripts": {
+    "dev": "TAILWIND_MODE=watch postcss styles.css -o ./app/assets/stylesheets/dist.css -w",
+    "build": "NODE_ENV=production postcss styles.css -o ./app/assets/stylesheets/dist.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ikejiri-ohashi/factory.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ikejiri-ohashi/factory/issues"
+  },
+  "homepage": "https://github.com/ikejiri-ohashi/factory#readme",
+  "devDependencies": {
+    "autoprefixer": "^10.3.4",
+    "cssnano": "^5.0.8",
+    "postcss-cli": "^8.3.1",
+    "tailwindcss": "^2.2.15"
+  }
 }
