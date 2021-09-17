@@ -2,7 +2,7 @@
   <div class="flex justify-center">
     <div class="row-span-1">
       <% if user_signed_in? %>
-        こんにちは、<%= link_to "#{current_user.nickname}さん" %><br>
+        こんにちは、<%= link_to "#{current_user.nickname}さん", user_path(current_user), class:"text-blue-500" %><br>
         <%= "ログアウトは" %><%= link_to "こちら", destroy_user_session_path, method: :delete, class:"text-blue-500" %>
       <% else %>
         <%= link_to "新規登録", new_user_registration_path, class:""%>
