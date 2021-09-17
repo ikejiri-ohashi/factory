@@ -812,6 +812,7 @@ select {
 .inline {
 	display: inline;
 }
+<<<<<<< Updated upstream
 .flex {
 	display: flex;
 }
@@ -874,6 +875,11 @@ select {
 }
 .p-4 {
 	padding: 1rem;
+=======
+.bg-yellow-200 {
+	--tw-bg-opacity: 1;
+	background-color: rgba(253, 230, 138, var(--tw-bg-opacity));
+>>>>>>> Stashed changes
 }
 .p-2 {
 	padding: 0.5rem;
@@ -890,6 +896,7 @@ select {
 }
 .text-white {
 	--tw-text-opacity: 1;
+<<<<<<< Updated upstream
 	color: rgba(255, 255, 255, var(--tw-text-opacity));
 }
 .text-blue-500 {
@@ -903,4 +910,7 @@ select {
 .hover\:bg-blue-700:hover {
 	--tw-bg-opacity: 1;
 	background-color: rgba(29, 78, 216, var(--tw-bg-opacity));
+=======
+	color: rgba(29, 78, 216, var(--tw-text-opacity));
+>>>>>>> Stashed changes
 }
