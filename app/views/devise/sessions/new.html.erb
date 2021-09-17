@@ -1,35 +1,48 @@
 <%= render "shared/header" %>
 
-<h2>Log in</h2>
-
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-   <div class='login-flash-message'>
-      <%= flash[:notice] %>
-      <%= flash[:alert] %>
+<div class="container mx-auto">
+  <div class="grid grid-cols-2 gap-4">
+    <div class="col-span-1 bg-white rounded-md shadow">
+      <div class="p-4">
+        Welcome back!
+      </div>
     </div>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+    <div class="col-span-1 bg-white rounded-md shadow">
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+        <div class="p-4 h-auto divide-y divide-gray-400 bg-white rounded-md shadow">
+          <div class="p-4">
+            <%= f.label :email %><br />
+            <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+          </div>
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
+          <div class="p-4">
+            <%= f.label :password %><br />
+            <%= f.password_field :password, autocomplete: "current-password" %>
+          </div>
 
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+          <% if devise_mapping.rememberable? %>
+            <div class="p-4">
+              <%= f.check_box :remember_me %>
+              <%= f.label :remember_me %>
+            </div>
+          <% end %>
+
+          <div class="p-4 flex justify-center">
+            <div class="">
+              <%= f.submit "ログインする", class:"p-3 mx-2 rounded-lg bg-blue-500 text-white hover:bg-blue-700" %>
+            </div>
+            <div class="p-3">
+              <%= link_to 'トップページに戻る', root_path, class:"p-3 mx-2 rounded-lg bg-blue-500 text-white hover:bg-blue-700" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
     </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
   </div>
-<% end %>
+</div>
 
-<%= render "devise/shared/links" %>
+
+<%# <%= render "devise/shared/links" %>
 
 
 <%= render "shared/footer" %>

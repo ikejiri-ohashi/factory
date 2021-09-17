@@ -1,17 +1,42 @@
 <%= render "shared/header" %>
 
-<% @jobs.each do |job|%>
-  <%= link_to job_path(job.id) do %>
-    <%= job.name %>
-    <%= job.place %>
-    <%= job.deadline %>
-    <%= job.category.name %>
-    <%= job.memo %>
-    <%= job.contact %>
-  <% end %>
-  <br>
-<% end %>
+<div class="container mx-auto">
+  
 
-<h1 class="text-6xl bg-yellow-200 font-bold text-blue-700">Hello TailwindCSS</h1>
+    <div class="grid grid-cols-3 gap-4">
+
+      <div class="col-span-2 bg-white rounded-md shadow">
+        <% @jobs.each do |job|%>
+          <div class="p-4 h-auto divide-y divide-gray-400">
+            <%= link_to job_path(job.id) do %>
+              <%= job.name %><br>
+              <%= job.place %><br>
+              <%= job.deadline %><br>
+              <%= job.category.name %><br>
+              <%= job.memo %><br>
+              <div class="mb-4">
+                <%= job.contact %><br>
+              </div>
+            <% end %>
+              <hr>
+          </div>
+        <% end %>
+      </div>
+
+    
+      <div class="col-span-1">
+        <div class="bg-white h-64 mb-4 p-2 rounded-md shadow">
+          box1
+        </div>
+        <div class="bg-white h-64 p-2 rounded-md shadow">
+          box2
+        </div>
+      </div>
+      
+    </div>
+
+
+  
+</div>
 
 <%= render "shared/footer" %>

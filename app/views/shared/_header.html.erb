@@ -1,8 +1,16 @@
-<% if user_signed_in? %>
-  こんにちは、<%= link_to "#{current_user.nickname}さん" %><br>
-  <%= "ログアウトは" %><%= link_to "こちら", destroy_user_session_path, method: :delete, class:"" %>
-<% else %>
-  <%= link_to "新規登録", new_user_registration_path, class:""%>
-  <dt><%= link_to "ログイン", new_user_session_path, class:"" %></dt>
-<% end %>
-<%= link_to "加工依頼の登録", new_job_path, class:""%><br>
+<div class="grid grid-rows-2 bg-white mb-4 p-4 shadow">
+  <div class="flex justify-center">
+    <div class="row-span-1">
+      <% if user_signed_in? %>
+        こんにちは、<%= link_to "#{current_user.nickname}さん" %><br>
+        <%= "ログアウトは" %><%= link_to "こちら", destroy_user_session_path, method: :delete, class:"text-blue-500" %>
+      <% else %>
+        <%= link_to "新規登録", new_user_registration_path, class:""%>
+        <dt><%= link_to "ログイン", new_user_session_path, class:"" %></dt>
+      <% end %>
+    </div>
+  </div>
+  <div class="row-span-1 flex justify-end">
+    <%= link_to "依頼を投稿する", new_job_path, class:"p-3 mx-2 rounded-lg bg-blue-500 text-white hover:bg-blue-700"%>
+  </div>
+</div>
