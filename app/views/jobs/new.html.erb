@@ -1,43 +1,47 @@
 <%= render "shared/header" %>
-
-<%= form_with model: @job, url: jobs_path, local: true do |f| %>
-  <%= render 'shared/error_messages', model: f.object %>
-  <div class="">
-    <%= f.label :name, class:"form-label" %><br />
-    <%= f.text_area :name, class:"" %>
-    <div class="form-text">仕事名を記入してください</div>
-  </div>
-  <div class="">
-    <%= f.label :place, class:"form-label" %><br />
-    <%= f.text_area :place, class:"" %>
-    <div class="form-text">希望納品場所を記入してください</div>
-  </div>
-  <div class="">
-    <%= f.label :deadline, class:"form-label" %><br />
-    <%= f.text_area :deadline, class:'' %>
-    <div class="form-text">納期を入力してください</div>
-  </div>
-  <div class="">
-    <%= f.label :category, class:"form-label" %><br />
-    <%= f.collection_select(:category_id, Category.all, :id, :name, {}, {class:"form-select"}) %>
-    <div class="form-text">加工の種類を選択してください（必須）</div>
-  </div>
-  <div class="">
-    <%= f.label :memo, class:"form-label" %><br />
-    <%= f.text_area :memo, class:'' %>
-    <div class="form-text">補足事項がありましたら記入してください（任意）</div>
-  </div>
-  <div class="">
-    <%= f.label :contact, class:"form-label" %><br />
-    <%= f.text_area :contact, class:'' %>
-    <div class="form-text">希望する見積もり送付先を記入してください</div>
-  </div>
-  <div class="">
-    <%= f.submit "質問を投稿する", class:"" %>
-  </div>
-  <div class="">
-    <%= link_to 'トップページに戻る', root_path, class:"" %>
-  </div>
-<% end %>
-
+<div class="container mx-auto">
+  <%= form_with model: @job, url: jobs_path, local: true do |f| %>
+    <%= render 'shared/error_messages', model: f.object %>
+    <div class="p-4 h-auto divide-y divide-gray-400 bg-white rounded-md shadow">
+      <div class="p-4">
+        <%= f.label :name, class:"form-label" %><br />
+        <%= f.text_area :name, class:"my-3 w-full" %>
+        <div class="form-text">仕事名を記入してください</div>
+      </div>
+      <div class="p-4">
+        <%= f.label :place, class:"form-label" %><br />
+        <%= f.text_area :place, class:"my-2 w-full" %>
+        <div class="form-text">希望納品場所を記入してください</div>
+      </div>
+      <div class="p-4">
+        <%= f.label :deadline, class:"form-label" %><br />
+        <%= f.text_area :deadline, class:'my-2 w-full' %>
+        <div class="form-text">希望納期を入力してください</div>
+      </div>
+      <div class="p-4">
+        <%= f.label :category, class:"form-label" %><br />
+        <%= f.collection_select(:category_id, Category.all, :id, :name, {}, {class:"form-select my-2"}) %>
+        <div class="form-text">加工の種類を選択してください（必須）</div>
+      </div>
+      <div class="p-4">
+        <%= f.label :memo, class:"form-label" %><br />
+        <%= f.text_area :memo, class:'my-2 w-full' %>
+        <div class="form-text">補足事項がありましたら記入してください（任意）</div>
+      </div>
+      <div class="p-4">
+        <%= f.label :contact, class:"form-label" %><br />
+        <%= f.text_area :contact, class:'my-2 w-full' %>
+        <div class="form-text">詳細の連絡先を記入してください</div>
+      </div>
+      <div class="p-4 flex justify-center">
+        <div class="">
+          <%= f.submit "質問を投稿する", class:"p-3 mx-2 rounded-lg bg-blue-500 text-white hover:bg-blue-700" %>
+        </div>
+        <div class="p-3">
+          <%= link_to 'トップページに戻る', root_path, class:"p-3 mx-2 rounded-lg bg-blue-500 text-white hover:bg-blue-700" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
 <%= render "shared/footer" %>
