@@ -1,7 +1,8 @@
 class JobsController < ApplicationController
 
   def index
-    @jobs = Job.all
+    @jobs = Job.order('created_at DESC')
+    @users = User.order('created_at DESC')
   end
 
   def new
