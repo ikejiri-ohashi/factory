@@ -10,6 +10,10 @@
     <div class="col-span-1 bg-white rounded-md shadow">
       <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
         <div class="p-4 h-auto divide-y divide-gray-400 bg-white rounded-md shadow">
+          <div class='login-flash-message'>
+            <%= flash[:notice] %>
+            <%= flash[:alert] %>
+          </div>
           <div class="p-4">
             <%= f.label :email %><br />
             <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
