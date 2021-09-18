@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_17_084605) do
+ActiveRecord::Schema.define(version: 2021_09_18_074316) do
 
   create_table "comments", charset: "utf8mb3", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -20,6 +20,18 @@ ActiveRecord::Schema.define(version: 2021_09_17_084605) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["job_id"], name: "index_comments_on_job_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "company_profiles", charset: "utf8mb3", force: :cascade do |t|
+    t.string "speciality"
+    t.text "content"
+    t.string "self_introduction"
+    t.string "conmapy_url"
+    t.string "contact"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_company_profiles_on_user_id"
   end
 
   create_table "jobs", charset: "utf8mb3", force: :cascade do |t|
@@ -36,8 +48,8 @@ ActiveRecord::Schema.define(version: 2021_09_17_084605) do
   end
 
   create_table "users", charset: "utf8mb3", force: :cascade do |t|
-    t.string "nickname", null: false
-    t.integer "genre_id", null: false
+    t.string "name", null: false
+    t.integer "genre_id"
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -52,5 +64,6 @@ ActiveRecord::Schema.define(version: 2021_09_17_084605) do
 
   add_foreign_key "comments", "jobs"
   add_foreign_key "comments", "users"
+  add_foreign_key "company_profiles", "users"
   add_foreign_key "jobs", "users"
 end
