@@ -4,6 +4,14 @@
   <div class="grid grid-cols-3 gap-4">
     <div class="col-span-2 bg-white rounded-md shadow">
       <div class="p-4 h-auto">
+        <%= link_to user_path(@job.user.id) do %>
+          <div class="flex display-start items-center mb-8">
+            <%= image_tag avatar_url(@job.user), class: "w-12" %>
+            <div class="ml-4">
+              <%= @job.user.nickname %>さん
+            </div>
+          </div>
+        <% end %>
         <div class="mb-4">
           <%= @job.name %>
         </div>
@@ -24,7 +32,7 @@
         </div>
         <hr>
         <div class="my-8">
-          <%= link_to "コメントする", new_job_comment_path(@job), class:"p-3 m-2 rounded-lg bg-blue-500 text-white hover:bg-blue-700" %><br>
+          <%= link_to "コメントする", new_job_comment_path(@job), class:"p-3 rounded-lg bg-blue-500 text-white hover:bg-blue-700" %><br>
         </div>
         <% @comment.each do |comment|%>
           <div class="p-4 h-auto divide-y divide-gray-400">
