@@ -4,7 +4,7 @@ class CreateCompanyProfiles < ActiveRecord::Migration[6.1]
       t.string :speciality
       t.text :content
       t.string :self_introduction
-      t.string :conmapy_url
+      t.string :company_url
       t.string :contact
       t.references :user,   null: false, foreign_key: true
       t.timestamps

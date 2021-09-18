@@ -1,6 +1,6 @@
 <%= render "shared/header" %>
 <div class="container mx-auto">
-  <%= form_with model: @company_profile, url: company_profiles_path, local: true do |f| %>
+  <%= form_with model: @company_profile, url: company_profile_path, local: true do |f| %>
     <div class="p-4 h-auto divide-y divide-gray-400 bg-white rounded-md shadow">
       <div class="p-4">
         <%= f.label :speciality, class:"form-label" %><br />

@@ -19,7 +19,7 @@
           </div>
         <% else %>
           <div class="my-4 flex justify-center">
-            編集するボタン
+            <%= link_to "プロフィールを編集する", edit_company_profile_path, class: "w-full bg-gray-500 text-white text-center" %>
           </div>
         <% end %>
       <% end %>
@@ -30,19 +30,19 @@
           プロフィール詳細
         </div>
         <div class="mb-4">
-          <%= @company_profile.speciality %>
+          <%# <%= @company_profile.speciality %> %>
         </div>
         <div class="mb-4">
-          <%= @company_profile.content %>
+          <%# <%= @company_profile.content %> %>
         </div>
         <div class="mb-4">
-          <%= @company_profile.self_introduction %>
+          <%# <%= @company_profile.self_introduction %> %>
         </div>
         <div class="mb-4">
-          <%= @company_profile.conmapy_url %>
+          <%# <%= @company_profile.conmapy_url %> %>
         </div>
         <div class="mb-4">
-          <%= @company_profile.contact %>
+          <%# <%= @company_profile.contact %> %>
         </div>
       </div>
     </div>

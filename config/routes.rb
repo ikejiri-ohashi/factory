@@ -10,5 +10,5 @@ Rails.application.routes.draw do
   resources :jobs, only: [:new, :create, :show] do
     resources :comments, only: [:new, :create]
   end
-  resources :company_profiles, only: [:new, :create]
+  resources :company_profiles, only: [:new, :create, :edit, :update]
 end

@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 2021_09_18_074316) do
     t.string "speciality"
     t.text "content"
     t.string "self_introduction"
-    t.string "conmapy_url"
+    t.string "company_url"
     t.string "contact"
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
