@@ -1,4 +1,5 @@
 class JobsController < ApplicationController
+  before_action :authenticate_user!, only: [:new, :create]
 
   def index
     @jobs = Job.order('created_at DESC')
