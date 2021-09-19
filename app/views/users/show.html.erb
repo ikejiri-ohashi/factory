@@ -26,24 +26,43 @@
     </div>
     <div class="col-span-2 bg-white rounded-md shadow">
       <div class="p-4 h-auto">
-        <div class="mb-4">
-          プロフィール詳細
-        </div>
-        <div class="mb-4">
-          <%# <%= @company_profile.speciality %> %>
-        </div>
-        <div class="mb-4">
-          <%# <%= @company_profile.content %> %>
-        </div>
-        <div class="mb-4">
-          <%# <%= @company_profile.self_introduction %> %>
-        </div>
-        <div class="mb-4">
-          <%# <%= @company_profile.conmapy_url %> %>
-        </div>
-        <div class="mb-4">
-          <%# <%= @company_profile.contact %> %>
-        </div>
+        <% if @company_profile.nil? %>
+          <div class="mb-4">
+            <div class="mb-4 p-2 border-4">
+            <p class="text-xl">得意技術：</p>
+            <hr>
+          </div>
+          <div class="mb-2">
+            企業紹介：
+            <hr>
+          </div>
+          <div class="mb-2">
+            ホームページ：
+            <hr>
+          </div>
+          <div class="mb-2">
+            連絡先：
+            <hr>
+          </div>
+        <% else %>
+          <div class="mb-4 p-2 border-4">
+            <p class="text-xl">得意技術：<%= @company_profile.speciality %></p>
+            <hr>
+            <%= @company_profile.content %>
+          </div>
+          <div class="mb-2">
+            企業紹介：<%= @company_profile.self_introduction %>
+            <hr>
+          </div>
+          <div class="mb-2">
+            ホームページ：<%= @company_profile.company_url %>
+            <hr>
+          </div>
+          <div class="mb-2">
+            連絡先：<%= @company_profile.contact %>
+            <hr>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
