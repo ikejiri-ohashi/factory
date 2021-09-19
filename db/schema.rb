@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_18_074316) do
+ActiveRecord::Schema.define(version: 2021_09_19_035723) do
 
   create_table "comments", charset: "utf8mb3", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -32,6 +32,15 @@ ActiveRecord::Schema.define(version: 2021_09_18_074316) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_company_profiles_on_user_id"
+  end
+
+  create_table "favorites", charset: "utf8mb3", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "job_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["job_id"], name: "index_favorites_on_job_id"
+    t.index ["user_id"], name: "index_favorites_on_user_id"
   end
 
   create_table "jobs", charset: "utf8mb3", force: :cascade do |t|
@@ -65,5 +74,7 @@ ActiveRecord::Schema.define(version: 2021_09_18_074316) do
   add_foreign_key "comments", "jobs"
   add_foreign_key "comments", "users"
   add_foreign_key "company_profiles", "users"
+  add_foreign_key "favorites", "jobs"
+  add_foreign_key "favorites", "users"
   add_foreign_key "jobs", "users"
 end

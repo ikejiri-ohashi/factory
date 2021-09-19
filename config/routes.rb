@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   root to: "jobs#index"
   resources :jobs, only: [:new, :create, :show] do
     resources :comments, only: [:new, :create]
+    resources :favorites, only: [:create, :destroy]
   end
   resources :company_profiles, only: [:new, :create, :edit, :update]
 end

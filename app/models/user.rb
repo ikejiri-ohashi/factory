@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_many :jobs, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_one :company_profiles, dependent: :destroy
+  has_many :favorites, dependent: :destroy
 
   validates :name, presence: true
 
@@ -18,4 +19,9 @@ class User < ApplicationRecord
       user.genre_id = 2
     end
   end
+
+  def already_favorited?(job)
+    favorites.exists?(job_id: job.id)
+  end
+
 end

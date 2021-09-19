@@ -886,6 +886,18 @@ select {
 .w-24 {
 	width: 6rem;
 }
+.w-16 {
+	width: 4rem;
+}
+.w-4 {
+	width: 1rem;
+}
+.w-8 {
+	width: 2rem;
+}
+.w-6 {
+	width: 1.5rem;
+}
 .scale-75 {
 	--tw-scale-x: .75;
 	--tw-scale-y: .75;

@@ -30,6 +30,17 @@
         <div class="mb-4">
           <%= @job.contact %>
         </div>
+        <div class="mb-4">
+          <% if user_signed_in? %>
+            <% if current_user.already_favorited?(@job) %>
+              <%= link_to image_tag("heart.png", class:"w-6"), job_favorite_path(@job), method: :delete %>
+            <% else %>
+              <%= link_to image_tag("heart_outline.png", class:"w-6"), job_favorites_path(@job), method: :post %>
+            <% end %>
+          <% else %>
+            <%= link_to image_tag("heart_outline.png", class:"w-6"), new_user_session_path %>
+          <% end %>
+        </div>
         <hr>
         <div class="my-8">
           <%= link_to "コメントする", new_job_comment_path(@job), class:"p-3 rounded-lg bg-blue-500 text-white hover:bg-blue-700" %><br>
