@@ -785,6 +785,9 @@ select {
 .col-span-1 {
 	grid-column: span 1 / span 1;
 }
+.col-span-3 {
+	grid-column: span 3 / span 3;
+}
 .row-span-1 {
 	grid-row: span 1 / span 1;
 }
@@ -877,6 +880,9 @@ select {
 .h-64 {
 	height: 16rem;
 }
+.h-24 {
+	height: 6rem;
+}
 .w-full {
 	width: 100%;
 }
@@ -897,6 +903,15 @@ select {
 }
 .w-6 {
 	width: 1.5rem;
+}
+.w-auto {
+	width: auto;
+}
+.w-48 {
+	width: 12rem;
+}
+.w-6\/12 {
+	width: 50%;
 }
 .scale-75 {
 	--tw-scale-x: .75;
@@ -941,6 +956,11 @@ select {
 	border-top-width: calc(1px * calc(1 - var(--tw-divide-y-reverse)));
 	border-bottom-width: calc(1px * var(--tw-divide-y-reverse));
 }
+.divide-x > :not([hidden]) ~ :not([hidden]) {
+	--tw-divide-x-reverse: 0;
+	border-right-width: calc(1px * var(--tw-divide-x-reverse));
+	border-left-width: calc(1px * calc(1 - var(--tw-divide-x-reverse)));
+}
 .divide-gray-400 > :not([hidden]) ~ :not([hidden]) {
 	--tw-divide-opacity: 1;
 	border-color: rgba(156, 163, 175, var(--tw-divide-opacity));
@@ -983,6 +1003,10 @@ select {
 .bg-gray-500 {
 	--tw-bg-opacity: 1;
 	background-color: rgba(107, 114, 128, var(--tw-bg-opacity));
+}
+.bg-indigo-500 {
+	--tw-bg-opacity: 1;
+	background-color: rgba(99, 102, 241, var(--tw-bg-opacity));
 }
 .p-4 {
 	padding: 1rem;

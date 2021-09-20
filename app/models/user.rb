@@ -9,7 +9,11 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_one :company_profiles, dependent: :destroy
   has_many :favorites, dependent: :destroy
+
   has_many :follows, dependent: :destroy
+  has_many :followings, through: :follows, source: :follow
+  has_many :reverse_of_follows, class_name: 'Follow', foreign_key: 'follow_id'
+  has_many :followers, through: :reverse_of_follows, source: :user
 
   validates :name, presence: true
 

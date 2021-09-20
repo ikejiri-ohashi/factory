@@ -76,6 +76,44 @@
       </div>
     </div>
   </div>
+  <div class="bg-white rounded-md shadow my-4 divide-x divide-gray-400 flex">
+    <div class="h-auto w-6/12 bg-blue-500 m-4">
+      <% @follows.each do | user |%>
+        <div class=" h-auto divide-y divide-gray-400 ">
+          <%= link_to user_path(user.follow_id) do %>
+          <div class="flex display-start items-center m-2">
+            <div class="image">
+              <%= image_tag avatar_url(user.follow), class: "w-12 transform scale-75" %>
+            </div>
+            <div class="ml-2">
+              <%= user.follow.name %>
+            </div>
+          </div>
+          <% end %>
+          <hr>
+        </div>
+      <% end %>
+    </div>
+    
+    <div class="h-auto w-6/12 bg-indigo-500 m-4">
+      <% @followers.each do | user |%>
+        <div class=" h-auto divide-y divide-gray-400 ">
+          <%= link_to user_path(user.user_id) do %>
+            <div class="flex display-start items-center m-2">
+              <div class="image">
+                <%= image_tag avatar_url(user.follow), class: "w-12 transform scale-75" %>
+              </div>
+              <div class="ml-2">
+                <%= user.user.name %>
+              </div>
+            </div>
+          <% end %>
+          <hr>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  
 </div>
 
-<%= render "shared/footer" %>
+<%# <%= render "shared/footer" %> 
