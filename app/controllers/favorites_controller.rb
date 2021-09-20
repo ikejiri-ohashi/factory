@@ -1,4 +1,6 @@
 class FavoritesController < ApplicationController
+  before_action :authenticate_user!, only: [:create, :destroy]
+
   def create
     @favorite = current_user.favorites.create(job_id: params[:job_id])
     redirect_back(fallback_location: root_path)
@@ -9,4 +11,5 @@ class FavoritesController < ApplicationController
     @favorite.destroy
     redirect_back(fallback_location: root_path)
   end
+  
 end
