@@ -883,6 +883,15 @@ select {
 .h-24 {
 	height: 6rem;
 }
+.h-1\/2 {
+	height: 50%;
+}
+.h-full {
+	height: 100%;
+}
+.h-96 {
+	height: 24rem;
+}
 .w-full {
 	width: 100%;
 }
