@@ -70,10 +70,10 @@
             <%= link_to user_path(user.follow_id) do %>
             <div class="flex display-start items-center m-2">
               <div class="image">
-                <%= image_tag avatar_url(user.follow), class: "w-12 transform scale-75" %>
+                <%= image_tag avatar_url(user.follow), class: "w-8" %>
               </div>
               <div class="ml-2">
-                <%= user.follow.name %>
+                <p class="text-sm"><%= user.follow.name %></p>
               </div>
             </div>
             <% end %>
@@ -91,10 +91,10 @@
             <%= link_to user_path(user.user_id) do %>
               <div class="flex display-start items-center m-2">
                 <div class="image">
-                  <%= image_tag avatar_url(user.follow), class: "w-12 transform scale-75" %>
+                  <%= image_tag avatar_url(user.follow), class: "w-8" %>
                 </div>
                 <div class="ml-2">
-                  <%= user.user.name %>
+                  <p class="text-sm"><%= user.user.name %></p>
                 </div>
               </div>
             <% end %>
@@ -112,9 +112,7 @@
           <div class="h-auto">
             <%= link_to job_path(job.id) do %>
               <div class="flex display-start items-center m-2">
-                <div class="ml-2">
-                  <%= job.name %>
-                </div>
+                ・<%= job.name %>
               </div>
             <% end %>
           </div>
@@ -131,9 +129,7 @@
           <div class="h-auto">
             <%= link_to job_path(favorite.job_id) do %>
               <div class="flex display-start items-center m-2">
-                <div class="ml-2">
-                  <%= favorite.job.name %>
-                </div>
+                ・<%= favorite.job.name %>
               </div>
             <% end %>
           </div>
