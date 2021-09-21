@@ -58,47 +58,87 @@
       </div>
     </div>
   </div>
-  <div class="bg-white rounded-md shadow my-4 divide-x divide-gray-400 flex">
-    <div class="h-auto w-6/12 m-2">
-      <div class="p-2">
-        <p class="text-base ml-2">フォロー中</p>
-        <hr>
-      </div>
-      <% @follows.each do | user |%>
-        <div class="h-auto">
-          <%= link_to user_path(user.follow_id) do %>
-          <div class="flex display-start items-center m-2">
-            <div class="image">
-              <%= image_tag avatar_url(user.follow), class: "w-12 transform scale-75" %>
-            </div>
-            <div class="ml-2">
-              <%= user.follow.name %>
-            </div>
-          </div>
-          <% end %>
+  <div class="grid grid-cols-3 gap-4">
+    <div class="bg-white rounded-md shadow my-4 flex">
+      <div class="h-auto w-6/12 m-2">
+        <div class="p-2">
+          <p class="text-base ml-2">フォロー中</p>
+          <hr>
         </div>
-      <% end %>
-    </div>
-    
-    <div class="h-auto w-6/12 m-2">
-      <div class="p-2">
-        <p class="text-base ml-2">フォロワー</p>
-        <hr>
-      </div>
-      <% @followers.each do | user |%>
-        <div class="h-auto">
-          <%= link_to user_path(user.user_id) do %>
+        <% @follows.each do | user |%>
+          <div class="h-auto">
+            <%= link_to user_path(user.follow_id) do %>
             <div class="flex display-start items-center m-2">
               <div class="image">
                 <%= image_tag avatar_url(user.follow), class: "w-12 transform scale-75" %>
               </div>
               <div class="ml-2">
-                <%= user.user.name %>
+                <%= user.follow.name %>
               </div>
             </div>
-          <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+      <hr>
+      <div class="h-auto w-6/12 m-2">
+        <div class="p-2">
+          <p class="text-base ml-2">フォロワー</p>
+          <hr>
         </div>
-      <% end %>
+        <% @followers.each do | user |%>
+          <div class="h-auto">
+            <%= link_to user_path(user.user_id) do %>
+              <div class="flex display-start items-center m-2">
+                <div class="image">
+                  <%= image_tag avatar_url(user.follow), class: "w-12 transform scale-75" %>
+                </div>
+                <div class="ml-2">
+                  <%= user.user.name %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="bg-white rounded-md shadow my-4 p-2">
+      <div class="p-2">
+        <p class="text-base ml-2">投稿した仕事</p>
+        <hr>
+      </div>
+      <div class="m-2">
+        <% @jobs.each do | job |%>
+          <div class="h-auto">
+            <%= link_to job_path(job.id) do %>
+              <div class="flex display-start items-center m-2">
+                <div class="ml-2">
+                  <%= job.name %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="bg-white rounded-md shadow my-4 p-2">
+      <div class="p-2">
+        <p class="text-base ml-2">お気に入りした仕事</p>
+        <hr>
+      </div>
+      <div class="m-2">
+        <% @favorites.each do | favorite |%>
+          <div class="h-auto">
+            <%= link_to job_path(favorite.job_id) do %>
+              <div class="flex display-start items-center m-2">
+                <div class="ml-2">
+                  <%= favorite.job.name %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
   
