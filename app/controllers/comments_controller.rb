@@ -1,5 +1,6 @@
 class CommentsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create]
+  before_action :authenticate_user!, only: [:new, :create, :destroy]
+  
   
   def new
     @comment = Comment.new
@@ -8,10 +9,16 @@ class CommentsController < ApplicationController
   def create
     @comment = Comment.create(comment_params)
     if @comment.save
-      redirect_to root_path
+      redirect_to job_path(@comment.job_id)
     else
       render :new
     end
+  end
+
+  def destroy
+    @comment = Comment.find(params[:id])
+    @comment.destroy
+    redirect_back(fallback_location: root_path)
   end
 
   private
