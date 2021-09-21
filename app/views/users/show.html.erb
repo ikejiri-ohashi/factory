@@ -2,7 +2,7 @@
 
 <div class="container mx-auto px-8">
   <div class="grid grid-cols-3 gap-4">
-    <div class="bg-white h-auto p-4 rounded-md shadow">
+    <div class="bg-white p-4 rounded-md shadow">
       <div class="mb-4 flex justify-center">
         <%= image_tag avatar_url(@user), class: "round-md" %>
       </div>
@@ -22,50 +22,122 @@
             <%= link_to "プロフィールを編集する", edit_company_profile_path, class: "w-full bg-gray-500 text-white text-center" %>
           </div>
         <% end %>
-      <% end %>
-    </div>
-    <div class="col-span-2 bg-white rounded-md shadow">
-      <div class="p-4 h-auto">
-        <% if @company_profile.nil? %>
-          <div class="mb-4">
-            <div class="mb-4 p-2 border-4">
-            <p class="text-xl">得意技術：</p>
-            <hr>
-          </div>
-          <div class="mb-2">
-            企業紹介：
-            <hr>
-          </div>
-          <div class="mb-2">
-            ホームページ：
-            <hr>
-          </div>
-          <div class="mb-2">
-            連絡先：
-            <hr>
+      <% else %>
+        <% if @follow.nil? %>
+          <div class="mt-16 flex justify-center">
+            <%= link_to "フォローする", user_follows_path(@user), class: "w-full bg-gray-500 text-white text-center", method: :post %>
           </div>
         <% else %>
-          <div class="mb-4 p-2 border-4">
-            <p class="text-xl">得意技術：<%= @company_profile.speciality %></p>
-            <hr>
-            <%= @company_profile.content %>
+          <div class="mt-16 flex justify-center">
+            <%= link_to "フォローをはずす", user_follow_path(@user), class: "w-full bg-gray-500 text-white text-center", method: :delete %>
           </div>
-          <div class="mb-2">
-            企業紹介：<%= @company_profile.self_introduction %>
-            <hr>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="col-span-2 h-auto bg-white rounded-md shadow">
+      <div class="p-4 h-auto">
+        <div class="mb-4 p-2 border-4">
+          <p class="text-xl m-2">得意技術：<%= @company_profile.speciality %></p>
+          <hr>
+          <div class="mt-2">
+            得意技術について：<%= @company_profile.content %>
           </div>
-          <div class="mb-2">
-            ホームページ：<%= @company_profile.company_url %>
-            <hr>
+        </div>
+        <div class="m-2">
+          企業紹介：<%= @company_profile.self_introduction %>
+        </div>
+        <hr>
+        <div class="m-2">
+          ホームページ：<%= @company_profile.company_url %>
+        </div>
+        <hr>
+        <div class="m-2">
+          連絡先：<%= @company_profile.contact %>
+        </div>
+        <hr>
+      </div>
+    </div>
+  </div>
+  <div class="grid grid-cols-3 gap-4">
+    <div class="bg-white rounded-md shadow my-4 flex">
+      <div class="h-auto w-6/12 m-2">
+        <div class="p-2">
+          <p class="text-base ml-2">フォロー中</p>
+          <hr>
+        </div>
+        <% @follows.each do | user |%>
+          <div class="h-auto">
+            <%= link_to user_path(user.follow_id) do %>
+            <div class="flex display-start items-center m-2">
+              <div class="image">
+                <%= image_tag avatar_url(user.follow), class: "w-8" %>
+              </div>
+              <div class="ml-2">
+                <p class="text-sm"><%= user.follow.name %></p>
+              </div>
+            </div>
+            <% end %>
           </div>
-          <div class="mb-2">
-            連絡先：<%= @company_profile.contact %>
-            <hr>
+        <% end %>
+      </div>
+      <hr>
+      <div class="h-auto w-6/12 m-2">
+        <div class="p-2">
+          <p class="text-base ml-2">フォロワー</p>
+          <hr>
+        </div>
+        <% @followers.each do | user |%>
+          <div class="h-auto">
+            <%= link_to user_path(user.user_id) do %>
+              <div class="flex display-start items-center m-2">
+                <div class="image">
+                  <%= image_tag avatar_url(user.follow), class: "w-8" %>
+                </div>
+                <div class="ml-2">
+                  <p class="text-sm"><%= user.user.name %></p>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="bg-white rounded-md shadow my-4 p-2">
+      <div class="p-2">
+        <p class="text-base ml-2">投稿した仕事</p>
+        <hr>
+      </div>
+      <div class="m-2">
+        <% @jobs.each do | job |%>
+          <div class="h-auto">
+            <%= link_to job_path(job.id) do %>
+              <div class="flex display-start items-center m-2">
+                ・<%= job.name %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="bg-white rounded-md shadow my-4 p-2">
+      <div class="p-2">
+        <p class="text-base ml-2">お気に入りした仕事</p>
+        <hr>
+      </div>
+      <div class="m-2">
+        <% @favorites.each do | favorite |%>
+          <div class="h-auto">
+            <%= link_to job_path(favorite.job_id) do %>
+              <div class="flex display-start items-center m-2">
+                ・<%= favorite.job.name %>
+              </div>
+            <% end %>
           </div>
         <% end %>
       </div>
     </div>
   </div>
+  
 </div>
 
-<%= render "shared/footer" %>
+<%= render "shared/footer" %> 

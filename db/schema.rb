@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_19_035723) do
+ActiveRecord::Schema.define(version: 2021_09_20_004928) do
 
   create_table "comments", charset: "utf8mb3", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -41,6 +41,16 @@ ActiveRecord::Schema.define(version: 2021_09_19_035723) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["job_id"], name: "index_favorites_on_job_id"
     t.index ["user_id"], name: "index_favorites_on_user_id"
+  end
+
+  create_table "follows", charset: "utf8mb3", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "follow_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["follow_id"], name: "index_follows_on_follow_id"
+    t.index ["user_id", "follow_id"], name: "index_follows_on_user_id_and_follow_id", unique: true
+    t.index ["user_id"], name: "index_follows_on_user_id"
   end
 
   create_table "jobs", charset: "utf8mb3", force: :cascade do |t|
@@ -76,5 +86,7 @@ ActiveRecord::Schema.define(version: 2021_09_19_035723) do
   add_foreign_key "company_profiles", "users"
   add_foreign_key "favorites", "jobs"
   add_foreign_key "favorites", "users"
+  add_foreign_key "follows", "users"
+  add_foreign_key "follows", "users", column: "follow_id"
   add_foreign_key "jobs", "users"
 end
