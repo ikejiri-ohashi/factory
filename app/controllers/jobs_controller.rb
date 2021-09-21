@@ -1,5 +1,5 @@
 class JobsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create]
+  before_action :authenticate_user!, only: [:new, :create, :destroy]
 
   def index
     @jobs = Job.order('created_at DESC')
@@ -22,6 +22,12 @@ class JobsController < ApplicationController
   def show
     @job = Job.find(params[:id])
     @comment = @job.comments.includes(:user)
+  end
+
+  def destroy
+    @job = Job.find(params[:id])
+    @job.destroy
+    redirect_to root_path
   end
 
   private
