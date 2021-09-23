@@ -1,5 +1,8 @@
 FROM ruby:3.0.0
 
+#本番環境用の記述
+ENV RAILS_ENV=production
+
 ## nodejsとyarnはwebpackをインストールする際に必要
 # yarnパッケージ管理ツールをインストール
 RUN apt-get update && apt-get install -y curl apt-transport-https wget && \
@@ -23,6 +26,10 @@ COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
 EXPOSE 3000
+
+#本番環境用
+VOLUME /app/public
+VOLUME /app/tmp
 
 # Start the main process.
 CMD ["rails", "server", "-b", "0.0.0.0"]
