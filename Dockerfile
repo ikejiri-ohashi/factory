@@ -19,7 +19,10 @@ RUN bundle install
 COPY . /factory
 
 RUN yarn install --check-files
-RUN bundle exec rails webpacker:compile
+
+RUN rails webpacker:install
+# RUN NODE_ENV=production ./bin/webpack
+# RUN bundle exec rails webpacker:compile
 
 # Add a script to be executed every time the container starts.
 COPY entrypoint.sh /usr/bin/
