@@ -1,5 +1,7 @@
 FROM ruby:3.0.0
 
+ENV RAILS_ENV=production
+
 # リポジトリを更新し依存モジュールをインストール
 RUN apt-get update -qq && \
     apt-get install -y build-essential \
@@ -21,3 +23,12 @@ ADD . /factory
 
 # puma.sockを配置するディレクトリを作成
 RUN mkdir -p tmp/sockets
+
+COPY entrypoint.sh /usr/bin/
+RUN chmod +x /usr/bin/entrypoint.sh
+ENTRYPOINT ["entrypoint.sh"]
+
+VOLUME /app/public
+VOLUME /app/tmp
+
+CMD bash -c "rm -f tmp/pids/server.pid && bundle exec puma -C config/puma.rb"
