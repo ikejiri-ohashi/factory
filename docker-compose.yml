@@ -1,4 +1,4 @@
-version: '3'
+version: '2'
 services:
   app:
     build:
@@ -6,9 +6,10 @@ services:
     command: bundle exec puma -C config/puma.rb
     volumes:
       - .:/factory
-      - public-data:/factory/public
-      - tmp-data:/factory/tmp
-      - log-data:/factory/log
+      - /var/factory
+      # socketファイルの共有
+      - sockets:/factory/tmp/sockets
+    tty: true
     depends_on:
       - db
   db:
@@ -21,18 +22,21 @@ services:
       - "3306:3306"
     volumes:
       - ./tmp/db:/var/lib/mysql
-  web:
+  nginx:
     build:
-      context: ./nginx
+      context: .
+      dockerfile: ./nginx/Dockerfile
     volumes:
       - public-data:/factory/public
       - tmp-data:/factory/tmp
     ports:
       - 80:80
+      #socketファイルの共有
+    volumes: 
+      - sockets:/factory/tmp/sockets
     depends_on:
       - app
+
 volumes:
-  public-data:
-  tmp-data:
-  log-data:
-  db-data:
+  db_data:
+  sockets:
