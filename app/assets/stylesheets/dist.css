@@ -1047,6 +1047,13 @@ select {
 	--tw-bg-opacity: 1;
 	background-color: rgba(99, 102, 241, var(--tw-bg-opacity));
 }
+.bg-current {
+	background-color: currentColor;
+}
+.bg-green-300 {
+	--tw-bg-opacity: 1;
+	background-color: rgba(110, 231, 183, var(--tw-bg-opacity));
+}
 .p-4 {
 	padding: 1rem;
 }

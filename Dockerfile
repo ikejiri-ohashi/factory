@@ -1,5 +1,5 @@
 FROM ruby:3.0.0
-
+# 開発環境用の記述
 ENV RAILS_ENV=production
 
 RUN apt-get update -qq && \
@@ -20,6 +20,7 @@ ADD . /factory
 
 EXPOSE 3000
 
+# 開発環境用の記述
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]

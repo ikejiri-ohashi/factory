@@ -3,6 +3,7 @@ services:
   app:
     build:
       context: .
+      dockerfile: ./container/Dockerfile
     command: bundle exec puma -C config/puma.rb
     ports:
       - '3000:3000'
