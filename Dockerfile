@@ -1,4 +1,4 @@
-FROM ruby:3.0.0
+FROM ruby:3.0.2
 # 開発環境用の記述
 ENV RAILS_ENV=production
 
