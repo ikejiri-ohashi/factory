@@ -1,5 +1,20 @@
-version: '3'
+version: '2'
 services:
+  app:
+    build:
+      context: .
+      dockerfile: ./container/Dockerfile
+    command: bundle exec puma -C config/puma.rb
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/factory
+      - /var/factory
+      # socketファイルの共有
+      - sockets:/factory/tmp/sockets
+    tty: true
+    depends_on:
+      - db
   db:
     image: mysql:8.0
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
@@ -10,13 +25,21 @@ services:
       - "3306:3306"
     volumes:
       - ./tmp/db:/var/lib/mysql
-
-  web:
-    build: ./container/Dockerfile.env
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+  nginx:
+    build:
+      context: .
+      dockerfile: ./nginx/Dockerfile
     volumes:
-      - .:/factory
+      - public-data:/factory/public
+      - tmp-data:/factory/tmp
     ports:
-      - "3000:3000"
+      - 80:80
+      #socketファイルの共有
+    volumes: 
+      - sockets:/factory/tmp/sockets
     depends_on:
-      - db
+      - app
+
+volumes:
+  db_data:
+  sockets:
