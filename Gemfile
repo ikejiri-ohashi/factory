@@ -58,3 +58,4 @@ gem 'devise'
 gem 'bcrypt', '~> 3.1.16'
 gem 'active_hash'
 gem 'rails-i18n'
+gem "aws-sdk-s3", require: false
