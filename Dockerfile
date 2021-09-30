@@ -40,4 +40,4 @@ ENTRYPOINT ["entrypoint.sh"]
 VOLUME /factory/public
 VOLUME /factory/tmp
 
-CMD bash -c "rm -f tmp/pids/server.pid && bundle exec puma -C config/puma.rb"
+CMD bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -e production"
