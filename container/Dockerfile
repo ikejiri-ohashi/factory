@@ -1,4 +1,4 @@
-FROM ruby:3.0.0
+FROM ruby:3.0.2
 
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - && apt-get update && \
     apt-get install -y nodejs --no-install-recommends && rm -rf /var/lib/apt/lists/*
