@@ -2,13 +2,12 @@ default: &default
   adapter: mysql2
   encoding: utf8
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: root
-  password: password
-  # 以下コメントアウトによりEC2が起動
-  # host: db
 
 development:
   <<: *default
+  host: db
+  username: root
+  password: password
   database: factory_development
 
 test:
