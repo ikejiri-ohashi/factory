@@ -4,6 +4,7 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: root
   password: password
+  # 以下コメントアウトによりEC2が起動
   # host: db
 
 development:
@@ -25,6 +26,7 @@ production:
   # username: <%= ENV['DB_USERNAME'] %>
   # password: <%= ENV['DB_PASSWORD'] %>
 
+  # EC2起動確認済み設定
   database: factory_production
   username: root
   password: <%= ENV['DATABASE_PASSWORD'] %>
