@@ -1,4 +1,6 @@
 FROM ruby:3.0.2
+# Fargate用の記述
+ENV RAILS_ENV=production
 
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - && apt-get update && \
     apt-get install -y nodejs --no-install-recommends && rm -rf /var/lib/apt/lists/*
@@ -28,4 +30,14 @@ COPY . /factory
 RUN rails webpacker:install
 RUN NODE_ENV=production ./bin/webpack
 
-EXPOSE 3000
+# EXPOSE 3000
+
+# Fargate用の記述
+COPY entrypoint.sh /usr/bin/
+RUN chmod +x /usr/bin/entrypoint.sh
+ENTRYPOINT ["entrypoint.sh"]
+
+VOLUME /factory/public
+VOLUME /factory/tmp
+
+CMD bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -e production"
