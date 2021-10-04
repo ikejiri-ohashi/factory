@@ -19,7 +19,7 @@ COPY Gemfile.lock .
 COPY yarn.lock .
 COPY package.json .
 RUN bundle install
-# ここでyarn installをしないとwebpackerを実行できない
+
 RUN yarn install
 COPY . /app
 
