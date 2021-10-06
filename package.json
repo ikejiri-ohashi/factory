@@ -7,10 +7,7 @@
     "lib": "lib",
     "test": "test"
   },
-  "scripts": {
-    "dev": "TAILWIND_MODE=watch postcss styles.css -o ./app/assets/stylesheets/dist.css -w",
-    "build": "NODE_ENV=production postcss styles.css -o ./app/assets/stylesheets/dist.css"
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ikejiri-ohashi/factory.git"
@@ -23,18 +20,23 @@
   },
   "homepage": "https://github.com/ikejiri-ohashi/factory#readme",
   "devDependencies": {
-    "autoprefixer": "^10.3.4",
-    "cssnano": "^5.0.8",
-    "postcss-cli": "^8.3.1",
-    "webpack-dev-server": "^4.3.0"
+    "@webpack-cli/serve": "^1.5.2",
+    "webpack-dev-server": "^3"
   },
   "dependencies": {
+    "@fullhuman/postcss-purgecss": "^4.0.3",
+    "@rails/actioncable": "^6.1.4-1",
     "@rails/activestorage": "^6.1.4-1",
     "@rails/ujs": "^6.1.4-1",
-    "@rails/webpacker": "5.4.2",
-    "@tailwindcss/forms": "^0.3.3",
-    "postcss": "^8.2.15",
-    "tailwindcss": "2.0.0",
+    "@rails/webpacker": "5.4.3",
+    "@tailwindcss/aspect-ratio": "^0.3.0",
+    "@tailwindcss/forms": "^0.3.4",
+    "@tailwindcss/line-clamp": "^0.2.2",
+    "@tailwindcss/typography": "^0.4.1",
+    "postcss": "^8.2.10",
+    "postcss-loader": "^4.0.3",
+    "sass": "^1.32.7",
+    "tailwindcss": "^2.2.16",
     "turbolinks": "^5.2.0",
     "webpack": "^4.46.0",
     "webpack-cli": "^3.3.12"

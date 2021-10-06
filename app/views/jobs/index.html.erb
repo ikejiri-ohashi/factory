@@ -1,5 +1,15 @@
 <%= render "shared/header" %>
-
+<div class="font-sans bg-white h-screen flex flex-col w-full">
+  <div class="h-screen bg-gradient-to-r from-green-400 to-blue-500">
+    <div class="px-4 py-48">
+     <div class="relative w-full text-center">
+       <h1 class="animate-pulse font-bold text-gray-200 text-2xl mb-6">
+        Your TailwindCSS setup is working if this pulses...
+       </h1>
+    </div>
+   </div>
+  </div>
+</div>
 <div class="container mx-auto px-8">
   <div class="grid grid-cols-3 gap-4">
     <div class="col-span-2 bg-white rounded-md shadow">
@@ -14,7 +24,7 @@
             <%= job.deadline %><br>
             <%= job.category.name %><br>
             <%= job.memo %><br>
-            <div class="mb-4">
+            <div class="mb-3">
               <%= job.contact %><br>
             </div>
           <% end %>
