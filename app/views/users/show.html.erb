@@ -103,10 +103,11 @@
       </div>
     </div>
     <div class="bg-white rounded-md shadow my-4 p-2">
-      <div class="p-2">
-        <p class="text-base ml-2">投稿した仕事</p>
-        <hr>
+      <div class="p-2 flex items-center">
+        <span class="material-icons">work</span>
+        <p class="ml-2">投稿した仕事</p>
       </div>
+      <hr>
       <div class="m-2">
         <% @jobs.each do | job |%>
           <div class="h-auto">
@@ -120,10 +121,11 @@
       </div>
     </div>
     <div class="bg-white rounded-md shadow my-4 p-2">
-      <div class="p-2">
-        <p class="text-base ml-2">お気に入りした仕事</p>
-        <hr>
+      <div class="p-2 flex items-center">
+        <%= image_tag("star.png", class:"w-6") %>
+        <p class="ml-2">お気に入りした仕事</p>
       </div>
+      <hr>
       <div class="m-2">
         <% @favorites.each do | favorite |%>
           <div class="h-auto">
