@@ -15,6 +15,7 @@ class CompanyProfilesController < ApplicationController
   end
 
   def edit
+    @company_profile = CompanyProfile.new
     @company_profile = CompanyProfile.find_by(user_id: params[:id])
   end
 
