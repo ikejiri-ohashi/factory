@@ -2,7 +2,7 @@ ja:
   activerecord:
     attributes:
       user:
-        nickname: ニックネーム
+        name: 名前
       job:
         name: 仕事概要
         place: 納品場所

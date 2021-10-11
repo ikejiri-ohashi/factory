@@ -15,7 +15,8 @@ class User < ApplicationRecord
   has_many :reverse_of_follows, class_name: 'Follow', foreign_key: 'follow_id'
   has_many :followers, through: :reverse_of_follows, source: :user
 
-  validates :name, :email, presence: true
+  validates :name, presence: true, length: { maximum: 20 }
+  validates :email, presence: true
 
   def self.guest
     find_or_create_by!(email: 'guest@example.com') do |user|
