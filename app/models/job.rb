@@ -5,6 +5,6 @@ class Job < ApplicationRecord
   belongs_to_active_hash :category
   has_many :favorites, dependent: :destroy
 
-  validates :name, :place, :deadline, :category_id, :memo, :contact, presence: true
+  validates :name, :category_id, :contact, presence: true
   validates :category_id, numericality: { other_than: 1, message: 'を選択してください' }
 end

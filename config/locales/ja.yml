@@ -7,7 +7,8 @@ ja:
         name: 仕事概要
         place: 納品場所
         deadline: 納期
-        category_id: カテゴリー
+        category: 加工の種類
+        category_id: 加工の種類
         memo: 備考
         contact: 連絡先
       comment:
