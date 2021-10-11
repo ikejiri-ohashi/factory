@@ -8,7 +8,7 @@ class CompanyProfilesController < ApplicationController
   def create
     @company_profile = CompanyProfile.new(company_profile_params)
     if @company_profile.save
-      redirect_to root_path
+      redirect_to user_url(@company_profile.user_id)
     else
       render :new
     end
@@ -23,7 +23,7 @@ class CompanyProfilesController < ApplicationController
     @company_profile = CompanyProfile.find_by(user_id: params[:id])
     @company_profile.update(company_profile_params)
     if @company_profile.save
-      redirect_to user_path
+      redirect_to user_url(@company_profile.user_id)
     else
       render :edit
     end

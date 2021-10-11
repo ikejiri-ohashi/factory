@@ -13,7 +13,7 @@ class JobsController < ApplicationController
   def create
     @job = Job.new(job_params)
     if @job.save
-      redirect_to root_path
+      redirect_to root_url
     else
       render :new
     end
@@ -27,7 +27,7 @@ class JobsController < ApplicationController
   def destroy
     @job = Job.find(params[:id])
     @job.destroy
-    redirect_to root_path
+    redirect_to root_url
   end
 
   private
