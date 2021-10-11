@@ -35,27 +35,33 @@
       <% end %>
     </div>
     <div class="col-span-2 h-auto bg-white rounded-md shadow">
-      <div class="p-4 h-auto">
-        <div class="mb-4 p-2 border-4">
-          <p class="text-xl m-2">得意技術：<%= @company_profile.speciality %></p>
-          <hr>
-          <div class="mt-2">
-            得意技術について：<%= @company_profile.content %>
+      <% if @company_profile.nil? %>
+        <div class="p-4 h-auto">
+          プロフィールはまだ登録されていません
+        </div>
+      <% else %>
+        <div class="p-4 h-auto">
+          <div class="mb-4 p-2 border-4">
+            <p class="text-xl m-2">得意技術：<%= @company_profile.speciality %></p>
+            <hr>
+            <div class="mt-2">
+              得意技術について：<%= @company_profile.content %>
+            </div>
           </div>
+          <div class="m-2">
+            企業紹介：<%= @company_profile.self_introduction %>
+          </div>
+          <hr>
+          <div class="m-2">
+            ホームページ：<%= @company_profile.company_url %>
+          </div>
+          <hr>
+          <div class="m-2">
+            連絡先：<%= @company_profile.contact %>
+          </div>
+          <hr>
         </div>
-        <div class="m-2">
-          企業紹介：<%= @company_profile.self_introduction %>
-        </div>
-        <hr>
-        <div class="m-2">
-          ホームページ：<%= @company_profile.company_url %>
-        </div>
-        <hr>
-        <div class="m-2">
-          連絡先：<%= @company_profile.contact %>
-        </div>
-        <hr>
-      </div>
+      <% end %>
     </div>
   </div>
   <div class="grid grid-cols-3 gap-4">
@@ -103,10 +109,11 @@
       </div>
     </div>
     <div class="bg-white rounded-md shadow my-4 p-2">
-      <div class="p-2">
-        <p class="text-base ml-2">投稿した仕事</p>
-        <hr>
+      <div class="p-2 flex items-center">
+        <span class="material-icons">work</span>
+        <p class="ml-2">投稿した仕事</p>
       </div>
+      <hr>
       <div class="m-2">
         <% @jobs.each do | job |%>
           <div class="h-auto">
@@ -120,10 +127,11 @@
       </div>
     </div>
     <div class="bg-white rounded-md shadow my-4 p-2">
-      <div class="p-2">
-        <p class="text-base ml-2">お気に入りした仕事</p>
-        <hr>
+      <div class="p-2 flex items-center">
+        <%= image_tag("star.png", class:"w-6") %>
+        <p class="ml-2">お気に入りした仕事</p>
       </div>
+      <hr>
       <div class="m-2">
         <% @favorites.each do | favorite |%>
           <div class="h-auto">

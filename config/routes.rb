@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
   root to: "jobs#index"
   devise_for :users, controllers: {
-    registrations: 'users/registrations'
+    registrations: 'users/registrations',
+    sessions: 'users/sessions'
   }
   devise_scope :user do
     post 'users/guest_sign_in', to: 'users/sessions#guest_sign_in'
-    # get '/users/:id', to: 'users#show', as: 'user'
   end
   resources :jobs, only: [:new, :create, :show, :destroy] do
     resources :comments, only: [:new, :create, :destroy]

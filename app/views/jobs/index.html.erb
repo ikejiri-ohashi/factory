@@ -2,49 +2,63 @@
 <div class="container mx-auto px-8">
   <div class="grid grid-cols-3 gap-4">
     <div class="col-span-2 bg-white rounded-md shadow">
-      <div class="p-4">
-        <p class="text-base">新規加工依頼一覧</p>
+      <div class="p-4 flex items-center">
+        <span class="material-icons">work</span>
+        <p class="ml-2">新規加工依頼一覧</p>
       </div>
+      
       <% @jobs.each do |job|%>
-        <div class="p-4 h-auto divide-y divide-gray-400">
+        <div class="p-4 h-auto">
+          <hr>
+          <div class="py-4 text-sm">
+            <%= link_to user_path(job.user.id) do %>
+              <u><%= job.user.name %></u>
+            <% end %>
+            さんが<%= job.created_at.to_s(:datetime_jp) %>に投稿
+          </div>
           <%= link_to job_path(job.id) do %>
-            <%= job.name %><br>
-            <%= job.place %><br>
-            <%= job.deadline %><br>
-            <%= job.category.name %><br>
-            <%= job.memo %><br>
-            <div class="mb-3">
-              <%= job.contact %><br>
+            <div class="text-xl">
+              <%= job.name %><br>
+            </div>
+            <div class="pt-2 flex items-center">
+              <span class="material-icons">build</span><p class="ml-2">加工種別：</p><%= job.category.name %>
+            </div>
+            <div class="pt-2 flex items-center">
+              <span class="material-icons">location_on</span><p class="ml-2">納品場所：</p><%= job.place %><br>
+            </div>
+            <div class="pt-2 flex items-center">
+              <span class="material-icons">schedule</span><p class="ml-2">希望納期： </p><%= job.deadline %><br>
             </div>
           <% end %>
-            <hr>
         </div>
+        
       <% end %>
     </div>
     <div class="col-span-1">
-      <div class="bg-white h-64 mb-4 p-2 rounded-md shadow">
-        <div class="m-2">
-          <p class="text-base">このサービスについて</p>
+      <div class="bg-white h-auto mb-4 p-2 rounded-md shadow">
+        <div class="m-2 flex items-center">
+          <%= image_tag("information.png", class:"w-6") %><p class="ml-2">このサービスについて</p>
         </div>
+        <p class="p-2">このサービスは金属加工の仕事を依頼したい企業と、その加工技術を持った企業を繋げるサービスです。</p>
       </div>
       <div class="bg-white h-auto p-2 rounded-md shadow">
-        <div class="m-2">
-          <p class="text-base">新規登録ユーザー</p>
+        <div class="m-2 flex items-center">
+          <span class="material-icons">people</span><p class="ml-2">新規登録ユーザー</p>
         </div>
         
         <% @users.each do | user |%>
-          <div class=" h-auto divide-y divide-gray-400 ">
-            <%= link_to user_path(user.id) do %>
-            <div class="flex display-start items-center m-2">
-              <div class="image">
-                <%= image_tag avatar_url(user), class: "w-12 transform scale-75" %>
-              </div>
-              <div class="ml-2">
-                <%= user.name %>
-              </div>
-            </div>
-            <% end %>
+          <div class=" h-auto">
             <hr>
+            <%= link_to user_path(user.id) do %>
+              <div class="flex display-start items-center m-2">
+                <div class="image">
+                  <%= image_tag avatar_url(user), class: "w-12 transform scale-75" %>
+                </div>
+                <div class="ml-2">
+                  <%= user.name %>
+                </div>
+              </div>
+            <% end %>
           </div>
         <% end %>
       </div>

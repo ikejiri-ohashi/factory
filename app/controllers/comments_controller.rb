@@ -9,7 +9,8 @@ class CommentsController < ApplicationController
   def create
     @comment = Comment.create(comment_params)
     if @comment.save
-      redirect_to job_path(@comment.job_id)
+      redirect_to job_url(@comment.job_id)
+      # redirect_to "https://www.factory-app.com/jobs/#{@comment.job_id}"
     else
       render :new
     end
