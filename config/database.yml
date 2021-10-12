@@ -15,7 +15,7 @@ test:
   host: db
   username: root
   password: password
-  database: factory_development
+  database: factory_test
 
 production:
   <<: *default
