@@ -6,10 +6,12 @@ jobs:
         environment:
           - BUNDLER_VERSION: 2.1.4
           - RAILS_ENV: 'test'
-      - image: circleci/mysql:5.6
+          - DB_HOST: 127.0.0.1
+      - image: circleci/mysql:8.0
         environment:
-          - MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
-          - MYSQL_ROOT_HOST: '%'
+          - MYSQL_USER: 'root'
+          - MYSQL_PASSWORD: 'password'
+          - MYSQL_DATABASE: 'factory_test'
 
     working_directory: ~/factory
 
@@ -32,8 +34,8 @@ jobs:
             - ./vendor/bundle
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}
 
-      - run: bundle exec rake db:create
-      - run: bundle exec rake db:schema:load
+      - run: bundle exec rails db:create
+      - run: bundle exec rails db:schema:load
 
       - run:
           name: run tests
