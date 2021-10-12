@@ -1,8 +1,15 @@
 class CompanyProfilesController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create]
+  before_action :set_company_profile, only: [:edit, :update]
+  before_action :move_to_index, only: [:edit, :update]
   
   def new
-    @company_profile = CompanyProfile.new
+    @check_profile = CompanyProfile.find_by(user_id: current_user.id)
+    if @check_profile.nil?
+      @company_profile = CompanyProfile.new
+    else
+      redirect_to root_path
+    end
   end
 
   def create
@@ -16,12 +23,9 @@ class CompanyProfilesController < ApplicationController
   end
 
   def edit
-    @company_profile = CompanyProfile.new
-    @company_profile = CompanyProfile.find_by(user_id: params[:id])
   end
 
   def update
-    @company_profile = CompanyProfile.find_by(user_id: params[:id])
     @company_profile.update(company_profile_params)
     if @company_profile.save
       # redirect_to "https://www.factory-app.com/users/#{@company_profile.user_id}"
@@ -35,6 +39,14 @@ class CompanyProfilesController < ApplicationController
 
   def company_profile_params
     params.require(:company_profile).permit(:speciality, :content, :self_introduction, :company_url, :contact).merge(user_id: current_user.id)
+  end
+
+  def set_company_profile
+    @company_profile = CompanyProfile.find_by(user_id: params[:id])
+  end
+
+  def move_to_index
+    redirect_to root_path if @company_profile.user_id != current_user.id
   end
 
 end
