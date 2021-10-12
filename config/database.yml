@@ -12,7 +12,10 @@ development:
 
 test:
   <<: *default
-  database: factory_test
+  host: db
+  username: root
+  password: password
+  database: factory_development
 
 production:
   <<: *default
