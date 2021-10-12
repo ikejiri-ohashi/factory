@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/ruby:2.5.1-node-browsers
+      - image: circleci/ruby:3.0.2-node-browsers
         environment:
           - BUNDLER_VERSION: 2.1.4
           - RAILS_ENV: 'test'
@@ -54,4 +54,3 @@ jobs:
       - store_artifacts:
           path: /tmp/test-results
           destination: test-results
-          
