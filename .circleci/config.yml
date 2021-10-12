@@ -8,8 +8,8 @@ jobs:
           - RAILS_ENV: 'test'
       - image: circleci/mysql:8.0
         environment:
-          - MYSQL_ROOT_PASSWORD: password
-          - MYSQL_DATABASE: root
+          - MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+          - MYSQL_ROOT_HOST: '%'
 
     working_directory: ~/factory
 
@@ -31,6 +31,8 @@ jobs:
           paths:
             - ./vendor/bundle
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+
+      - run: mv config/database.yml.ci config/database.yml 
 
       - run: bundle exec rails db:create
       - run: bundle exec rails db:schema:load
