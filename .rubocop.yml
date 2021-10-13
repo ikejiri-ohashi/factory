@@ -14,8 +14,6 @@ AllCops:
 Layout/LineLength:
  Max: 130
 
-IfUnlessModifier:
-  MaxLineLength: 80
 # 下記ファイルはチェックの対象から外す
  Exclude:
    - "Rakefile"
