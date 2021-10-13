@@ -7,10 +7,10 @@ workflows:
   nginx-deploy:
     jobs:
       - aws-ecr/build-and-push-image:
-          account-url: AWS_ECR_ACCOUNT_URL
-          region: AWS_REGION
-          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-          aws-access-key-id: AWS_ACCESS_KEY_ID
+          account-url: AWS_ECR_ACCOUNT_URL_ENV_VAR_NAME
+          region: AWS_REGION_ENV_VAR_NAME
+          aws-access-key-id: AWS_ACCESS_KEY_ID_ENV_VAR_NAME
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY_ENV_VAR_NAME
           create-repo: true
           dockerfile: ./nginx/Dockerfile
           repo: nginx-factory
@@ -22,17 +22,17 @@ workflows:
           requires:
             - aws-ecr/build-and-push-image
           family: 'factory1004:1' # ECSのタスク定義名
-          cluster-name: ECS_ARN  #ECSのクラスターのARN
+          cluster-name: 'arn:aws:ecs:ap-northeast-1:468989489473:cluster/cluster1004'  #ECSのクラスターのARN
           service-name: 'servive1004'  #サービス名
           container-image-name-updates: "container=nginx,tag=${CIRCLE_SHA1}"
   # Railsのデプロイ
   rails-deploy:
     jobs:
       - aws-ecr/build-and-push-image:
-          account-url: AWS_ECR_ACCOUNT_URL
-          region: AWS_REGION
-          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-          aws-access-key-id: AWS_ACCESS_KEY_ID
+          account-url: AWS_ECR_ACCOUNT_URL_ENV_VAR_NAME
+          region: AWS_REGION_ENV_VAR_NAME
+          aws-access-key-id: AWS_ACCESS_KEY_ID_ENV_VAR_NAME
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY_ENV_VAR_NAME
           create-repo: true
           dockerfile: .Dockerfile
           repo: rails-factory
@@ -44,7 +44,7 @@ workflows:
           requires:
             - aws-ecr/build-and-push-image
           family: 'factory1004:1' # ECSのタスク定義名
-          cluster-name: ECS_ARN  #ECSのクラスターのARN
+          cluster-name: 'arn:aws:ecs:ap-northeast-1:468989489473:cluster/cluster1004'  #ECSのクラスターのARN
           service-name: 'servive1004'  #サービス名
           container-image-name-updates: "container=rails,tag=${CIRCLE_SHA1}"
           
