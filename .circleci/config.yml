@@ -1,23 +1,49 @@
 version: 2.1
-
 orbs:
-    aws-ecr: circleci/aws-ecr@6.1.0
-    aws-ecs: circleci/aws-ecs@0.0.8
-
+  aws-ecr: circleci/aws-ecr@6.7.0
+  aws-ecs: circleci/aws-ecs@1.1.0
 workflows:
-    # build_and_push_imageという名前のworkflowを定義
-    build_and_push_image:
-        # workflowで実行するjobの順番を定義
-        jobs:
-        - aws-ecr/build-and-push-image:
-            region: AWS_REGION
-            account-url: AWS_ECR_ACCOUNT_URL
-            repo: 'rails-factory'
-            tag: "${CIRCLE_SHA1}"
-        - aws-ecs/deploy-service-update:
-            requires:
-                - aws-ecr/build-and-push-image
-            family: '1d641cfbf6924f49b3e94dfd9d389f5b'
-            cluster-name: 'cluster1004'
-            service-name: 'servive1004'
-            container-image-name-updates: 'container=rails,tag=${CIRCLE_SHA1}'
+  # Nginxのデプロイ
+  nginx-deploy:
+    jobs:
+      - aws-ecr/build-and-push-image:
+          account-url: AWS_ECR_ACCOUNT_URL
+          region: AWS_REGION
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          create-repo: true
+          dockerfile: ./nginx/Dockerfile
+          repo: nginx-factory
+          tag: "${CIRCLE_SHA1}"
+          filters:
+            branches:
+              only: master
+      - aws-ecs/deploy-service-update:
+          requires:
+            - aws-ecr/build-and-push-image
+          family: 'factory1004:1' # ECSのタスク定義名
+          cluster-name: ECS_ARN  #ECSのクラスターのARN
+          service-name: 'servive1004'  #サービス名
+          container-image-name-updates: "container=nginx,tag=${CIRCLE_SHA1}"
+  # Railsのデプロイ
+  rails-deploy:
+    jobs:
+      - aws-ecr/build-and-push-image:
+          account-url: AWS_ECR_ACCOUNT_URL
+          region: AWS_REGION
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          create-repo: true
+          dockerfile: .Dockerfile
+          repo: rails-factory
+          tag: "${CIRCLE_SHA1}"
+          filters:
+            branches:
+              only: master
+      - aws-ecs/deploy-service-update:
+          requires:
+            - aws-ecr/build-and-push-image
+          family: 'factory1004:1' # ECSのタスク定義名
+          cluster-name: ECS_ARN  #ECSのクラスターのARN
+          service-name: 'servive1004'  #サービス名
+          container-image-name-updates: "container=rails,tag=${CIRCLE_SHA1}"
