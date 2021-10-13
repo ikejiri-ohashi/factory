@@ -2,7 +2,7 @@ class CompanyProfilesController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create]
   before_action :set_company_profile, only: [:edit, :update]
   before_action :move_to_index, only: [:edit, :update]
-  
+
   def new
     @check_profile = CompanyProfile.find_by(user_id: current_user.id)
     if @check_profile.nil?
@@ -38,7 +38,8 @@ class CompanyProfilesController < ApplicationController
   private
 
   def company_profile_params
-    params.require(:company_profile).permit(:speciality, :content, :self_introduction, :company_url, :contact).merge(user_id: current_user.id)
+    params.require(:company_profile).permit(:speciality, :content, :self_introduction, :company_url,
+                                            :contact).merge(user_id: current_user.id)
   end
 
   def set_company_profile
@@ -48,5 +49,4 @@ class CompanyProfilesController < ApplicationController
   def move_to_index
     redirect_to root_path if @company_profile.user_id != current_user.id
   end
-
 end

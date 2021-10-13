@@ -45,5 +45,4 @@ class JobsController < ApplicationController
   def move_to_index
     redirect_to action: :index if @job.user_id != current_user.id
   end
-
 end

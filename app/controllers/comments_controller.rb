@@ -2,7 +2,7 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :destroy]
   before_action :set_comment, only: [:destroy]
   before_action :move_to_index, only: [:destroy]
-  
+
   def new
     @comment = Comment.new
   end

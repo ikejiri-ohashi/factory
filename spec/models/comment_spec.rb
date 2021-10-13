@@ -6,7 +6,6 @@ RSpec.describe Comment, type: :model do
   end
 
   describe 'コメントの保存' do
-
     context 'コメントの投稿ができる場合' do
       it 'テキストが入力されていれば投稿できる' do
         expect(@comment).to be_valid
@@ -17,9 +16,8 @@ RSpec.describe Comment, type: :model do
       it '仕事概要が空だと登録できない' do
         @comment.content = ''
         @comment.valid?
-        expect(@comment.errors.full_messages).to include("コメントを入力してください")
+        expect(@comment.errors.full_messages).to include('コメントを入力してください')
       end
-
     end
   end
 end

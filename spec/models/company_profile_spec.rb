@@ -30,7 +30,6 @@ RSpec.describe CompanyProfile, type: :model do
     end
     context 'プロフィールの保存ができない場合' do
       it 'ユーザーIDガ一致していないと登録ができない' do
-        
       end
     end
   end
