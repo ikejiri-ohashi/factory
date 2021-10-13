@@ -21,7 +21,7 @@ class User < ApplicationRecord
   def self.guest
     find_or_create_by!(email: 'guest@example.com') do |user|
       user.password = SecureRandom.urlsafe_base64
-      user.name = "ゲスト"
+      user.name = 'ゲスト'
       user.genre_id = 2
     end
   end
@@ -29,5 +29,4 @@ class User < ApplicationRecord
   def already_favorited?(job)
     favorites.exists?(job_id: job.id)
   end
-
 end
