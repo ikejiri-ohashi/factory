@@ -47,3 +47,4 @@ workflows:
           cluster-name: ECS_ARN  #ECSのクラスターのARN
           service-name: 'servive1004'  #サービス名
           container-image-name-updates: "container=rails,tag=${CIRCLE_SHA1}"
+          
