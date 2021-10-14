@@ -23,11 +23,14 @@ ActiveRecord::Schema.define(version: 2021_09_20_004928) do
   end
 
   create_table "company_profiles", charset: "utf8mb3", force: :cascade do |t|
-    t.string "speciality"
+    t.integer "category_id"
+    t.integer "sub_category_id"
     t.text "content"
     t.string "self_introduction"
+    t.integer "place_id"
     t.string "company_url"
     t.string "contact"
+    t.string "profile_image"
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -55,10 +58,12 @@ ActiveRecord::Schema.define(version: 2021_09_20_004928) do
 
   create_table "jobs", charset: "utf8mb3", force: :cascade do |t|
     t.string "name", null: false
-    t.string "place", null: false
-    t.string "deadline", null: false
+    t.integer "place_id", null: false
+    t.integer "deadline_id", null: false
     t.integer "category_id", null: false
-    t.string "memo", null: false
+    t.integer "sub_category_id", null: false
+    t.string "job_image"
+    t.string "memo"
     t.string "contact", null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false

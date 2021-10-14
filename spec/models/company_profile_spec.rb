@@ -8,7 +8,11 @@ RSpec.describe CompanyProfile, type: :model do
   describe 'プロフィールの保存' do
     context 'プロフィールの保存ができる場合' do
       it '得意技術が空欄でも保存できる' do
-        @company_profile.speciality = ''
+        @company_profile.category_id = ''
+        expect(@company_profile).to be_valid
+      end
+      it '得意技術が空欄でも保存できる' do
+        @company_profile.sub_category_id = ''
         expect(@company_profile).to be_valid
       end
       it '得意技術の詳細が空欄でも保存できる' do
@@ -17,6 +21,10 @@ RSpec.describe CompanyProfile, type: :model do
       end
       it '自己紹介が空欄でも保存できる' do
         @company_profile.self_introduction = ''
+        expect(@company_profile).to be_valid
+      end
+      it '企業所在地が空欄でも保存できる' do
+        @company_profile.place_id = ''
         expect(@company_profile).to be_valid
       end
       it 'URLが空欄でも保存できる' do
@@ -29,7 +37,7 @@ RSpec.describe CompanyProfile, type: :model do
       end
     end
     context 'プロフィールの保存ができない場合' do
-      it 'ユーザーIDガ一致していないと登録ができない' do
+      it 'ユーザーIDが一致していないと登録ができない' do
       end
     end
   end

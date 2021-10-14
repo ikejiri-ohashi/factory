@@ -3,23 +3,31 @@
   <%= form_with model: @company_profile, url: company_profile_path, method: :put, local: true do |f| %>
     <div class="p-4 h-auto divide-y divide-gray-400 bg-white rounded-md shadow">
       <div class="p-4">
-        <div class="form-text">得意技術を記述してください</div>
-        <%= f.text_area :speciality, class:"my-3 w-full" %>
+        <div class="form-text">得意技術</div>
+        <%= f.collection_select(:category_id, Category.all, :id, :name, {}, {class:"form-select my-2"}) %>
       </div>
       <div class="p-4">
-        <div class="form-text">得意技術の詳細を記入してください</div>
+        <div class="form-text">得意技術のの詳細</div>
+        <%= f.collection_select(:sub_category_id, SubCategory.all, :id, :name, {}, {class:"form-select my-2"}) %>
+      </div>
+      <div class="p-4">
+        <div class="form-text">得意技術の説明</div>
         <%= f.text_area :content, class:"my-2 w-full" %>
       </div>
       <div class="p-4">
-        <div class="form-text">自己紹介を入力してください</div>
+        <div class="form-text">自己紹介</div>
         <%= f.text_area :self_introduction, class:'my-2 w-full' %>
       </div>
       <div class="p-4">
-        <div class="form-text">会社ホームページのURLを記入してください</div>
+        <div class="form-text">企業所在地</div>
+        <%= f.collection_select(:place_id, Place.all, :id, :name, {}, {class:"form-select my-2"}) %>
+      </div>
+      <div class="p-4">
+        <div class="form-text">会社ホームページ</div>
         <%= f.text_area :company_url, class:'my-2 w-full' %>
       </div>
       <div class="p-4">
-        <div class="form-text">連絡先を記入してください</div>
+        <div class="form-text">連絡先</div>
         <%= f.text_area :contact, class:'my-2 w-full' %>
       </div>
       <div class="p-4 flex justify-center">

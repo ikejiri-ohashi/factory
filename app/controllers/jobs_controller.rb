@@ -6,6 +6,7 @@ class JobsController < ApplicationController
   def index
     @jobs = Job.order('created_at DESC')
     @users = User.order('created_at DESC')
+    @job_ranks = Job.find(Favorite.group(:job_id).order('count(job_id) desc').limit(3).pluck(:job_id))
   end
 
   def new
@@ -35,7 +36,8 @@ class JobsController < ApplicationController
   private
 
   def job_params
-    params.require(:job).permit(:name, :place, :deadline, :category_id, :memo, :contact).merge(user_id: current_user.id)
+    params.require(:job).permit(:name, :place_id, :deadline_id, :category_id, :sub_category_id, :memo,
+                                :contact).merge(user_id: current_user.id)
   end
 
   def set_job

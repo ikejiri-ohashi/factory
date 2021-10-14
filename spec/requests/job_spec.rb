@@ -15,11 +15,11 @@ describe JobsController, type: :request do
     end
     it 'indexアクションにリクエストするとレスポンスに投稿済みの仕事の納品場所が存在する' do
       get root_path
-      expect(response.body).to include(@job.place)
+      expect(response.body).to include(@job.place.name)
     end
     it 'indexアクションにリクエストするとレスポンスに投稿済みの仕事の希望納期が存在する' do
       get root_path
-      expect(response.body).to include(@job.deadline)
+      expect(response.body).to include(@job.deadline.name)
     end
     it 'indexアクションにリクエストするとレスポンスに投稿済みの仕事の加工種別が存在する' do
       get root_path
@@ -54,11 +54,11 @@ describe JobsController, type: :request do
     end
     it 'showアクションにリクエストするとレスポンスに投稿済みの仕事の納品場所が存在する' do
       get job_path(@job)
-      expect(response.body).to include(@job.place)
+      expect(response.body).to include(@job.place.name)
     end
     it 'showアクションにリクエストするとレスポンスに投稿済みの仕事の希望納期が存在する' do
       get job_path(@job)
-      expect(response.body).to include(@job.deadline)
+      expect(response.body).to include(@job.deadline.name)
     end
     it 'showアクションにリクエストするとレスポンスに投稿済みの仕事の加工種別が存在する' do
       get job_path(@job)
