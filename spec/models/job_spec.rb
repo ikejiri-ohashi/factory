@@ -10,10 +10,6 @@ RSpec.describe Job, type: :model do
       it 'すべての情報が入力されていれば投稿できる' do
         expect(@job).to be_valid
       end
-      it '納品場所の情報がなくても投稿できる' do
-        @job.place = ''
-        expect(@job).to be_valid
-      end
       it '備考の情報がなくても投稿できる' do
         @job.memo = ''
         expect(@job).to be_valid
@@ -26,15 +22,45 @@ RSpec.describe Job, type: :model do
         @job.valid?
         expect(@job.errors.full_messages).to include('仕事概要を入力してください')
       end
-      it 'カテゴリーのIDが空だと登録でききない' do
+      it '納品場所が空だと登録でききない' do
+        @job.place_id = ''
+        @job.valid?
+        expect(@job.errors.full_messages).to include('納品場所を選択してください')
+      end
+      it '納品場所のIDが1(選択されていない状態)だと登録でききない' do
+        @job.place_id = '1'
+        @job.valid?
+        expect(@job.errors.full_messages).to include('納品場所を選択してください')
+      end
+      it '希望納期が空だと登録でききない' do
+        @job.deadline_id = ''
+        @job.valid?
+        expect(@job.errors.full_messages).to include('希望納期を選択してください')
+      end
+      it '希望納期のIDが1(選択されていない状態)だと登録でききない' do
+        @job.deadline_id = '1'
+        @job.valid?
+        expect(@job.errors.full_messages).to include('希望納期を選択してください')
+      end
+      it '加工の種類が空だと登録でききない' do
         @job.category_id = ''
         @job.valid?
         expect(@job.errors.full_messages).to include('加工の種類を選択してください')
       end
-      it 'カテゴリーのIDが1(選択されていない状態)だと登録でききない' do
+      it '加工の種類のIDが1(選択されていない状態)だと登録でききない' do
         @job.category_id = '1'
         @job.valid?
         expect(@job.errors.full_messages).to include('加工の種類を選択してください')
+      end
+      it '加工の詳細が空だと登録でききない' do
+        @job.category_id = ''
+        @job.valid?
+        expect(@job.errors.full_messages).to include('加工の詳細を選択してください')
+      end
+      it '加工の詳細のIDが1(選択されていない状態)だと登録でききない' do
+        @job.sub_category_id = '1'
+        @job.valid?
+        expect(@job.errors.full_messages).to include('加工の詳細を選択してください')
       end
       it '連絡先が空だと登録でききない' do
         @job.contact = ''

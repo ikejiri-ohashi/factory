@@ -5,10 +5,10 @@ ja:
         name: 名前
       job:
         name: 仕事概要
-        place: 納品場所
-        deadline: 納期
-        category: 加工の種類
+        place_id: 納品場所
+        deadline_id: 希望納期
         category_id: 加工の種類
+        sub_category_id: 加工の詳細
         memo: 備考
         contact: 連絡先
       comment:
