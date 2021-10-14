@@ -16,7 +16,7 @@ RSpec.describe Job, type: :model do
       end
     end
 
-    context '仕事の情報がが投稿できない場合' do
+    context '仕事の情報が投稿できない場合' do
       it '仕事概要が空だと登録できない' do
         @job.name = ''
         @job.valid?
@@ -53,7 +53,7 @@ RSpec.describe Job, type: :model do
         expect(@job.errors.full_messages).to include('加工の種類を選択してください')
       end
       it '加工の詳細が空だと登録でききない' do
-        @job.category_id = ''
+        @job.sub_category_id = ''
         @job.valid?
         expect(@job.errors.full_messages).to include('加工の詳細を選択してください')
       end
