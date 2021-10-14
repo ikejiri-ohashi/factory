@@ -4,25 +4,18 @@
   <div class="grid grid-cols-3 gap-4">
     <div class="col-span-2 bg-white rounded-md shadow">
       <div class="p-4 h-auto">
-        <%= link_to user_path(@job.user.id) do %>
-          <div class="flex justify-between">
-            <div class="flex display-start items-center">
-              <%= image_tag avatar_url(@job.user), class: "w-12" %>
-              <div class="ml-4 flex items-start">
-                <p class="hover:underline"><%= @job.user.name %>さん </p>が
-                <%= @job.created_at.to_s(:datetime_jp) %>に投稿
-              </div>
-            </div>
-        <% end %>
-            <% if current_user == @job.user %>
-              <div class="bg-gray-500 h-8 rounded-md flex items-center">
-                <%= link_to image_tag("delete.png", class:"w-6"), job_path, class: "p-2", data: { confirm: "本当に削除しますか?" }, method: :delete %>
-              </div>
-            <% end %>
+        <div class="flex justify-between">
+          <div class="flex items-center mb-6">
+            <span class="material-icons">work</span>
+            <p class="ml-2 text-2xl">依頼内容詳細</p>
           </div>
-        <div class="text-2xl py-6">
-          <%= @job.name %><br>
+          <% if current_user == @job.user %>
+            <div class="bg-gray-500 h-8 rounded-md flex items-center">
+              <%= link_to image_tag("delete.png", class:"w-6"), job_path, class: "p-2", data: { confirm: "本当に削除しますか?" }, method: :delete %>
+            </div>
+          <% end %>
         </div>
+        <p class="text-2xl mb-6"><%= @job.name %></p>
         <div class="py-2 flex items-center">
           <span class="material-icons">build</span><p class="ml-2">加工種別：</p><%= @job.category.name %>
           <p class="ml-2">/</p>
@@ -58,7 +51,15 @@
 
     <div class="col-span-1">
       <div class="bg-white h-64 mb-4 p-2 rounded-md shadow">
-        box1
+        <%= link_to user_path(@job.user.id) do %>
+        <div class="mb-4 flex justify-center">
+          <%= image_tag avatar_url(@job.user), class: "w-14" %>
+        </div>
+        <div class="mb-4 flex justify-center">
+          <p class="hover:underline text-xl"><%= @job.user.name %>さん</p>
+        </div>
+        投稿日時<%= @job.created_at.to_s(:datetime_jp) %>
+        <% end %>
       </div>
     </div>
 
