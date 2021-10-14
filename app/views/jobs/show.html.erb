@@ -8,8 +8,9 @@
           <div class="flex justify-between">
             <div class="flex display-start items-center">
               <%= image_tag avatar_url(@job.user), class: "w-12" %>
-              <div class="ml-4">
-                <%= @job.user.name %>さんが、<%= @job.created_at.to_s(:datetime_jp) %>に投稿
+              <div class="ml-4 flex items-start">
+                <p class="hover:underline"><%= @job.user.name %>さん </p>が
+                <%= @job.created_at.to_s(:datetime_jp) %>に投稿
               </div>
             </div>
         <% end %>

@@ -78,7 +78,7 @@
               <div class="image">
                 <%= image_tag avatar_url(user.follow), class: "w-8" %>
               </div>
-              <div class="ml-2">
+              <div class="ml-2 hover:underline">
                 <p class="text-sm"><%= user.follow.name %></p>
               </div>
             </div>
@@ -99,7 +99,7 @@
                 <div class="image">
                   <%= image_tag avatar_url(user.follow), class: "w-8" %>
                 </div>
-                <div class="ml-2">
+                <div class="ml-2 hover:underline">
                   <p class="text-sm"><%= user.user.name %></p>
                 </div>
               </div>
@@ -118,8 +118,8 @@
         <% @jobs.each do | job |%>
           <div class="h-auto">
             <%= link_to job_path(job.id) do %>
-              <div class="flex display-start items-center m-2">
-                ・<%= job.name %>
+              <div class="flex display-start items-center m-2 hover:underline">
+                <%= job.name %>
               </div>
             <% end %>
           </div>
@@ -136,8 +136,8 @@
         <% @favorites.each do | favorite |%>
           <div class="h-auto">
             <%= link_to job_path(favorite.job_id) do %>
-              <div class="flex display-start items-center m-2">
-                ・<%= favorite.job.name %>
+              <div class="flex display-start items-center m-2 hover:underline">
+                <%= favorite.job.name %>
               </div>
             <% end %>
           </div>

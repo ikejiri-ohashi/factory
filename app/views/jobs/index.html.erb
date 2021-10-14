@@ -4,7 +4,7 @@
     <div class="col-span-2 bg-white rounded-md shadow">
       <div class="p-4 flex items-center">
         <span class="material-icons">work</span>
-        <p class="ml-2">新規加工依頼一覧</p>
+        <p class="ml-2 ">新規加工依頼一覧</p>
       </div>
       
       <% @jobs.each do |job|%>
@@ -17,8 +17,8 @@
             さんが<%= job.created_at.to_s(:datetime_jp) %>に投稿
           </div>
           <%= link_to job_path(job.id) do %>
-            <div class="text-xl">
-              <%= job.name %><br>
+            <div class="text-xl flex">
+              <p class="hover:underline"><%= job.name %></p><br>
             </div>
             <div class="pt-2 flex items-center">
               <span class="material-icons">build</span><p class="ml-2">加工種別：</p><%= job.category.name %>
@@ -41,6 +41,26 @@
         </div>
         <p class="p-2">このサービスは金属加工の仕事を依頼したい企業と、その加工技術を持った企業を繋げるサービスです。</p>
       </div>
+      <div class="bg-white h-auto mb-4 p-2 rounded-md shadow">
+        <div class="m-2 flex items-center">
+          <span class="material-icons">trending_up</span><p class="ml-2">注目の仕事ランキング</p>
+        </div>
+        <% @job_ranks.each.with_index(1) do | job, i | %>
+          <div class=" h-auto">
+            <hr>
+            <div class="flex display-start items-center m-2">
+              <div class="ranks">
+                <%= i %>位 
+              </div>
+              <div class="ml-2 hover:underline">
+                <%= link_to job_path(job.id) do %>
+                  <%= job.name %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
       <div class="bg-white h-auto p-2 rounded-md shadow">
         <div class="m-2 flex items-center">
           <span class="material-icons">people</span><p class="ml-2">新規登録ユーザー</p>
@@ -49,7 +69,7 @@
           <div class=" h-auto">
             <hr>
             <%= link_to user_path(user.id) do %>
-              <div class="flex display-start items-center m-2">
+              <div class="flex display-start items-center m-2 hover:underline">
                 <div class="image">
                   <%= image_tag avatar_url(user), class: "w-12 transform scale-75" %>
                 </div>

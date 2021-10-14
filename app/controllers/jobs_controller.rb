@@ -6,6 +6,7 @@ class JobsController < ApplicationController
   def index
     @jobs = Job.order('created_at DESC')
     @users = User.order('created_at DESC')
+    @job_ranks = Job.find(Favorite.group(:job_id).order('count(job_id) desc').limit(3).pluck(:job_id))
   end
 
   def new

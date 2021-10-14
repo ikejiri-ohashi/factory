@@ -8,12 +8,12 @@
         <div class="col-span-1 flex justify-center items-center">
           <div class="user_session">
             <% if user_signed_in? %>
-              ようこそ、<%= link_to "#{current_user.name}さん", user_path(current_user), class:"text-blue-500" %><br>
-              <%= "ログアウトは" %><%= link_to "こちら", destroy_user_session_path, method: :delete, class:"text-blue-500" %>
+              ようこそ、<%= link_to "#{current_user.name}さん", user_path(current_user), class:"hover:underline text-blue-500" %><br>
+              <%= "ログアウトは" %><%= link_to "こちら", destroy_user_session_path, method: :delete, class:"hover:underline text-blue-500" %>
             <% else %>
-              <%= link_to "新規登録", new_user_registration_path, class:""%>
-              <dt><%= link_to "ログイン", new_user_session_path, class:"" %></dt>
-              <%= link_to 'ゲストログイン（閲覧用）', users_guest_sign_in_path, method: :post %>
+              <%= link_to "新規登録", new_user_registration_path, class:"hover:underline"%>
+              <dt><%= link_to "ログイン", new_user_session_path, class:"hover:underline" %></dt>
+              <%= link_to 'ゲストログイン（閲覧用）', users_guest_sign_in_path, class:"hover:underline", method: :post %>
             <% end %>
           </div>
         </div>
