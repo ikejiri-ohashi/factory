@@ -6,34 +6,32 @@
         <%= render 'shared/error_messages', model: f.object %>
       </div>
       <div class="p-4">
-        <%= f.label :name, class:"form-label" %><br />
+        <div class="form-text">仕事のタイトルを記入してください(必須)</div>
         <%= f.text_area :name, class:"my-3 w-full" %>
-        <div class="form-text">仕事概要を記入してください(必須)</div>
       </div>
       <div class="p-4">
-        <%= f.label :place, class:"form-label" %><br />
-        <%= f.text_area :place, class:"my-2 w-full" %>
-        <div class="form-text">納品場所を記入してください</div>
+        <div class="form-text">納品場所を記入してください(必須)</div>
+        <%= f.collection_select(:place_id, Place.all, :id, :name, {}, {class:"form-select my-2"}) %>
       </div>
       <div class="p-4">
-        <%= f.label :deadline, class:"form-label" %><br />
-        <%= f.text_area :deadline, class:'my-2 w-full' %>
-        <div class="form-text">希望納期を入力してください</div>
+        <div class="form-text">希望納期を選択してください(必須)</div>
+        <%= f.collection_select(:deadline_id, Deadline.all, :id, :name, {}, {class:"form-select my-2"}) %>
       </div>
       <div class="p-4">
-        <%= f.label :category, class:"form-label" %><br />
-        <%= f.collection_select(:category_id, Category.all, :id, :name, {}, {class:"form-select my-2"}) %>
         <div class="form-text">加工の種類を選択してください（必須）</div>
+        <%= f.collection_select(:category_id, Category.all, :id, :name, {}, {class:"form-select my-2"}) %>
       </div>
       <div class="p-4">
-        <%= f.label :memo, class:"form-label" %><br />
+        <div class="form-text">加工の詳細を選択してください（任意）</div>
+        <%= f.collection_select(:sub_category_id, SubCategory.all, :id, :name, {}, {class:"form-select my-2"}) %>
+      </div>
+      <div class="p-4">
+        <div class="form-text">補足事項がありましたら記入してください（任意）</div>
         <%= f.text_area :memo, class:'my-2 w-full' %>
-        <div class="form-text">補足事項がありましたら記入してください</div>
       </div>
       <div class="p-4">
-        <%= f.label :contact, class:"form-label" %><br />
-        <%= f.text_area :contact, class:'my-2 w-full' %>
         <div class="form-text">見積書などの送付先を記入してください（必須）</div>
+        <%= f.text_area :contact, class:'my-2 w-full' %>
       </div>
       <div class="p-4 flex justify-center">
         <div class="">

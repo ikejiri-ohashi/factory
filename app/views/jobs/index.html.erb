@@ -10,9 +10,9 @@
       <% @jobs.each do |job|%>
         <div class="p-4 h-auto">
           <hr>
-          <div class="py-4 text-sm">
+          <div class="py-4 text-sm flex">
             <%= link_to user_path(job.user.id) do %>
-              <u><%= job.user.name %></u>
+              <p class="hover:underline"><%= job.user.name %></p>
             <% end %>
             さんが<%= job.created_at.to_s(:datetime_jp) %>に投稿
           </div>
@@ -24,10 +24,10 @@
               <span class="material-icons">build</span><p class="ml-2">加工種別：</p><%= job.category.name %>
             </div>
             <div class="pt-2 flex items-center">
-              <span class="material-icons">location_on</span><p class="ml-2">納品場所：</p><%= job.place %><br>
+              <span class="material-icons">location_on</span><p class="ml-2">納品場所：</p><%= job.place.name %><br>
             </div>
             <div class="pt-2 flex items-center">
-              <span class="material-icons">schedule</span><p class="ml-2">希望納期： </p><%= job.deadline %><br>
+              <span class="material-icons">schedule</span><p class="ml-2">希望納期： </p><%= job.deadline.name %><br>
             </div>
           <% end %>
         </div>
