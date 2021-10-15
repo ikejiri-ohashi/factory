@@ -4,7 +4,15 @@
   <div class="grid grid-cols-3 gap-4">
     <div class="bg-white p-4 rounded-md shadow">
       <div class="mb-4 flex justify-center">
-        <%= image_tag avatar_url(@user), class: "round-md" %>
+        <% if @company_profile.nil? %>
+          <%= image_tag avatar_url(@user), class: "round-md" %>
+        <% else %>
+          <% if @company_profile.profile_image? %>
+            <%= image_tag @company_profile.profile_image.url %>
+          <% else %>
+            <%= image_tag avatar_url(@user), class: "round-md" %>
+          <% end %>
+        <% end %>
       </div>
       <div class="mb-4 flex justify-center">
         <p class="text-2xl"><%= @user.name %></p>

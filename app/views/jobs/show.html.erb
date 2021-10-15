@@ -64,13 +64,13 @@
     <div class="col-span-1">
       <div class="bg-white h-64 mb-4 p-2 rounded-md shadow">
         <%= link_to user_path(@job.user.id) do %>
-        <div class="mb-4 flex justify-center">
-          <%= image_tag avatar_url(@job.user), class: "w-14" %>
-        </div>
-        <div class="mb-4 flex justify-center">
-          <p class="hover:underline text-xl"><%= @job.user.name %>さん</p>
-        </div>
-        投稿日時<%= @job.created_at.to_s(:datetime_jp) %>
+          <div class="mb-4 flex justify-center">
+            <%= image_tag avatar_url(@job.user), class: "w-14" %>
+          </div>
+          <div class="mb-4 flex justify-center">
+            <p class="hover:underline text-xl"><%= @job.user.name %>さん</p>
+          </div>
+          投稿日時<%= @job.created_at.to_s(:datetime_jp) %>
         <% end %>
       </div>
     </div>

@@ -3,6 +3,10 @@
   <%= form_with model: @company_profile, url: company_profiles_path, local: true do |f| %>
     <div class="p-4 h-auto divide-y divide-gray-400 bg-white rounded-md shadow">
       <div class="p-4">
+        <div class="form-text">プロフィール画像</div>
+        <%= f.file_field :profile_image, class: "image" %>
+      </div>
+      <div class="p-4">
         <div class="form-text">得意技術</div>
         <%= f.collection_select(:category_id, Category.all, :id, :name, {}, {class:"form-select my-2"}) %>
       </div>
