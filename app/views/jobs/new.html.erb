@@ -30,6 +30,10 @@
         <%= f.text_area :memo, class:'my-2 w-full' %>
       </div>
       <div class="p-4">
+        <div class="form-text">画像がありましたらしてください（任意）</div>
+        <%= f.file_field :job_image, class: "image" %>
+      </div>
+      <div class="p-4">
         <div class="form-text">見積書などの送付先を記入してください（必須）</div>
         <%= f.text_area :contact, class:'my-2 w-full' %>
       </div>

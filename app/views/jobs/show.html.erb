@@ -30,6 +30,18 @@
         <div class="py-2 flex items-center">
           <span class="material-icons">notes</span><p class="ml-2">備考：</p><%= @job.memo %><br>
         </div>
+          <% if @job.job_image? %>
+            <div class="py-2 flex items-center">
+              <span class="material-icons">photo_camera</span><p class="ml-2">参考画像：</p>
+            </div>
+            <div class="py-2 flex items-center border-4">
+              <%= image_tag @job.job_image.url %>
+            </div>
+          <% else %>
+            <div class="py-2 flex items-center">
+              <span class="material-icons">photo_camera</span><p class="ml-2">参考画像：画像は登録されていません</p>
+            </div>
+          <% end %>
         <div class="flex justify-between">
           <div class="py-2 flex items-center">
             <span class="material-icons">contact_support</span><p class="ml-2">問い合わせ先：</p><%= @job.contact %><br>
