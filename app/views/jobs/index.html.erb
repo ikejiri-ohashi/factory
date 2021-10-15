@@ -49,7 +49,7 @@
             <hr>
             <div class="flex display-start items-center m-2">
               <div class="ranks">
-                <%= i %>位 
+                <b><%= i %>位 </b>
               </div>
               <div class="ml-2 hover:underline">
                 <%= link_to job_path(job.id) do %>
@@ -69,9 +69,11 @@
             <hr>
             <%= link_to user_path(user.id) do %>
               <div class="flex display-start items-center m-2">
-                <div class="image">
-                  <%= image_tag avatar_url(user), class: "w-12 transform scale-75" %>
-                </div>
+                <% if user.profile_image? %>
+                  <%= image_tag user.profile_image.url, class: "w-8" %>
+                <% else %>
+                  <%= image_tag avatar_url(user), class: "w-8" %>
+                <% end %>
                 <div class="ml-2">
                   <p class="hover:underline"><%= user.name %></p>
                 </div>

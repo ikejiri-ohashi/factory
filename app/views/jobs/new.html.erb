@@ -6,15 +6,15 @@
         <%= render 'shared/error_messages', model: f.object %>
       </div>
       <div class="p-4">
-        <div class="form-text">仕事のタイトルを記入してください(必須)</div>
+        <div class="form-text">仕事のタイトルを記入してください（必須）</div>
         <%= f.text_area :name, class:"my-3 w-full" %>
       </div>
       <div class="p-4">
-        <div class="form-text">納品場所を記入してください(必須)</div>
+        <div class="form-text">納品場所を記入してください（必須）</div>
         <%= f.collection_select(:place_id, Place.all, :id, :name, {}, {class:"form-select my-2"}) %>
       </div>
       <div class="p-4">
-        <div class="form-text">希望納期を選択してください(必須)</div>
+        <div class="form-text">希望納期を選択してください（必須）</div>
         <%= f.collection_select(:deadline_id, Deadline.all, :id, :name, {}, {class:"form-select my-2"}) %>
       </div>
       <div class="p-4">
@@ -28,6 +28,10 @@
       <div class="p-4">
         <div class="form-text">補足事項がありましたら記入してください（任意）</div>
         <%= f.text_area :memo, class:'my-2 w-full' %>
+      </div>
+      <div class="p-4">
+        <div class="form-text">参考画像がありましたら選択してください（任意）</div>
+        <%= f.file_field :job_image, class: "my-2 image" %>
       </div>
       <div class="p-4">
         <div class="form-text">見積書などの送付先を記入してください（必須）</div>
