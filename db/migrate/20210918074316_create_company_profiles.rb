@@ -8,7 +8,6 @@ class CreateCompanyProfiles < ActiveRecord::Migration[6.1]
       t.integer :place_id
       t.string :company_url
       t.string :contact
-      t.string :profile_image
       t.references :user,   null: false, foreign_key: true
       t.timestamps
     end

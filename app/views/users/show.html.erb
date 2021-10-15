@@ -4,17 +4,13 @@
   <div class="grid grid-cols-3 gap-4">
     <div class="bg-white p-4 rounded-md shadow">
       <div class="mb-4 flex justify-center">
-        <% if @company_profile.nil? %>
-          <%= image_tag avatar_url(@user), class: "round-md" %>
+        <% if @user.profile_image? %>
+          <%= image_tag @user.profile_image.url class: "w-16" %>
         <% else %>
-          <% if @company_profile.profile_image? %>
-            <%= image_tag @company_profile.profile_image.url %>
-          <% else %>
-            <%= image_tag avatar_url(@user), class: "round-md" %>
-          <% end %>
+          <%= image_tag avatar_url(@user) %>
         <% end %>
       </div>
-      <div class="mb-4 flex justify-center">
+      <div class="pt-4 flex justify-center">
         <p class="text-2xl"><%= @user.name %></p>
       </div>
       <% if @user == current_user %>
@@ -89,7 +85,7 @@
             <%= link_to user_path(user.follow_id) do %>
             <div class="flex display-start items-center m-2">
               <div class="image">
-                <%= image_tag avatar_url(user.follow), class: "w-8" %>
+                <span class="material-icons">person_outline</span>
               </div>
               <div class="ml-2 hover:underline">
                 <p class="text-sm"><%= user.follow.name %></p>
@@ -110,7 +106,7 @@
             <%= link_to user_path(user.user_id) do %>
               <div class="flex display-start items-center m-2">
                 <div class="image">
-                  <%= image_tag avatar_url(user.follow), class: "w-8" %>
+                  <span class="material-icons">person_outline</span>
                 </div>
                 <div class="ml-2 hover:underline">
                   <p class="text-sm"><%= user.user.name %></p>
