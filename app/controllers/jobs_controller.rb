@@ -10,7 +10,7 @@ class JobsController < ApplicationController
     if user_signed_in?
       @company_profile = CompanyProfile.new
       @company_profile = CompanyProfile.find_by(user_id: current_user.id)
-      if @company_profile != nil 
+      unless @company_profile.nil?
         @matched_category = Job.where(category_id: @company_profile.category_id)
         @matched_place = Job.where(place_id: @company_profile.place_id)
       end
