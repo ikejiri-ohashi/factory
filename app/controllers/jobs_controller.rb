@@ -12,8 +12,11 @@ class JobsController < ApplicationController
       @company_profile = CompanyProfile.find_by(user_id: current_user.id)
       if @company_profile != nil 
         @matched_category = Job.find_by(category_id: @company_profile.category_id)
+        @matched_place = Job.find_by(place_id: @company_profile.place_id)
+        if @matched_category.id == @matched_place.id && @matched_category.user_id != current_user.id
+          @matched_both = @matched_category
+        end
       end
-      # @matched_place = Job.find_by(place_id: @company_profile.place_id)
     end
   end
 

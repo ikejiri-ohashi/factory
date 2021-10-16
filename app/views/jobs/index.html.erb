@@ -45,12 +45,13 @@
           <span class="material-icons">person_search</span><p class="ml-2">あなたにおすすめ</p>
         </div>
         <% if user_signed_in? %>
-          <% if @company_profile != nil %>
+          <% if @matched_both != nil %>
               <div class="flex display-start items-center m-2">
-                <%= link_to job_path(@company_profile.id) do %>
-                  <p class="hover:underline"><%= @matched_category.name %></p>
+                <%= link_to job_path(@matched_both.id) do %>
+                  <p class="hover:underline"><%= @matched_both.name %></p>
                 <% end %>
               </div>
+              <p class="m-2">加工技術と場所が一致しています！</p>
           <% else %>
             <p class="m-2">おすすめの仕事はありません</p>
           <% end %>
