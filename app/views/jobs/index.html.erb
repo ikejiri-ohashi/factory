@@ -42,6 +42,24 @@
       </div>
       <div class="bg-white h-auto mb-4 p-2 rounded-md shadow">
         <div class="m-2 flex items-center">
+          <span class="material-icons">person_search</span><p class="ml-2">あなたにおすすめ</p>
+        </div>
+        <% if user_signed_in? %>
+          <% if @company_profile != nil %>
+              <div class="flex display-start items-center m-2">
+                <%= link_to job_path(@company_profile.id) do %>
+                  <p class="hover:underline"><%= @matched_category.name %></p>
+                <% end %>
+              </div>
+          <% else %>
+            <p class="m-2">おすすめの仕事はありません</p>
+          <% end %>
+        <% else %>
+          <p class="m-2">ログインするとおすすめの仕事が表示されます</p>
+        <% end %>
+      </div>
+      <div class="bg-white h-auto mb-4 p-2 rounded-md shadow">
+        <div class="m-2 flex items-center">
           <span class="material-icons">trending_up</span><p class="ml-2">注目の仕事ランキング</p>
         </div>
         <% @job_ranks.each.with_index(1) do | job, i | %>
