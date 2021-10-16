@@ -13,7 +13,7 @@ class JobsController < ApplicationController
     @company_profile = CompanyProfile.find_by(user_id: current_user.id)
 
       return if @company_profile.nil?
-      
+
       @matched_category = Job.where(category_id: @company_profile.category_id)
       @matched_place = Job.where(place_id: @company_profile.place_id)
   end
