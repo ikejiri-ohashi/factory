@@ -8,12 +8,14 @@ class JobsController < ApplicationController
     @users = User.order('created_at DESC')
     @job_ranks = Job.find(Favorite.group(:job_id).order('count(job_id) desc').limit(3).pluck(:job_id))
     return unless user_signed_in?
-      @company_profile = CompanyProfile.new
-      @company_profile = CompanyProfile.find_by(user_id: current_user.id)
-      unless @company_profile.nil?
-        @matched_category = Job.where(category_id: @company_profile.category_id)
-        @matched_place = Job.where(place_id: @company_profile.place_id)
-      end
+
+    @company_profile = CompanyProfile.new
+    @company_profile = CompanyProfile.find_by(user_id: current_user.id)
+
+      return if @company_profile.nil?
+      
+      @matched_category = Job.where(category_id: @company_profile.category_id)
+      @matched_place = Job.where(place_id: @company_profile.place_id)
   end
 
   def new
