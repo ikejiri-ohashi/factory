@@ -36,13 +36,62 @@
     <div class="col-span-1">
       <div class="bg-white h-auto mb-4 p-2 rounded-md shadow">
         <div class="m-2 flex items-center">
-          <%= image_tag("information.png", class:"w-6") %><p class="ml-2">このサービスについて</p>
+          <%= image_tag("information.png", class:"w-6") %><b class="ml-2">このサービスについて</b>
         </div>
         <p class="p-2">このサービスは金属加工の仕事を依頼したい企業と、その加工技術を持った企業を繋げるサービスです。</p>
       </div>
+      <div class="bg-white h-auto mb-4 p-2 rounded-md shadow border-2 border-blue-400">
+        <div class="m-2 flex items-center">
+          <span class="material-icons">person_search</span><b class="ml-2">あなたへのおすすめ</b>
+        </div>
+        <% if user_signed_in? %>
+          <% if @matched_category != nil && @matched_place != nil %>
+            <%# これより下にメッセージを入れると繰り返し表示してしまう %>
+            <% @matched_category.each do |matched_category| %>
+              <% if matched_category.user_id != current_user.id %>
+                <% @matched_place.each do |matched_place|%>
+                  <% if matched_category.id == matched_place.id %>
+                    <hr>
+                    <div class="flex display-start items-center m-2">
+                      <%= link_to job_path(matched_place.id) do %>
+                        <p class="hover:underline"><%= matched_place.name %></p>
+                      <% end %>
+                    </div>
+                  <% end %>
+                <% end %>
+              <% end %>
+            <% end %>
+            <%# これより上にメッセージを入れると繰り返し表示してしまう %>
+            <p class="text-sm mx-2 pt-4">ここではあなたが登録した得意技術と所在地を元に、これらの条件が一致している依頼が表示されます。</p>
+          <% else %>
+            <p class="m-2">プロフィールを登録するとおすすめの仕事が表示されます</p>
+          <% end %>
+        <% else %>
+          <p class="m-2">ログインするとおすすめの仕事が表示されます</p>
+        <% end %>
+      </div>
       <div class="bg-white h-auto mb-4 p-2 rounded-md shadow">
         <div class="m-2 flex items-center">
-          <span class="material-icons">trending_up</span><p class="ml-2">注目の仕事ランキング</p>
+          <span class="material-icons">home</span><b class="ml-2">あなたの地域で投稿された依頼</b>
+        </div>
+        <% if user_signed_in? %>
+          <% @matched_place.each do |matched_place|%>
+            <% if matched_place.user_id != current_user.id %>
+              <hr>
+              <div class="flex display-start items-center m-2">
+                <%= link_to job_path(matched_place.id) do %>
+                  <p class="hover:underline"><%= matched_place.name %></p>
+                <% end %>
+              </div>
+            <% end %>
+          <% end %>
+        <% else %>
+          <p class="m-2">ログインするとあなたの地域で投稿された仕事が表示されます</p>
+        <% end %>
+      </div>
+      <div class="bg-white h-auto mb-4 p-2 rounded-md shadow">
+        <div class="m-2 flex items-center">
+          <span class="material-icons">trending_up</span><b class="ml-2">注目の仕事ランキング</b>
         </div>
         <% @job_ranks.each.with_index(1) do | job, i | %>
           <div class=" h-auto">
@@ -62,7 +111,7 @@
       </div>
       <div class="bg-white h-auto p-2 rounded-md shadow">
         <div class="m-2 flex items-center">
-          <span class="material-icons">people</span><p class="ml-2">新規登録ユーザー</p>
+          <span class="material-icons">people</span><b class="ml-2">新規登録ユーザー</b>
         </div>
         <% @users.each do | user |%>
           <div class=" h-auto">
