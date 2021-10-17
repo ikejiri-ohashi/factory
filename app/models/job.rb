@@ -8,6 +8,7 @@ class Job < ApplicationRecord
   belongs_to_active_hash :deadline
   has_many :favorites, dependent: :destroy
   mount_uploader :job_image, JobImageUploader
+  has_one :contract, dependent: :destroy
 
   validates :name, :place_id, :category_id, :sub_category_id, :deadline_id, :contact, presence: true
   validates :place_id, :category_id, :sub_category_id, :deadline_id, numericality: { other_than: 1, message: 'を選択してください' }

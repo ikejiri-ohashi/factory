@@ -9,11 +9,20 @@
       <% @jobs.each do |job|%>
         <div class="p-4 h-auto">
           <hr>
-          <div class="py-4 text-sm flex">
-            <%= link_to user_path(job.user.id) do %>
-              <p class="hover:underline"><%= job.user.name %></p>
+          <div class="flex justify-between items-center">
+            <div class="py-4 text-sm flex">
+              <%= link_to user_path(job.user.id) do %>
+                <p class="hover:underline"><%= job.user.name %></p>
+              <% end %>
+              さんが<%= job.created_at.to_s(:datetime_jp) %>に投稿
+            </div>
+            <% @contracts.each do |contract|%>
+              <% if contract == job.id %>
+                <div class="flex items-center rounded-md border-2 border-green-500">
+                  <span class="material-icons">done</span><p class="mx-2">募集は終了しました</p>
+                </div>
+              <% end %>
             <% end %>
-            さんが<%= job.created_at.to_s(:datetime_jp) %>に投稿
           </div>
           <%= link_to job_path(job.id) do %>
             <div class="text-xl flex">
@@ -45,10 +54,10 @@
           <span class="material-icons">person_search</span><b class="ml-2">あなたへのおすすめ</b>
         </div>
         <% if user_signed_in? %>
-          <% if @matched_category != nil && @matched_place != nil %>
+          <% unless @matched_category == nil && @matched_place == nil %>
             <%# これより下にメッセージを入れると繰り返し表示してしまう %>
             <% @matched_category.each do |matched_category| %>
-              <% if matched_category.user_id != current_user.id %>
+              <% unless matched_category.user_id == current_user.id || @contracts.include?(matched_category.id) %>
                 <% @matched_place.each do |matched_place|%>
                   <% if matched_category.id == matched_place.id %>
                     <hr>
@@ -62,7 +71,7 @@
               <% end %>
             <% end %>
             <%# これより上にメッセージを入れると繰り返し表示してしまう %>
-            <p class="text-sm mx-2 pt-4">ここではあなたが登録した得意技術と所在地を元に、これらの条件が一致している依頼が表示されます。</p>
+            <p class="text-sm mx-2 pt-4">ここではあなたの得意技術と所在地を元に、これらの条件が一致している依頼が表示されます。</p>
           <% else %>
             <p class="m-2">プロフィールを登録するとおすすめの仕事が表示されます</p>
           <% end %>
@@ -76,7 +85,7 @@
         </div>
         <% if user_signed_in? %>
           <% @matched_place.each do |matched_place|%>
-            <% if matched_place.user_id != current_user.id %>
+            <% unless matched_place.user_id == current_user.id || @contracts.include?(matched_place.id) %>
               <hr>
               <div class="flex display-start items-center m-2">
                 <%= link_to job_path(matched_place.id) do %>
@@ -85,6 +94,7 @@
               </div>
             <% end %>
           <% end %>
+          <p class="text-sm mx-2 pt-4">ここではあなたの地域で投稿された依頼が表示されます。</p>
         <% else %>
           <p class="m-2">ログインするとあなたの地域で投稿された仕事が表示されます</p>
         <% end %>

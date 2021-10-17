@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resources :jobs, only: [:new, :create, :show, :destroy] do
     resources :comments, only: [:new, :create, :destroy]
     resources :favorites, only: [:create, :destroy]
+    resources :contracts, only: [:create]
   end
   resources :company_profiles, only: [:new, :create, :edit, :update]
   resources :users, only: [:show] do
