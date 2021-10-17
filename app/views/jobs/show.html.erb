@@ -102,7 +102,7 @@
             <% else %>
               <p>発注をした場合は下記ボタンを押してください。契約済みの依頼として保存されます。</p>
               <div class="flex items-center pt-6">
-                <%= link_to "契約済みの依頼として保存する", job_contracts_path(@job), class:"p-2 rounded-lg bg-green-500 text-white hover:bg-green-700", method: :post%>
+                <%= link_to "契約済みの依頼として保存する", job_contracts_path(@job), class:"p-2 rounded-lg bg-green-500 text-white hover:bg-green-700", data: { confirm: "契約済みにしてもよろしいですか?" }, method: :post%>
               </div>
             <% end %>
           </div>
