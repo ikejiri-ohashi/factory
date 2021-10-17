@@ -6,6 +6,7 @@ class JobsController < ApplicationController
   def index
     @jobs = Job.order('created_at DESC')
     @users = User.order('created_at DESC')
+    @contracts = Contract.pluck(:job_id)
     @job_ranks = Job.find(Favorite.group(:job_id).order('count(job_id) desc').limit(3).pluck(:job_id))
     return unless user_signed_in?
 
@@ -34,6 +35,7 @@ class JobsController < ApplicationController
 
   def show
     @comment = @job.comments.includes(:user)
+    @contract = Contract.find_by(job_id: params[:id])
   end
 
   def destroy

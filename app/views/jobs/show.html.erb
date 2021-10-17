@@ -4,15 +4,21 @@
   <div class="grid grid-cols-3 gap-4">
     <div class="col-span-2 bg-white rounded-md shadow">
       <div class="p-4 h-auto">
-        <div class="flex justify-between">
-          <div class="flex items-center mb-6">
+        <div class="flex justify-between mb-6">
+          <div class="flex items-center">
             <span class="material-icons">work</span>
             <p class="ml-2 text-2xl">依頼内容詳細</p>
           </div>
-          <% if current_user == @job.user %>
-            <div class="bg-gray-500 h-8 rounded-md flex items-center">
-              <%= link_to image_tag("delete.png", class:"w-6"), job_path, class: "p-2", data: { confirm: "本当に削除しますか?" }, method: :delete %>
+          <% if @contract != nil && @contract.job_id == @job.id %>
+            <div class="flex items-center rounded-md border-2 border-green-500">
+              <span class="material-icons">done</span><p class="mx-2">募集は終了しました</p>
             </div>
+          <% else %>
+            <% if current_user == @job.user %>
+              <div class="bg-gray-500 h-8 rounded-md flex items-center">
+                <%= link_to image_tag("delete.png", class:"w-6"), job_path, class: "p-2", data: { confirm: "本当に削除しますか?" }, method: :delete %>
+              </div>
+            <% end %>
           <% end %>
         </div>
         <p class="text-2xl mb-6"><%= @job.name %></p>
@@ -95,8 +101,8 @@
               </div>
             <% else %>
               <p>発注をした場合は下記ボタンを押してください。契約済みの依頼として保存されます。</p>
-              <div class="flex items-center py-6">
-                <%= link_to "契約済み依頼として保存する", job_contracts_path(@job), class:"p-2 rounded-lg bg-green-500 text-white hover:bg-green-700", method: :post%>
+              <div class="flex items-center pt-6">
+                <%= link_to "契約済みの依頼として保存する", job_contracts_path(@job), class:"p-2 rounded-lg bg-green-500 text-white hover:bg-green-700", method: :post%>
               </div>
             <% end %>
           </div>

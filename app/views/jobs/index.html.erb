@@ -9,11 +9,20 @@
       <% @jobs.each do |job|%>
         <div class="p-4 h-auto">
           <hr>
-          <div class="py-4 text-sm flex">
-            <%= link_to user_path(job.user.id) do %>
-              <p class="hover:underline"><%= job.user.name %></p>
+          <div class="flex justify-between items-center">
+            <div class="py-4 text-sm flex">
+              <%= link_to user_path(job.user.id) do %>
+                <p class="hover:underline"><%= job.user.name %></p>
+              <% end %>
+              さんが<%= job.created_at.to_s(:datetime_jp) %>に投稿
+            </div>
+            <% @contracts.each do |contract|%>
+              <% if contract == job.id %>
+                <div class="flex items-center rounded-md border-2 border-green-500">
+                  <span class="material-icons">done</span><p class="mx-2">募集は終了しました</p>
+                </div>
+              <% end %>
             <% end %>
-            さんが<%= job.created_at.to_s(:datetime_jp) %>に投稿
           </div>
           <%= link_to job_path(job.id) do %>
             <div class="text-xl flex">
