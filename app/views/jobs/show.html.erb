@@ -82,6 +82,26 @@
             投稿日時：<%= @job.created_at.to_s(:datetime_jp) %>
         </div>
       </div>
+      <% if user_signed_in? && current_user.id == @job.user_id %>
+        <div class="bg-white rounded-md shadow my-4">
+          <div class="p-4 h-auto">
+            <div class="flex items-center mb-6">
+              <span class="material-icons">manage_search</span>
+              <p class="ml-2 text-2xl">契約の管理</p>
+            </div>
+            <% if current_user.already_ordered?(@job) %>
+              <div class="flex items-center py-2">
+                <p>契約済みの依頼として保存済み</p>
+              </div>
+            <% else %>
+              <p>発注をした場合は下記ボタンを押してください。契約済みの依頼として保存されます。</p>
+              <div class="flex items-center py-6">
+                <%= link_to "契約済み依頼として保存する", job_contracts_path(@job), class:"p-2 rounded-lg bg-green-500 text-white hover:bg-green-700", method: :post%>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
     </div>
 
     <div class="col-span-2 bg-white rounded-md shadow">

@@ -37,11 +37,14 @@ ActiveRecord::Schema.define(version: 2021_10_16_083638) do
   end
 
   create_table "contracts", charset: "utf8mb3", force: :cascade do |t|
-    t.bigint "user_id", null: false
+    t.bigint "user_id"
+    t.bigint "contracter_id"
     t.bigint "job_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["contracter_id"], name: "index_contracts_on_contracter_id"
     t.index ["job_id"], name: "index_contracts_on_job_id"
+    t.index ["user_id", "contracter_id"], name: "index_contracts_on_user_id_and_contracter_id", unique: true
     t.index ["user_id"], name: "index_contracts_on_user_id"
   end
 
@@ -99,6 +102,7 @@ ActiveRecord::Schema.define(version: 2021_10_16_083638) do
   add_foreign_key "company_profiles", "users"
   add_foreign_key "contracts", "jobs"
   add_foreign_key "contracts", "users"
+  add_foreign_key "contracts", "users", column: "contracter_id"
   add_foreign_key "favorites", "jobs"
   add_foreign_key "favorites", "users"
   add_foreign_key "follows", "users"
