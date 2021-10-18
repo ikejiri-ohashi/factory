@@ -1,17 +1,12 @@
 class CommentsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create, :destroy]
+  before_action :authenticate_user!, only: [:create, :destroy]
   before_action :set_comment, only: [:destroy]
   before_action :move_to_index, only: [:destroy]
-
-  def new
-    @comment = Comment.new
-  end
 
   def create
     @comment = Comment.create(comment_params)
     if @comment.save
-      redirect_to job_url(@comment.job_id)
-      # redirect_to "https://www.factory-app.com/jobs/#{@comment.job_id}"
+      redirect_back(fallback_location: root_path)
     else
       render :new
     end
