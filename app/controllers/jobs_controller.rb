@@ -35,7 +35,7 @@ class JobsController < ApplicationController
   end
 
   def show
-    @comment = @job.comments.includes(:user)
+    @comment = @job.comments.includes(:user).order('created_at DESC')
     @contract = Contract.find_by(job_id: params[:id])
     @users = User.order('created_at DESC')
     @favorites = Favorite.where(job_id: params[:id])
