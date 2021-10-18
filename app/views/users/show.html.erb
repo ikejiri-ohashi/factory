@@ -129,7 +129,11 @@
             <%= link_to user_path(user.follow_id) do %>
             <div class="flex display-start items-center m-2">
               <div class="image">
-                <span class="material-icons">person_outline</span>
+                <% if user.follow.profile_image? %>
+                  <%= image_tag user.follow.profile_image.url, class: "w-8" %>
+                <% else %>
+                  <%= image_tag avatar_url(user.follow), class: "w-8" %>
+                <% end %>
               </div>
               <div class="ml-2 hover:underline">
                 <p class="text-sm"><%= user.follow.name %></p>
@@ -150,7 +154,11 @@
             <%= link_to user_path(user.user_id) do %>
               <div class="flex display-start items-center m-2">
                 <div class="image">
-                  <span class="material-icons">person_outline</span>
+                  <% if user.user.profile_image? %>
+                    <%= image_tag user.user.profile_image.url, class: "w-8" %>
+                  <% else %>
+                    <%= image_tag avatar_url(user.user), class: "w-8" %>
+                  <% end %>
                 </div>
                 <div class="ml-2 hover:underline">
                   <p class="text-sm"><%= user.user.name %></p>
