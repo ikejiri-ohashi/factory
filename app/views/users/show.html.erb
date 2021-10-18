@@ -74,7 +74,51 @@
     </div>
   </div>
   <div class="grid grid-cols-3 gap-4">
-    <div class="bg-white rounded-md shadow mt-4 flex">
+    <div class="bg-white rounded-md shadow mt-4 p-2">
+      <div class="p-2 flex items-center">
+        <span class="material-icons">work</span>
+        <p class="ml-2">投稿した仕事</p>
+      </div>
+      <hr>
+      <% @jobs.each do | job |%>
+        <div class="flex h-auto">
+          <%= link_to job_path(job.id) do %>
+            <p class="p-2 hover:underline"><%= job.name %></p>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <div class="bg-white rounded-md shadow mt-4 p-2">
+      <div class="p-2 flex items-center">
+        <span class="material-icons">done</span>
+        <p class="ml-2">発注した仕事</p>
+      </div>
+      <hr>
+      <% @contracts.each do |contract| %>
+        <div class="flex h-auto">
+          <%= link_to job_path(contract.job_id) do %>
+            <p class="p-2 hover:underline"><%= contract.job.name %></p>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <div class="bg-white rounded-md shadow mt-4 p-2">
+      <div class="p-2 flex items-center">
+        <span class="material-icons">task</span>
+        <p class="ml-2">受注した仕事</p>
+      </div>
+      <hr>
+      <div class="m-2">
+        <% @accepts.each do |accepts|%>
+          <div class="flex h-auto">
+            <%= link_to job_path(accepts.job_id) do %>
+              <p class="p-2 hover:underline"><%= accepts.job.name %></p>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="bg-white rounded-md shadow mb-4 flex">
       <div class="h-auto w-6/12 m-2">
         <div class="p-2">
           <p class="text-base ml-2">フォロー中</p>
@@ -117,34 +161,6 @@
         <% end %>
       </div>
     </div>
-    <div class="bg-white rounded-md shadow my-4 p-2">
-      <div class="p-2 flex items-center">
-        <span class="material-icons">work</span>
-        <p class="ml-2">投稿した仕事</p>
-      </div>
-      <hr>
-      <% @jobs.each do | job |%>
-        <div class="flex h-auto">
-          <%= link_to job_path(job.id) do %>
-            <p class="p-2 hover:underline"><%= job.name %></p>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
-    <div class="bg-white rounded-md shadow my-4 p-2">
-      <div class="p-2 flex items-center">
-        <span class="material-icons">done</span>
-        <p class="ml-2">発注した仕事</p>
-      </div>
-      <hr>
-      <% @contracts.each do |contract| %>
-        <div class="flex h-auto">
-          <%= link_to job_path(contract.job_id) do %>
-            <p class="p-2 hover:underline"><%= contract.job.name %></p>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
     <div class="bg-white rounded-md shadow mb-4 p-2">
       <div class="p-2 flex items-center">
         <%= image_tag("star.png", class:"w-6") %>
@@ -158,22 +174,6 @@
               <div class="flex display-start items-center m-2 hover:underline">
                 <%= favorite.job.name %>
               </div>
-            <% end %>
-          </div>
-        <% end %>
-      </div>
-    </div>
-    <div class="bg-white rounded-md shadow mb-4 p-2">
-      <div class="p-2 flex items-center">
-        <span class="material-icons">task</span>
-        <p class="ml-2">受注した仕事</p>
-      </div>
-      <div class="m-2">
-        <hr>
-        <% @accepts.each do |accepts|%>
-          <div class="flex h-auto">
-            <%= link_to job_path(accepts.job_id) do %>
-              <p class="p-2 hover:underline"><%= accepts.job.name %></p>
             <% end %>
           </div>
         <% end %>
