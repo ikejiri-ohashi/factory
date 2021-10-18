@@ -37,6 +37,7 @@ class JobsController < ApplicationController
     @comment = @job.comments.includes(:user)
     @contract = Contract.find_by(job_id: params[:id])
     @users = User.order('created_at DESC')
+    @favorites = Favorite.where(job_id: params[:id])
   end
 
   def destroy

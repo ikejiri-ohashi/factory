@@ -53,6 +53,7 @@
             <span class="material-icons">contact_support</span><p class="ml-2">問い合わせ先：</p><%= @job.contact %><br>
           </div>
           <div class="flex items-center pt-4">
+            
             <% if user_signed_in? %>
               <% if current_user.already_favorited?(@job) %>
                 <%= link_to image_tag("star.png", class:"w-6"), job_favorite_path(@job), method: :delete %>
@@ -62,10 +63,8 @@
             <% else %>
               <%= link_to image_tag("star_outline.png", class:"w-6"), new_user_session_path %>
             <% end %>
+            <p class="ml-2"><%= @favorites.count %></p>
           </div>
-        </div>
-        <div class="pt-4 flex items-center">
-          <p class="ml-2">job_id：</p><%= @job.id %><br>
         </div>
       </div>
     </div>
