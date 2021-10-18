@@ -64,6 +64,9 @@
             <% end %>
           </div>
         </div>
+        <div class="pt-4 flex items-center">
+          <p class="ml-2">job_id：</p><%= @job.id %><br>
+        </div>
       </div>
     </div>
     <div class="col-span-1">
@@ -80,12 +83,12 @@
               <%= image_tag avatar_url(@job.user), class: "w-16" %>
             <% end %>
           </div>
-          <%= link_to user_path(@job.user) do %>
-            <div class="mb-4 flex justify-center">
+          <div class="mb-4 flex justify-center">
+            <%= link_to user_path(@job.user) do %>
               <p class="hover:underline text-xl"><%= @job.user.name %>さん</p>
-            </div>
-          <% end %>
-            投稿日時：<%= @job.created_at.to_s(:datetime_jp) %>
+            <% end %>
+          </div>
+          投稿日時：<%= @job.created_at.to_s(:datetime_jp) %>
         </div>
       </div>
       <% if user_signed_in? && current_user.id == @job.user_id %>
@@ -93,17 +96,34 @@
           <div class="p-4 h-auto">
             <div class="flex items-center mb-6">
               <span class="material-icons">manage_search</span>
-              <p class="ml-2 text-2xl">契約の管理</p>
+              <p class="ml-2 text-2xl">発注先</p>
             </div>
             <% if current_user.already_ordered?(@job) %>
-              <div class="flex items-center py-2">
-                <p>契約済みの依頼として保存済み</p>
+              <div class="flex justify-center mb-6">
+                <% if @contract.contracter.profile_image? %>
+                  <%= image_tag @contract.contracter.profile_image.url, class: "w-16" %>
+                <% else %>
+                  <%= image_tag avatar_url(@contract.contracter), class: "w-16" %>
+                <% end %>
               </div>
+              <div class="mb-4 flex justify-center">
+                <%= link_to user_path(@contract.contracter.id) do %>
+                  <p class="hover:underline text-xl"><%= @contract.contracter.name %>さん</p>
+                <% end %>
+              </div>
+              登録日時：<%= @contract.created_at.to_s(:datetime_jp) %>
             <% else %>
-              <p>発注をした場合は下記ボタンを押してください。契約済みの依頼として保存されます。</p>
-              <div class="flex items-center pt-6">
-                <%= link_to "契約済みの依頼として保存する", job_contracts_path(@job), class:"p-2 rounded-lg bg-green-500 text-white hover:bg-green-700", data: { confirm: "契約済みにしてもよろしいですか?" }, method: :post%>
-              </div>
+              <p>発注が決定した場合は発注先のユーザーを選択し、募集を終了してください。</p>
+              <%= form_with model: @contract, url: job_contracts_path(@job), local: true do |f| %>
+                <div class="pt-6">
+                  <div class="flex justify-center">
+                    <%= f.collection_select(:contracter_id, @users, :id, :name, prompt: "選択してください", class:"form-select my-2") %>
+                   </div>
+                  <div class='flex justify-center pt-4'>
+                    <%= f.submit "募集を終了する",  id: "submit", class:"p-2 rounded-lg bg-green-500 text-white hover:bg-green-700" %>
+                  </div>
+                </div>
+              <% end %>
             <% end %>
           </div>
         </div>
