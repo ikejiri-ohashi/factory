@@ -105,7 +105,7 @@
         <div class="m-2 flex items-center">
           <span class="material-icons">home</span><b class="ml-2">あなたの地域で投稿された依頼</b>
         </div>
-        <% if user_signed_in? %>
+        <% if user_signed_in? && @matched_place != nil %>
           <% @matched_place.each do |matched_place|%>
             <% unless matched_place.user_id == current_user.id || @contracts.include?(matched_place.id) %>
               <hr>
