@@ -14,6 +14,10 @@ RSpec.describe Job, type: :model do
         @job.memo = ''
         expect(@job).to be_valid
       end
+      it '連絡先の情報がなくても投稿できる' do
+        @job.contact = ''
+        expect(@job).to be_valid
+      end
     end
 
     context '仕事の情報が投稿できない場合' do
@@ -51,21 +55,6 @@ RSpec.describe Job, type: :model do
         @job.category_id = '1'
         @job.valid?
         expect(@job.errors.full_messages).to include('加工の種類を選択してください')
-      end
-      it '加工の詳細が空だと登録でききない' do
-        @job.sub_category_id = ''
-        @job.valid?
-        expect(@job.errors.full_messages).to include('加工の詳細を選択してください')
-      end
-      it '加工の詳細のIDが1(選択されていない状態)だと登録でききない' do
-        @job.sub_category_id = '1'
-        @job.valid?
-        expect(@job.errors.full_messages).to include('加工の詳細を選択してください')
-      end
-      it '連絡先が空だと登録でききない' do
-        @job.contact = ''
-        @job.valid?
-        expect(@job.errors.full_messages).to include('連絡先を入力してください')
       end
     end
   end
