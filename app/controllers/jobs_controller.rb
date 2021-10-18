@@ -36,6 +36,7 @@ class JobsController < ApplicationController
   def show
     @comment = @job.comments.includes(:user)
     @contract = Contract.find_by(job_id: params[:id])
+    @users = User.order('created_at DESC')
   end
 
   def destroy

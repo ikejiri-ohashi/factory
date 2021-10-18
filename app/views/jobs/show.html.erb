@@ -64,6 +64,9 @@
             <% end %>
           </div>
         </div>
+        <div class="pt-4 flex items-center">
+          <p class="ml-2">job_id：</p><%= @job.id %><br>
+        </div>
       </div>
     </div>
     <div class="col-span-1">
@@ -100,10 +103,15 @@
                 <p>契約済みの依頼として保存済み</p>
               </div>
             <% else %>
-              <p>発注をした場合は下記ボタンを押してください。契約済みの依頼として保存されます。</p>
-              <div class="flex items-center pt-6">
-                <%= link_to "契約済みの依頼として保存する", job_contracts_path(@job), class:"p-2 rounded-lg bg-green-500 text-white hover:bg-green-700", data: { confirm: "契約済みにしてもよろしいですか?" }, method: :post%>
-              </div>
+              <p>発注が決定した場合は受注先のユーザーを選択し、下記ボタンを押してください。募集終了の依頼として保存されます。</p>
+              <%= form_with model: @contract, url: job_contracts_path(@job), local: true do |f| %>
+                <div class="pt-6">
+                  <%= f.collection_select(:contracter_id, @users, :id, :name, prompt: "選択してください", class:"form-select my-2") %>
+                  <div class='py-4'>
+                    <%= f.submit "募集を終了する",  id: "submit", class:"p-2 rounded-lg bg-green-500 text-white hover:bg-green-700" %>
+                  </div>
+                </div>
+              <% end %>
             <% end %>
           </div>
         </div>
