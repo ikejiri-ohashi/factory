@@ -18,7 +18,7 @@
         <%= f.collection_select(:deadline_id, Deadline.all, :id, :name, {}, {class:"form-select my-2"}) %>
       </div>
       <div class="p-4">
-        <div class="form-text">加工の種類を選択してください（必須）</div>
+        <div class="form-text">加工種別を選択してください（必須）</div>
         <%= f.collection_select(:category_id, Category.all, :id, :name, {}, {class:"form-select my-2"}) %>
       </div>
       <div class="p-4">
