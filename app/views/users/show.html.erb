@@ -165,14 +165,15 @@
     </div>
     <div class="bg-white rounded-md shadow mb-4 p-2">
       <div class="p-2 flex items-center">
-        <%= image_tag("star.png", class:"w-6") %>
+        <span class="material-icons">task</span>
         <p class="ml-2">受注した仕事</p>
       </div>
       <div class="m-2">
+        <hr>
         <% @accepts.each do |accepts|%>
           <div class="flex h-auto">
             <%= link_to job_path(accepts.job_id) do %>
-              <p class="p-2 hover:underline"><%= accepts.id %></p>
+              <p class="p-2 hover:underline"><%= accepts.job.name %></p>
             <% end %>
           </div>
         <% end %>
