@@ -27,8 +27,8 @@ class JobsController < ApplicationController
   def create
     @job = Job.new(job_params)
     if @job.save
-      # redirect_to root_url
-      redirect_to "https://www.factory-app.com/jobs/#{@job.id}"
+      redirect_to root_url
+      # redirect_to "https://www.factory-app.com/jobs/#{@job.id}"
     else
       render :new
     end
@@ -43,8 +43,8 @@ class JobsController < ApplicationController
 
   def destroy
     @job.destroy
-    # redirect_to root_url
-    redirect_to "https://www.factory-app.com/"
+    redirect_to root_url
+    # redirect_to "https://www.factory-app.com/"
   end
 
   private
