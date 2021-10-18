@@ -7,7 +7,7 @@
         <p class="ml-2 text-2xl">新規加工依頼一覧</p>
       </div>
       <% @jobs.each do |job|%>
-        <div class="p-4 h-auto">
+        <div class="mx-4 pb-4 h-auto">
           <hr>
           <div class="flex justify-between items-center">
             <div class="py-4 text-sm flex">
@@ -28,18 +28,31 @@
             <div class="text-xl flex">
               <p class="hover:underline"><%= job.name %></p><br>
             </div>
-            <div class="pt-2 flex items-center">
-              <span class="material-icons">build</span><p class="ml-2">加工種別：</p><%= job.category.name %>
-            </div>
-            <div class="pt-2 flex items-center">
-              <span class="material-icons">location_on</span><p class="ml-2">納品場所：</p><%= job.place.name %><br>
-            </div>
+          <% end %>
+          <div class="pt-2 flex items-center">
+            <span class="material-icons">build</span><p class="ml-2">加工種別：</p><%= job.category.name %>
+          </div>
+          <div class="pt-2 flex items-center">
+            <span class="material-icons">location_on</span><p class="ml-2">納品場所：</p><%= job.place.name %><br>
+          </div>
+          <div class="flex justify-between">
             <div class="pt-2 flex items-center">
               <span class="material-icons">schedule</span><p class="ml-2">希望納期： </p><%= job.deadline.name %><br>
             </div>
-          <% end %>
+            <div class="flex items-center">
+              <% if user_signed_in? %>
+                <% if current_user.already_favorited?(job) %>
+                  <%= link_to image_tag("star.png", class:"w-6"), job_favorite_path(id: job.id, job_id: job.id), method: :delete %>
+                <% else %>
+                  <%= link_to image_tag("star_outline.png", class:"w-6"), job_favorites_path(job), method: :post %>
+                <% end %>
+              <% else %>
+                <%= link_to image_tag("star_outline.png", class:"w-6"), new_user_session_path %>
+              <% end %>
+              <p class="ml-2"><%= @favorites.count(job.id) %></p>
+            </div>
+          </div>
         </div>
-        
       <% end %>
     </div>
     <div class="col-span-1">
