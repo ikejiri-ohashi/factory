@@ -22,10 +22,6 @@
         <%= f.collection_select(:category_id, Category.all, :id, :name, {}, {class:"form-select my-2"}) %>
       </div>
       <div class="p-4">
-        <div class="form-text">加工の詳細を選択してください（必須）</div>
-        <%= f.collection_select(:sub_category_id, SubCategory.all, :id, :name, {}, {class:"form-select my-2"}) %>
-      </div>
-      <div class="p-4">
         <div class="form-text">補足事項がありましたら記入してください（任意）</div>
         <%= f.text_area :memo, class:'my-2 w-full' %>
       </div>
