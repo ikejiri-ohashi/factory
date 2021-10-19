@@ -16,8 +16,7 @@ class JobsController < ApplicationController
 
     return if @company_profile.nil?
 
-    @matched_category = Job.where(category_id: @company_profile.category_id)
-    @matched_place = Job.where(place_id: @company_profile.place_id)
+    @recommends = Job.where(category_id: @company_profile.category_id, place_id: @company_profile.place_id)
   end
 
   def new
