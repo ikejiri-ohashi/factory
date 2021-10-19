@@ -68,49 +68,21 @@
           <span class="material-icons">person_search</span><b class="ml-2">あなたへのおすすめ</b>
         </div>
         <% if user_signed_in? %>
-          <% unless @matched_category == nil && @matched_place == nil %>
-            <%# これより下にメッセージを入れると繰り返し表示してしまう %>
-            <% @matched_category.each do |matched_category| %>
-              <% unless matched_category.user_id == current_user.id || @contracts.include?(matched_category.id) %>
-                <% @matched_place.each do |matched_place|%>
-                  <% if matched_category.id == matched_place.id %>
-                    <hr>
-                    <div class="flex display-start items-center m-2">
-                      <%= link_to job_path(matched_place.id) do %>
-                        <p class="hover:underline"><%= matched_place.name %></p>
-                      <% end %>
-                    </div>
+          <% unless @recommends == nil %>
+            <% @recommends.each do |recommend| %>
+              <% unless recommend.user_id == current_user.id || @contracts.include?(recommend.id)  %>
+                <hr>
+                <div class="flex display-start items-center m-2">
+                  <%= link_to job_path(recommend.id) do %>
+                    <p class="hover:underline"><%= recommend.name %></p>
                   <% end %>
-                <% end %>
+                </div>
               <% end %>
             <% end %>
-            <%# これより上にメッセージを入れると繰り返し表示してしまう %>
             <p class="text-sm mx-2 pt-4">ここではあなたの得意技術と所在地を元に、これらの条件が一致している依頼が表示されます。</p>
-          <% else %>
-            <p class="m-2">プロフィールを登録するとおすすめの仕事が表示されます</p>
           <% end %>
         <% else %>
           <p class="m-2">ログインするとおすすめの仕事が表示されます</p>
-        <% end %>
-      </div>
-      <div class="bg-white h-auto mb-4 p-2 rounded-md shadow">
-        <div class="m-2 flex items-center">
-          <span class="material-icons">home</span><b class="ml-2">あなたの地域で投稿された依頼</b>
-        </div>
-        <% if user_signed_in? && @matched_place != nil %>
-          <% @matched_place.each do |matched_place|%>
-            <% unless matched_place.user_id == current_user.id || @contracts.include?(matched_place.id) %>
-              <hr>
-              <div class="flex display-start items-center m-2">
-                <%= link_to job_path(matched_place.id) do %>
-                  <p class="hover:underline"><%= matched_place.name %></p>
-                <% end %>
-              </div>
-            <% end %>
-          <% end %>
-          <p class="text-sm mx-2 pt-4">ここではあなたの地域で投稿された依頼が表示されます。</p>
-        <% else %>
-          <p class="m-2">ログインするとあなたの地域で投稿された仕事が表示されます</p>
         <% end %>
       </div>
       <div class="bg-white h-auto mb-4 p-2 rounded-md shadow">
