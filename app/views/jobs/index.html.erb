@@ -68,8 +68,8 @@
           <span class="material-icons">person_search</span><b class="ml-2">あなたへのおすすめ</b>
         </div>
         <% if user_signed_in? %>
-          <% unless @recommends == nil %>
-            <% @recommends.each do |recommend| %>
+          <% unless @job_recommends == nil %>
+            <% @job_recommends.each do |recommend| %>
               <% unless recommend.user_id == current_user.id || @contracts.include?(recommend.id)  %>
                 <hr>
                 <div class="flex display-start items-center m-2">
@@ -80,6 +80,35 @@
               <% end %>
             <% end %>
             <p class="text-sm mx-2 pt-4">ここではあなたの得意技術と所在地を元に、これらの条件が一致している依頼が表示されます。</p>
+          <% end %>
+        <% else %>
+          <p class="m-2">ログインするとおすすめの仕事が表示されます</p>
+        <% end %>
+      </div>
+      <div class="bg-white h-auto mb-4 p-2 rounded-md shadow border-2 border-blue-400">
+        <div class="m-2 flex items-center">
+          <span class="material-icons">person_search</span><b class="ml-2">おすすめユーザー</b>
+        </div>
+        <% if user_signed_in? %>
+          <% unless @recommend_user == nil %>
+            <% @recommend_user.each do |recommend_user| %>
+              <% unless recommend_user.id == current_user.id || @contracts.include?(@user_posted_job.id)  %>
+                <hr>
+                <div class="m-2">
+                  <%= link_to user_path(recommend_user.id) do %>
+                    <p class="hover:underline"><%= recommend_user.name %>さん</p>
+                  <% end %>
+                </div>
+                <div class="m-2">
+                  <p>こちらのユーザーに<p>
+                  <%= link_to job_path(@user_posted_job.id) do %>
+                    <p class="hover:underline"><%= @user_posted_job.name %></p>
+                  <% end %>
+                  <p>を依頼してみませんか？</p>
+                </div>
+              <% end %>
+            <% end %>
+            <p class="text-sm mx-2 pt-4">ここではあなたが投稿した使用技術と納品場所を元にこれらの条件が一致しており、あなたが投稿した依頼を引き受ける可能性が高いユーザーが表示されます。</p>
           <% end %>
         <% else %>
           <p class="m-2">ログインするとおすすめの仕事が表示されます</p>
