@@ -94,21 +94,32 @@
             <% @recommend_user.each do |recommend_user| %>
               <% unless recommend_user.id == current_user.id || @contracts.include?(@user_posted_job.id)  %>
                 <hr>
-                <div class="m-2">
+                <div class="flex display-start items-center mx-2 my-4">
                   <%= link_to user_path(recommend_user.id) do %>
-                    <p class="hover:underline"><%= recommend_user.name %>さん</p>
+                    <% if recommend_user.profile_image? %>
+                      <%= image_tag recommend_user.profile_image.url, class: "w-8" %>
+                    <% else %>
+                      <%= image_tag avatar_url(recommend_user), class: "w-8" %>
+                    <% end %>
                   <% end %>
+                  <div class="flex">
+                    <%= link_to user_path(recommend_user.id) do %>
+                      <p class="ml-2 hover:underline"><%= recommend_user.name %></p>
+                    <% end %>
+                  </div>
                 </div>
-                <div class="m-2">
-                  <p>こちらのユーザーに<p>
+                <div class="mx-2">
+                  <p>こちらのユーザーにあなたが投稿した<p>
                   <%= link_to job_path(@user_posted_job.id) do %>
-                    <p class="hover:underline"><%= @user_posted_job.name %></p>
+                    <div class="flex">
+                      <p class="hover:underline"><%= @user_posted_job.name %></p>
+                    </div>
                   <% end %>
                   <p>を依頼してみませんか？</p>
                 </div>
               <% end %>
             <% end %>
-            <p class="text-sm mx-2 pt-4">ここではあなたが投稿した使用技術と納品場所を元にこれらの条件が一致しており、あなたが投稿した依頼を引き受ける可能性が高いユーザーが表示されます。</p>
+            <p class="text-sm mx-2 pt-4">ここではあなたが投稿した依頼の使用技術と納品場所を元にこの依頼を引き受ける可能性が高いユーザーが表示されます。</p>
           <% end %>
         <% else %>
           <p class="m-2">ログインするとおすすめの仕事が表示されます</p>
