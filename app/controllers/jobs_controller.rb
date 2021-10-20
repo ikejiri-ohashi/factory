@@ -19,9 +19,10 @@ class JobsController < ApplicationController
       @job_recommends = Job.where(category_id: @company_profile.category_id, place_id: @company_profile.place_id)
     end
 
-    unless @user_posted_job.nil?
-      @recommend_user = User.find(CompanyProfile.where(category_id: @user_posted_job.category_id, place_id: @user_posted_job.place_id).pluck(:user_id))
-    end
+    return if @user_posted_job.nil?
+
+    @recommend_user = User.find(CompanyProfile.where(category_id: @user_posted_job.category_id,
+                                                     place_id: @user_posted_job.place_id).pluck(:user_id))
   end
 
   def new

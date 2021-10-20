@@ -111,14 +111,14 @@
               <% end %>
             <% end %>
             <div class="mx-2 p-2 border border-gray-600">
-              <b>検索対象</b>
+              <b>あなたの最新の投稿</b>
               <div class="flex">
                 <%= link_to job_path(@user_posted_job.id) do %>
                   <p class="hover:underline"><%= @user_posted_job.name %></p>
                 <% end %>
               </div>
             </div>
-            <p class="text-sm mx-2 pt-4">ここではあなたが投稿した依頼の使用技術と納品場所を元に、この依頼を引き受ける可能性が高いユーザーが表示されます。</p>
+            <p class="text-sm mx-2 pt-4">ここではあなたの最新の投稿の使用技術と納品場所を元に、この依頼を引き受ける可能性が高いユーザーが表示されます。</p>
           <% end %>
         <% else %>
           <p class="m-2">ログインするとおすすめの仕事が表示されます</p>
