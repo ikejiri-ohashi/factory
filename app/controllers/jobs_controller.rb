@@ -4,7 +4,7 @@ class JobsController < ApplicationController
   before_action :move_to_index, only: [:destroy]
 
   def index
-    @jobs = Job.order('created_at DESC')
+    @jobs = Job.order('created_at DESC').includes(:user)
     @users = User.order('created_at DESC')
     @contracts = Contract.pluck(:job_id)
     @favorites = Favorite.pluck(:job_id)
@@ -43,7 +43,7 @@ class JobsController < ApplicationController
     @comment = @job.comments.includes(:user).order('created_at DESC')
     @contract = Contract.find_by(job_id: params[:id])
     @users = User.order('created_at DESC')
-    @favorites = Favorite.where(job_id: params[:id])
+    @favorites = Favorite.where(job_id: params[:id]).pluck(:user_id)
   end
 
   def destroy
