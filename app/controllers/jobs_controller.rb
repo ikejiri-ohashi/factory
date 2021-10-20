@@ -7,11 +7,11 @@ class JobsController < ApplicationController
     @jobs = Job.order('created_at DESC').includes(:user)
     @users = User.order('created_at DESC')
     @contracts = Contract.pluck(:job_id)
-    @favorites = Favorite.pluck(:job_id)
+    @count_favorites = Favorite.pluck(:job_id)
     @job_ranks = Job.find(Favorite.group(:job_id).order('count(job_id) desc').limit(3).pluck(:job_id))
     return unless user_signed_in?
 
-    @current_user_favorite = Favorite.where(user_id: current_user.id).pluck(:job_id)
+    @check_current_user_favorite = Favorite.where(user_id: current_user.id).pluck(:job_id)
     @company_profile = CompanyProfile.new
     @company_profile = CompanyProfile.find_by(user_id: current_user.id)
     @user_posted_job = Job.order('created_at DESC').find_by(user_id: current_user.id)

@@ -50,7 +50,7 @@
             </div>
             <div class="flex items-center">
               <% if user_signed_in? %>
-                <% if @current_user_favorite.include?(job.id) %>
+                <% if @check_current_user_favorite.include?(job.id) %>
                   <%= link_to image_tag("star.png", class:"w-6"), job_favorite_path(id: job.id, job_id: job.id), method: :delete %>
                 <% else %>
                   <%= link_to image_tag("star_outline.png", class:"w-6"), job_favorites_path(job), method: :post %>
@@ -58,7 +58,7 @@
               <% else %>
                 <%= link_to image_tag("star_outline.png", class:"w-6"), new_user_session_path %>
               <% end %>
-              <p class="ml-2"><%= @favorites.count(job.id) %></p>
+              <p class="ml-2"><%= @count_favorites.count(job.id) %></p>
             </div>
           </div>
         </div>
