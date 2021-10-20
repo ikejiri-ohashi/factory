@@ -13,7 +13,7 @@ class JobsController < ApplicationController
 
     @company_profile = CompanyProfile.new
     @company_profile = CompanyProfile.find_by(user_id: current_user.id)
-    @user_posted_job = Job.find_by(user_id: current_user.id)
+    @user_posted_job = Job.order('created_at DESC').find_by(user_id: current_user.id)
 
     unless @company_profile.nil?
       @job_recommends = Job.where(category_id: @company_profile.category_id, place_id: @company_profile.place_id)

@@ -65,7 +65,7 @@
       </div>
       <div class="bg-white h-auto mb-4 p-2 rounded-md shadow border-2 border-blue-400">
         <div class="m-2 flex items-center">
-          <span class="material-icons">person_search</span><b class="ml-2">あなたへのおすすめ</b>
+          <span class="material-icons">person_search</span><b class="ml-2">あなたにおすすめの依頼</b>
         </div>
         <% if user_signed_in? %>
           <% unless @job_recommends == nil %>
@@ -87,14 +87,14 @@
       </div>
       <div class="bg-white h-auto mb-4 p-2 rounded-md shadow border-2 border-blue-400">
         <div class="m-2 flex items-center">
-          <span class="material-icons">person_search</span><b class="ml-2">おすすめユーザー</b>
+          <span class="material-icons">person_search</span><b class="ml-2">あなたにおすすめのユーザー</b>
         </div>
         <% if user_signed_in? %>
           <% unless @recommend_user == nil %>
             <% @recommend_user.each do |recommend_user| %>
               <% unless recommend_user.id == current_user.id || @contracts.include?(@user_posted_job.id)  %>
                 <hr>
-                <div class="flex display-start items-center mx-2 my-4">
+                <div class="flex display-start items-center m-2">
                   <%= link_to user_path(recommend_user.id) do %>
                     <% if recommend_user.profile_image? %>
                       <%= image_tag recommend_user.profile_image.url, class: "w-8" %>
@@ -108,18 +108,17 @@
                     <% end %>
                   </div>
                 </div>
-                <div class="mx-2">
-                  <p>こちらのユーザーにあなたが投稿した<p>
-                  <%= link_to job_path(@user_posted_job.id) do %>
-                    <div class="flex">
-                      <p class="hover:underline"><%= @user_posted_job.name %></p>
-                    </div>
-                  <% end %>
-                  <p>を依頼してみませんか？</p>
-                </div>
               <% end %>
             <% end %>
-            <p class="text-sm mx-2 pt-4">ここではあなたが投稿した依頼の使用技術と納品場所を元にこの依頼を引き受ける可能性が高いユーザーが表示されます。</p>
+            <div class="mx-2 p-2 border border-gray-600">
+              <b>検索対象</b>
+              <div class="flex">
+                <%= link_to job_path(@user_posted_job.id) do %>
+                  <p class="hover:underline"><%= @user_posted_job.name %></p>
+                <% end %>
+              </div>
+            </div>
+            <p class="text-sm mx-2 pt-4">ここではあなたが投稿した依頼の使用技術と納品場所を元に、この依頼を引き受ける可能性が高いユーザーが表示されます。</p>
           <% end %>
         <% else %>
           <p class="m-2">ログインするとおすすめの仕事が表示されます</p>
