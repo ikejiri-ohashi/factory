@@ -127,18 +127,18 @@
         <% @follows.each do | user |%>
           <div class="h-auto">
             <%= link_to user_path(user.follow_id) do %>
-            <div class="flex display-start items-center m-2">
-              <div class="image">
-                <% if user.follow.profile_image? %>
-                  <%= image_tag user.follow.profile_image.url, class: "w-8" %>
-                <% else %>
-                  <%= image_tag avatar_url(user.follow), class: "w-8" %>
-                <% end %>
+              <div class="flex display-start items-center m-2">
+                <div class="image">
+                  <% if user.follow.profile_image? %>
+                    <%= image_tag user.follow.profile_image.url, class: "w-8" %>
+                  <% else %>
+                    <%= image_tag avatar_url(user.follow), class: "w-8" %>
+                  <% end %>
+                </div>
+                <div class="ml-2 hover:underline">
+                  <p class="text-sm"><%= user.follow.name %></p>
+                </div>
               </div>
-              <div class="ml-2 hover:underline">
-                <p class="text-sm"><%= user.follow.name %></p>
-              </div>
-            </div>
             <% end %>
           </div>
         <% end %>
@@ -188,7 +188,6 @@
       </div>
     </div>
   </div>
-  
 </div>
 
 <%= render "shared/footer" %> 
