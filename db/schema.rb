@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_16_083638) do
+ActiveRecord::Schema.define(version: 2021_10_21_231908) do
 
   create_table "comments", charset: "utf8mb3", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -80,6 +80,17 @@ ActiveRecord::Schema.define(version: 2021_10_16_083638) do
     t.index ["user_id"], name: "index_jobs_on_user_id"
   end
 
+  create_table "requests", charset: "utf8mb3", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "request_id"
+    t.bigint "job_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["job_id"], name: "index_requests_on_job_id"
+    t.index ["request_id"], name: "index_requests_on_request_id"
+    t.index ["user_id"], name: "index_requests_on_user_id"
+  end
+
   create_table "users", charset: "utf8mb3", force: :cascade do |t|
     t.string "name", null: false
     t.string "profile_image"
@@ -106,4 +117,7 @@ ActiveRecord::Schema.define(version: 2021_10_16_083638) do
   add_foreign_key "follows", "users"
   add_foreign_key "follows", "users", column: "follow_id"
   add_foreign_key "jobs", "users"
+  add_foreign_key "requests", "jobs"
+  add_foreign_key "requests", "users"
+  add_foreign_key "requests", "users", column: "request_id"
 end

@@ -20,6 +20,11 @@ class User < ApplicationRecord
   has_many :reverse_of_contracts, class_name: 'Contract', foreign_key: 'contracter_id'
   has_many :accepters, through: :reverse_of_contracts, source: :user
 
+  has_many :requests, dependent: :destroy
+  has_many :requesting, through: :requests, source: :request
+  has_many :reverse_of_requests, class_name: 'Request', foreign_key: 'request_id'
+  has_many :requested, through: :reverse_of_requests, source: :user
+
   validates :name, presence: true, length: { maximum: 20 }
   validates :email, presence: true
 
