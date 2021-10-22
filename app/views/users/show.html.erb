@@ -73,13 +73,94 @@
       <% end %>
     </div>
   </div>
-  <div class="grid grid-cols-3 gap-4">
-    <div class="bg-white rounded-md shadow mt-4 p-2">
+  <div class="grid grid-cols-3 gap-x-4">
+    <div class="bg-white rounded-t-md shadow mt-4 flex">
+      <div class="h-auto w-6/12 m-2">
+        <div class="p-2">
+          <p class="text-base ml-2">フォロー中</p>
+          <hr>
+        </div>
+        <% @follows.each do | user |%>
+          <div class="flex display-start items-center m-2">
+            <%= link_to user_path(user.follow_id) do %>
+              <% if user.follow.profile_image? %>
+                <%= image_tag user.follow.profile_image.url, class: "w-8" %>
+              <% else %>
+                <%= image_tag avatar_url(user.follow), class: "w-8" %>
+              <% end %>
+            <% end %>
+            <%= link_to user_path(user.follow_id) do %>
+              <p class="ml-2 text-sm hover:underline"><%= user.follow.name %></p>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+      <hr>
+      <div class="h-auto w-6/12 m-2">
+        <div class="p-2">
+          <p class="text-base ml-2">フォロワー</p>
+          <hr>
+        </div>
+        <% @followers.each do | user |%>
+          <div class="flex display-start items-center m-2">
+            <%= link_to user_path(user.user_id) do %>
+              <% if user.user.profile_image? %>
+                <%= image_tag user.user.profile_image.url, class: "w-8" %>
+              <% else %>
+                <%= image_tag avatar_url(user.user), class: "w-8" %>
+              <% end %>
+            <% end %>
+            <%= link_to user_path(user.user_id) do %>
+              <p class="ml-2 text-sm hover:underline"><%= user.user.name %></p>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="bg-white rounded-t-md shadow mt-4 p-2">
+      <div class="p-2 flex items-center">
+        <span class="material-icons">done</span>
+        <p class="ml-2">発注した仕事</p>
+      </div>
+      <% @contracts.each do |contract| %>
+        <div class="flex h-auto">
+          <%= link_to job_path(contract.job_id) do %>
+            <p class="p-2 hover:underline"><%= contract.job.name %></p>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <div class="bg-white rounded-t-md shadow mt-4 p-2">
+      <div class="p-2 flex items-center">
+        <span class="material-icons">task</span>
+        <p class="ml-2">受注した仕事</p>
+      </div>
+      <% @accepts.each do |accept|%>
+        <div class="flex h-auto">
+          <%= link_to job_path(accept.job_id) do %>
+            <p class="p-2 hover:underline"><%= accept.job.name %></p>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <div class="bg-white rounded-b-md shadow p-2 border-t">
+      <div class="p-2 flex items-center">
+        <span class="material-icons">announcement</span>
+        <p class="ml-2">受け取ったリクエスト</p>
+      </div>
+      <% @got_requests.each do |request|%>
+        <div class="flex h-auto">
+          <%= link_to job_path(request.job_id) do %>
+            <p class="p-2 hover:underline"><%= request.job.name %></p>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <div class="bg-white rounded-b-md shadow p-2 border-t">
       <div class="p-2 flex items-center">
         <span class="material-icons">work</span>
         <p class="ml-2">募集中の仕事</p>
       </div>
-      <hr>
       <% @jobs.each do | job |%>
         <div class="flex items-center h-auto">
           <% unless @check_contract.include?(job.id)%>
@@ -93,120 +174,18 @@
         </div>
       <% end %>
     </div>
-    <div class="bg-white rounded-md shadow mt-4 p-2">
-      <div class="p-2 flex items-center">
-        <span class="material-icons">done</span>
-        <p class="ml-2">発注した仕事</p>
-      </div>
-      <hr>
-      <% @contracts.each do |contract| %>
-        <div class="flex h-auto">
-          <%= link_to job_path(contract.job_id) do %>
-            <p class="p-2 hover:underline"><%= contract.job.name %></p>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
-    <div class="bg-white rounded-md shadow mt-4 p-2">
-      <div class="p-2 flex items-center">
-        <span class="material-icons">task</span>
-        <p class="ml-2">受注した仕事</p>
-      </div>
-      <hr>
-      <div class="m-2">
-        <% @accepts.each do |accept|%>
-          <div class="flex h-auto">
-            <%= link_to job_path(accept.job_id) do %>
-              <p class="p-2 hover:underline"><%= accept.job.name %></p>
-            <% end %>
-          </div>
-        <% end %>
-      </div>
-    </div>
-    <div class="bg-white rounded-md shadow mb-4 p-2">
-      <div class="p-2 flex items-center">
-        <span class="material-icons">announcement</span>
-        <p class="ml-2">リクエストが来ています</p>
-      </div>
-      <hr>
-      <div class="m-2">
-        <% @got_requests.each do |request|%>
-          <div class="flex h-auto">
-            <%= link_to job_path(request.job_id) do %>
-              <p class="p-2 hover:underline"><%= request.job.name %></p>
-            <% end %>
-          </div>
-        <% end %>
-      </div>
-    </div>
-    <div class="bg-white rounded-md shadow mb-4 flex">
-      <div class="h-auto w-6/12 m-2">
-        <div class="p-2">
-          <p class="text-base ml-2">フォロー中</p>
-          <hr>
-        </div>
-        <% @follows.each do | user |%>
-          <div class="h-auto">
-            <%= link_to user_path(user.follow_id) do %>
-              <div class="flex display-start items-center m-2">
-                <div class="image">
-                  <% if user.follow.profile_image? %>
-                    <%= image_tag user.follow.profile_image.url, class: "w-8" %>
-                  <% else %>
-                    <%= image_tag avatar_url(user.follow), class: "w-8" %>
-                  <% end %>
-                </div>
-                <div class="ml-2 hover:underline">
-                  <p class="text-sm"><%= user.follow.name %></p>
-                </div>
-              </div>
-            <% end %>
-          </div>
-        <% end %>
-      </div>
-      <hr>
-      <div class="h-auto w-6/12 m-2">
-        <div class="p-2">
-          <p class="text-base ml-2">フォロワー</p>
-          <hr>
-        </div>
-        <% @followers.each do | user |%>
-          <div class="h-auto">
-            <%= link_to user_path(user.user_id) do %>
-              <div class="flex display-start items-center m-2">
-                <div class="image">
-                  <% if user.user.profile_image? %>
-                    <%= image_tag user.user.profile_image.url, class: "w-8" %>
-                  <% else %>
-                    <%= image_tag avatar_url(user.user), class: "w-8" %>
-                  <% end %>
-                </div>
-                <div class="ml-2 hover:underline">
-                  <p class="text-sm"><%= user.user.name %></p>
-                </div>
-              </div>
-            <% end %>
-          </div>
-        <% end %>
-      </div>
-    </div>
-    <div class="bg-white rounded-md shadow mb-4 p-2">
+    <div class="bg-white rounded-b-md shadow p-2 border-t">
       <div class="p-2 flex items-center">
         <%= image_tag("star.png", class:"w-6") %>
         <p class="ml-2">お気に入りした仕事</p>
       </div>
-      <hr>
-      <div class="m-2">
-        <% @favorites.each do | favorite |%>
-          <div class="h-auto">
-            <%= link_to job_path(favorite.job_id) do %>
-              <div class="flex display-start items-center m-2 hover:underline">
-                <%= favorite.job.name %>
-              </div>
-            <% end %>
-          </div>
+      <% @favorites.each do | favorite |%>
+        <div class="flex items-center h-auto">
+        <%= link_to job_path(favorite.job_id) do %>
+          <p class="p-2 hover:underline"><%= favorite.job.name %></p>
         <% end %>
-      </div>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>
