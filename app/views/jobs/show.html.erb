@@ -165,6 +165,16 @@
             <% end %>
           </div>
         </div>
+      <% elsif user_signed_in? && @check_requests.include?(current_user.id) %>
+        <div class="bg-white rounded-md shadow my-4 border-2 border-yellow-300">
+          <div class="p-4 h-auto">
+            <div class="flex items-center mb-6">
+              <span class="material-icons">announcement</span>
+              <p class="ml-2 text-xl">あなたにリクエストが届いています！</p>
+            </div>
+            <p>この依頼の疑問はコメントで依頼主に聞いてみましょう</p>
+          </div>
+        </div>
       <% end %>
     </div>
     <div class="col-span-2 bg-white rounded-md shadow">

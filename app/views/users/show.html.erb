@@ -144,17 +144,19 @@
       <% end %>
     </div>
     <div class="bg-white rounded-b-md shadow p-2 border-t">
-      <div class="p-2 flex items-center">
-        <span class="material-icons">announcement</span>
-        <p class="ml-2">受け取ったリクエスト</p>
-      </div>
-      <% @got_requests.each do |request|%>
-        <% unless @check_contract.include?(request.job_id)%>
-          <div class="flex h-auto">
-            <%= link_to job_path(request.job_id) do %>
-              <p class="p-2 hover:underline"><%= request.job.name %></p>
-            <% end %>
-          </div>
+      <% if @user == current_user %>
+        <div class="p-2 flex items-center">
+          <span class="material-icons">announcement</span>
+          <p class="ml-2">受け取ったリクエスト</p>
+        </div>
+        <% @got_requests.each do |request|%>
+          <% unless @check_contract.include?(request.job_id)%>
+            <div class="flex h-auto">
+              <%= link_to job_path(request.job_id) do %>
+                <p class="p-2 hover:underline"><%= request.job.name %></p>
+              <% end %>
+            </div>
+          <% end %>
         <% end %>
       <% end %>
     </div>
