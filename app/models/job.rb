@@ -8,6 +8,7 @@ class Job < ApplicationRecord
   has_many :favorites, dependent: :destroy
   mount_uploader :job_image, JobImageUploader
   has_one :contract, dependent: :destroy
+  has_many :request, dependent: :destroy
 
   validates :name, :place_id, :category_id, :deadline_id, presence: true
   validates :place_id, :category_id, :deadline_id, numericality: { other_than: 1, message: 'を選択してください' }

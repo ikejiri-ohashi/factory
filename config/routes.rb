@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     resources :comments, only: [:create, :destroy]
     resources :favorites, only: [:create, :destroy]
     resources :contracts, only: [:create]
+    resources :requests, only: [:create, :destroy]
   end
   resources :company_profiles, only: [:new, :create, :edit, :update]
   resources :users, only: [:show] do
