@@ -77,16 +77,18 @@
     <div class="bg-white rounded-md shadow mt-4 p-2">
       <div class="p-2 flex items-center">
         <span class="material-icons">work</span>
-        <p class="ml-2">投稿した仕事</p>
+        <p class="ml-2">募集中の仕事</p>
       </div>
       <hr>
       <% @jobs.each do | job |%>
         <div class="flex items-center h-auto">
-          <%= link_to job_path(job.id) do %>
-            <p class="p-2 hover:underline"><%= job.name %></p>
-          <% end %>
-          <% if @send_requests.include?(job.id)%>
-            <span class="material-icons">send</span>
+          <% unless @check_contract.include?(job.id)%>
+            <%= link_to job_path(job.id) do %>
+              <p class="p-2 hover:underline"><%= job.name %></p>
+            <% end %>
+            <% if @send_requests.include?(job.id)%>
+              <span class="material-icons">send</span>
+            <% end %>
           <% end %>
         </div>
       <% end %>
