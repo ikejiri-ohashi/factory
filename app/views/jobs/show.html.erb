@@ -127,6 +127,23 @@
                 </div>
               </div>
             <% end %>
+            <p class="py-4">リクエストを送信済みのユーザー</p>
+            <% @send_requests.each do |request|%>
+              <div class="mb-2">
+                <div class="flex display-start items-center">
+                  <%= link_to user_path(request.request.id) do %>
+                    <% if request.request.profile_image? %>
+                      <%= image_tag request.request.profile_image.url, class: "w-8" %>
+                    <% else %>
+                      <%= image_tag avatar_url(request.request), class: "w-8" %>
+                    <% end %>
+                  <% end %>
+                  <%= link_to user_path(request.request.id) do %>
+                    <p class="ml-2 hover:underline"><%= request.request.name %></p>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
           </div>
         </div>
         <div class="bg-white rounded-md shadow my-4">
@@ -150,7 +167,6 @@
         </div>
       <% end %>
     </div>
-
     <div class="col-span-2 bg-white rounded-md shadow">
       <div class="p-4 h-auto">
         <div class="flex items-center">

@@ -45,6 +45,7 @@ class JobsController < ApplicationController
     @contract = Contract.find_by(job_id: params[:id])
     @users = User.order('created_at DESC')
     @favorites = Favorite.where(job_id: params[:id]).pluck(:user_id)
+    @send_requests = Request.where(job_id: params[:id]).includes(:user)
   end
 
   def destroy
