@@ -87,6 +87,47 @@
           投稿日時：<%= @job.created_at.to_s(:datetime_jp) %>
         </div>
       </div>
+      <div class="bg-white rounded-md shadow mt-4 p-2">
+        <% if user_signed_in? %>
+          <% if @user == current_user %>
+            <div class="p-2 flex items-center">
+              <span class="material-icons">send</span>
+              <p class="ml-2">あなたに送信されたリクエスト</p>
+            </div>
+            <hr>
+            <div class="m-2">
+              <p>リクエストは届いていません</p>
+            </div>
+          <% else %>
+            <div class="p-2 flex items-center">
+              <span class="material-icons">send</span>
+              <p class="ml-2">このユーザーに加工のリクエストを送信する</p>
+            </div>
+            <hr>
+            <div class="m-2">
+              <%= form_with model: @request, url: job_requests_path(@job), local: true do |f| %>
+                <div class="pt-6">
+                  <div class="flex justify-center">
+                    <%= f.collection_select(:request_id, @users, :id, :name, prompt: "選択してください", class:"form-select my-2") %>
+                    </div>
+                  <div class='flex justify-center pt-4'>
+                    <%= f.submit "リクエストを送信する",  id: "submit", class:"p-2 rounded-lg bg-green-500 text-white hover:bg-green-700" %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        <% else %>
+          <div class="p-2 flex items-center">
+            <span class="material-icons">send</span>
+            <p class="ml-2">リクエスト</p>
+          </div>
+          <hr>
+          <div class="m-2">
+            <p>ログインするとあなたに届いている加工のリクエストを閲覧したり、他のユーザーにリクエストを送信することができます。</p>
+          </div>
+        <% end %>
+      </div>
       <% if user_signed_in? && current_user.id == @job.user_id %>
         <div class="bg-white rounded-md shadow my-4">
           <div class="p-4 h-auto">

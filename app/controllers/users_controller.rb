@@ -3,6 +3,7 @@ class UsersController < ApplicationController
     @user = User.find_by(id: params[:id])
     @jobs = Job.where(user_id: params[:id])
     @current_user_jobs = Job.where(user_id: current_user.id)
+    @request = Request.find_by(request_id: params[:id])
     @company_profile = CompanyProfile.find_by(user_id: params[:id])
     @favorites = Favorite.where(user_id: params[:id]).includes(:job)
     @follows = Follow.where(user_id: params[:id]).includes(:user, :follow)
