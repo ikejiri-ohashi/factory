@@ -81,9 +81,12 @@
       </div>
       <hr>
       <% @jobs.each do | job |%>
-        <div class="flex h-auto">
+        <div class="flex items-center h-auto">
           <%= link_to job_path(job.id) do %>
             <p class="p-2 hover:underline"><%= job.name %></p>
+          <% end %>
+          <% if @send_requests.include?(job.id)%>
+            <span class="material-icons">send</span>
           <% end %>
         </div>
       <% end %>
@@ -109,16 +112,31 @@
       </div>
       <hr>
       <div class="m-2">
-        <% @accepts.each do |accepts|%>
+        <% @accepts.each do |accept|%>
           <div class="flex h-auto">
-            <%= link_to job_path(accepts.job_id) do %>
-              <p class="p-2 hover:underline"><%= accepts.job.name %></p>
+            <%= link_to job_path(accept.job_id) do %>
+              <p class="p-2 hover:underline"><%= accept.job.name %></p>
             <% end %>
           </div>
         <% end %>
       </div>
     </div>
-
+    <div class="bg-white rounded-md shadow mb-4 p-2">
+      <div class="p-2 flex items-center">
+        <span class="material-icons">announcement</span>
+        <p class="ml-2">リクエストが来ています</p>
+      </div>
+      <hr>
+      <div class="m-2">
+        <% @got_requests.each do |request|%>
+          <div class="flex h-auto">
+            <%= link_to job_path(request.job_id) do %>
+              <p class="p-2 hover:underline"><%= request.job.name %></p>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
     <div class="bg-white rounded-md shadow mb-4 flex">
       <div class="h-auto w-6/12 m-2">
         <div class="p-2">

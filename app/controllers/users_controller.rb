@@ -9,5 +9,7 @@ class UsersController < ApplicationController
     @check_follow = Follow.find_by(user_id: current_user.id, follow_id: params[:id]) if user_signed_in?
     @contracts = Contract.where(user_id: params[:id]).includes(:job)
     @accepts = Contract.where(contracter_id: params[:id]).includes(:job)
+    @got_requests = Request.where(request_id: params[:id]).includes(:job)
+    @send_requests = Request.where(user_id: params[:id]).pluck(:job_id)
   end
 end
