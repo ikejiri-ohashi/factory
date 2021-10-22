@@ -165,14 +165,15 @@
             <% end %>
           </div>
         </div>
-      <% elsif user_signed_in? && @check_requests.include?(current_user.id) %>
+      <% elsif user_signed_in? && @check_request != nil %>
         <div class="bg-white rounded-md shadow my-4 border-2 border-yellow-300">
           <div class="p-4 h-auto">
             <div class="flex items-center mb-6">
               <span class="material-icons">announcement</span>
               <p class="ml-2 text-xl">あなたにリクエストが届いています！</p>
             </div>
-            <p>この依頼の疑問はコメントで依頼主に聞いてみましょう</p>
+            <u><%= @check_request.job.created_at.to_s(:datetime_jp) %></u>に
+            <p>依頼者からリクエストがありました。<br>この依頼の受注について不明点があればコメントで聞いてみましょう。</p>
           </div>
         </div>
       <% end %>

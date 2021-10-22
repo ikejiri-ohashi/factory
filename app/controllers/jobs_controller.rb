@@ -46,7 +46,10 @@ class JobsController < ApplicationController
     @users = User.order('created_at DESC')
     @favorites = Favorite.where(job_id: params[:id]).pluck(:user_id)
     @send_requests = Request.where(job_id: params[:id]).includes(:user)
-    @check_requests = Request.where(job_id: params[:id]).pluck(:request_id)
+
+    return unless user_signed_in?
+
+    @check_request = Request.find_by(job_id: params[:id], request_id: current_user.id)
   end
 
   def destroy
