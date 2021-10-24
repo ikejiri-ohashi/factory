@@ -117,7 +117,7 @@
               <p class="ml-2 text-xl">加工のリクエスト</p>
             </div>
             <p>特定のユーザーを選択し、この依頼のリクエストを送信することができます。</p>
-            <%= form_with model: @request, url: job_requests_path(@job), local: true do |f| %>
+            <%= form_with model: @request, url: job_requests_path(@job), remote: true do |f| %>
               <div class="pt-6">
                 <div class="flex justify-center">
                   <%= f.collection_select(:request_id, @users, :id, :name, prompt: "選択してください", class:"form-select my-2") %>
@@ -128,22 +128,10 @@
               </div>
             <% end %>
             <p class="py-4">リクエストを送信済みのユーザー</p>
-            <% @send_requests.each do |request|%>
-              <div class="mb-2">
-                <div class="flex display-start items-center">
-                  <%= link_to user_path(request.request.id) do %>
-                    <% if request.request.profile_image? %>
-                      <%= image_tag request.request.profile_image.url, class: "w-8" %>
-                    <% else %>
-                      <%= image_tag avatar_url(request.request), class: "w-8" %>
-                    <% end %>
-                  <% end %>
-                  <%= link_to user_path(request.request.id) do %>
-                    <p class="ml-2 hover:underline"><%= request.request.name %></p>
-                  <% end %>
-                </div>
-              </div>
-            <% end %>
+            <div class="request">
+              <%= render 'requests/requests', requests: @send_requests %>
+            </div>
+            
           </div>
         </div>
         <div class="bg-white rounded-md shadow my-4">

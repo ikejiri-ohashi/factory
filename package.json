@@ -33,6 +33,7 @@
     "@tailwindcss/forms": "^0.3.4",
     "@tailwindcss/line-clamp": "^0.2.2",
     "@tailwindcss/typography": "^0.4.1",
+    "jquery": "^3.6.0",
     "postcss": "^8.2.10",
     "postcss-loader": "^4.0.3",
     "sass": "^1.32.7",
