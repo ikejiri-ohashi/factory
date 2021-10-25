@@ -117,21 +117,22 @@
               <p class="ml-2 text-xl">加工のリクエスト</p>
             </div>
             <p>特定のユーザーを選択し、この依頼のリクエストを送信することができます。</p>
-            <%= form_with model: @request, url: job_requests_path(@job), remote: true do |f| %>
-              <div class="pt-6">
-                <div class="flex justify-center">
-                  <%= f.collection_select(:request_id, @users, :id, :name, prompt: "選択してください", class:"form-select my-2") %>
+            <div class="contents">
+              <%= form_with url: job_requests_path(@job) do |f| %>
+                <div class="pt-6">
+                  <div class="flex justify-center">
+                    <%= f.collection_select(:request_id, @users, :id, :name, prompt: "選択してください", class:"form-select my-2") %>
+                    </div>
+                  <div class='flex justify-center pt-4'>
+                    <%= f.submit "リクエストを送信する",  id: "submit", class:"p-2 rounded-lg bg-green-500 text-white hover:bg-green-700" %>
                   </div>
-                <div class='flex justify-center pt-4'>
-                  <%= f.submit "リクエストを送信する",  id: "submit", class:"p-2 rounded-lg bg-green-500 text-white hover:bg-green-700" %>
                 </div>
-              </div>
-            <% end %>
+              <% end %>
+            </div>
             <p class="py-4">リクエストを送信済みのユーザー</p>
-            <div class="request">
+            <div class="request_class">
               <%= render 'requests/requests', requests: @send_requests %>
             </div>
-            
           </div>
         </div>
         <div class="bg-white rounded-md shadow my-4">
