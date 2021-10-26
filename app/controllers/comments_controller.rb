@@ -4,12 +4,8 @@ class CommentsController < ApplicationController
   before_action :move_to_index, only: [:destroy]
 
   def create
-    @comment = Comment.create(comment_params)
-    if @comment.save
-      redirect_back(fallback_location: root_path)
-    else
-      render :new
-    end
+    comment = Comment.create(comment_params)
+    render json:{ comment: comment }
   end
 
   def destroy

@@ -1,5 +1,5 @@
 <%= render "shared/header" %>
-
+<input type="hidden" value=<%= @job.id %> id="hidden_job_id" />
 <div class="container mx-auto">
   <div class="grid grid-cols-3 gap-4">
     <div class="col-span-2 bg-white rounded-md shadow">
@@ -188,15 +188,17 @@
         </div>
         <div class="my-2">
           <% if user_signed_in? %>
-            <%= form_with model: @comment, url: job_comments_path(@job) do |f| %>
-              <%= f.text_area :content, class:'my-4 w-full', placeholder: "コメントを入力" %>
-              <%= f.submit "コメントを投稿する", class:"mb-4 p-2 rounded-lg bg-blue-500 text-white hover:bg-blue-700" %>
+            <%= form_with model: @comment, url: job_comments_path(@job), method: :post, id: "form" do |f| %>
+              <%= f.text_area :content, class:'my-4 w-full', id: "content", placeholder: "コメントを入力" %>
+              <%= f.submit "コメントを投稿する", id:'comment_submit', class:"mb-4 p-2 rounded-lg bg-blue-500 text-white hover:bg-blue-700" %>
             <% end %>
           <% else %>
             <p class="my-4">ログインするとコメントができます</p>
           <% end %>
         </div>
-          <hr>
+        <div id="comment_list">
+        </div>
+        <hr>
         <% @comment.each do |comment|%>
           <div class="py-2 h-auto divide-y divide-gray-400">
             <div class="flex justify-between my-4">
@@ -223,7 +225,7 @@
             </div>
             <%= comment.content %>
           </div>
-         <hr>
+          <hr>
         <% end %>
       </div>
     </div>
