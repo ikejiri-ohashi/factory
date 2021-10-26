@@ -125,7 +125,7 @@
                   <%= f.collection_select(:request_id, @users, :id, :name, prompt: "選択してください", class:"form-select my-2") %>
                 </div>
                 <div class='flex justify-center pt-4'>
-                  <%= f.submit "リクエストを送信する", id: "request_submit", class:"cursor-pointer p-2 rounded-lg bg-green-500 text-white hover:bg-green-700  disabled:opacity-50" %>
+                  <%= f.submit "リクエストを送信する", id: "request_submit", class:"cursor-pointer p-2 rounded-lg bg-green-500 text-white hover:bg-green-700 disabled:opacity-50" %>
                 </div>
               <% end %>
             </div>
@@ -155,13 +155,15 @@
               <p class="ml-2 text-xl">発注先</p>
             </div>
             <p>発注が決定した場合は発注先のユーザーを選択し、募集を終了してください。</p>
-            <%= form_with model: @contract, url: job_contracts_path(@job) do |f| %>
+            <div class="pt-6" id="contract_list">
+            </div>
+            <%= form_with model: @contract, url: job_contracts_path(@job), id: "contract_form" do |f| %>
               <div class="pt-6">
                 <div class="flex justify-center">
                   <%= f.collection_select(:contracter_id, @users, :id, :name, prompt: "選択してください", class:"form-select my-2") %>
-                  </div>
+                </div>
                 <div class='flex justify-center pt-4'>
-                  <%= f.submit "募集を終了する",  id: "submit", class:"cursor-pointer p-2 rounded-lg bg-green-500 text-white hover:bg-green-700 " %>
+                  <%= f.submit "募集を終了する", id: "contract_submit", class:"cursor-pointer p-2 rounded-lg bg-green-500 text-white hover:bg-green-700 disabled:opacity-50" %>
                 </div>
               </div>
             <% end %>
@@ -190,7 +192,7 @@
           <% if user_signed_in? %>
             <%= form_with model: @comment, url: job_comments_path(@job), method: :post, id: "form" do |f| %>
               <%= f.text_area :content, class:'my-4 w-full', id: "content", placeholder: "コメントを入力" %>
-              <%= f.submit "コメントを投稿する", id:'comment_submit', class:"cursor-pointer mb-4 p-2 rounded-lg bg-blue-500 text-white hover:bg-blue-700" %>
+              <%= f.submit "コメントを投稿する", id:'comment_submit', class:"cursor-pointer mb-4 p-2 rounded-lg bg-blue-500 text-white hover:bg-blue-700 disabled:opacity-50" %>
             <% end %>
           <% else %>
             <p class="my-4">ログインするとコメントができます</p>
@@ -243,6 +245,12 @@
 $(function() {
   $("#request_submit").click(function() {
     $("#request_submit").prop("disabled", true);
+  });
+  $("#contract_submit").click(function() {
+    $("#contract_submit").prop("disabled", true);
+  });
+  $("#comment_submit").click(function() {
+    $("#comment_submit", "destroy_submit").prop("disabled", true);
   });
 });
 </script>

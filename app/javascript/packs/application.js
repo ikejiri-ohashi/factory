@@ -5,6 +5,7 @@
 require('jquery')
 require("../comment")
 require("../request")
+require("../contract")
 
 import Rails from "@rails/ujs"
 import Turbolinks from "turbolinks"
