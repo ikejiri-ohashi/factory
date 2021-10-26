@@ -130,9 +130,22 @@
               <% end %>
             </div>
             <p class="py-4">リクエストを送信済みのユーザー</p>
-            <div class="request_class">
-              <%= render 'requests/requests', requests: @send_requests %>
-            </div>
+            <% @send_requests.each do |request|%>
+              <div class="mb-2">
+                <div class="flex display-start items-center">
+                  <%= link_to user_path(request.request.id) do %>
+                    <% if request.request.profile_image? %>
+                      <%= image_tag request.request.profile_image.url, class: "w-8" %>
+                    <% else %>
+                      <%= image_tag avatar_url(request.request), class: "w-8" %>
+                    <% end %>
+                  <% end %>
+                  <%= link_to user_path(request.request.id) do %>
+                    <p class="ml-2 hover:underline"><%= request.request.name %></p>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
           </div>
         </div>
         <div class="bg-white rounded-md shadow my-4">
@@ -142,7 +155,7 @@
               <p class="ml-2 text-xl">発注先</p>
             </div>
             <p>発注が決定した場合は発注先のユーザーを選択し、募集を終了してください。</p>
-            <%= form_with model: @contract, url: job_contracts_path(@job), local: true do |f| %>
+            <%= form_with model: @contract, url: job_contracts_path(@job) do |f| %>
               <div class="pt-6">
                 <div class="flex justify-center">
                   <%= f.collection_select(:contracter_id, @users, :id, :name, prompt: "選択してください", class:"form-select my-2") %>
@@ -175,7 +188,7 @@
         </div>
         <div class="my-2">
           <% if user_signed_in? %>
-            <%= form_with model: @comment, url: job_comments_path(@job), local: true do |f| %>
+            <%= form_with model: @comment, url: job_comments_path(@job) do |f| %>
               <%= f.text_area :content, class:'my-4 w-full', placeholder: "コメントを入力" %>
               <%= f.submit "コメントを投稿する", class:"mb-4 p-2 rounded-lg bg-blue-500 text-white hover:bg-blue-700" %>
             <% end %>
