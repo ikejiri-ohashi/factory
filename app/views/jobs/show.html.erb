@@ -55,12 +55,16 @@
               <% if @favorites.include?(current_user.id) %>
                 <%= link_to image_tag("star.png", class:"w-6"), job_favorite_path(@job), method: :delete %>
               <% else %>
-                <%= link_to image_tag("star_outline.png", class:"w-6"), job_favorites_path(@job), method: :post %>
+                <%= image_tag("star_outline.png", class:"cursor-pointer w-6", id: "favorite_form" ) %>
               <% end %>
             <% else %>
               <%= link_to image_tag("star_outline.png", class:"w-6"), new_user_session_path %>
             <% end %>
             <p class="ml-2"><%= @favorites.count %></p>
+          </div>
+        </div>
+        <div class="flex justify-end pt-6">
+          <div id="favorite_list">
           </div>
         </div>
       </div>
@@ -80,7 +84,7 @@
             <% end %>
           </div>
           <div class="mb-4 flex justify-center">
-            <%= link_to user_path(@job.user) do %>
+            <%= link_to user_path(@job.user), data: {"turbolinks" => false} do %>
               <p class="hover:underline text-xl"><%= @job.user.name %>さん</p>
             <% end %>
           </div>
@@ -102,7 +106,7 @@
               <% end %>
             </div>
             <div class="mb-4 flex justify-center">
-              <%= link_to user_path(@contract.contracter.id) do %>
+              <%= link_to user_path(@contract.contracter.id), data: {"turbolinks" => false} do %>
                 <p class="hover:underline text-xl"><%= @contract.contracter.name %>さん</p>
               <% end %>
             </div>
@@ -133,14 +137,14 @@
             <% @send_requests.each do |request|%>
               <div class="mb-2">
                 <div class="flex display-start items-center">
-                  <%= link_to user_path(request.request.id) do %>
+                  <%= link_to user_path(request.request.id), data: {"turbolinks" => false} do %>
                     <% if request.request.profile_image? %>
                       <%= image_tag request.request.profile_image.url, class: "w-8" %>
                     <% else %>
                       <%= image_tag avatar_url(request.request), class: "w-8" %>
                     <% end %>
                   <% end %>
-                  <%= link_to user_path(request.request.id) do %>
+                  <%= link_to user_path(request.request.id), data: {"turbolinks" => false} do %>
                     <p class="ml-2 hover:underline"><%= request.request.name %></p>
                   <% end %>
                 </div>
@@ -205,7 +209,7 @@
           <div class="py-2 h-auto divide-y divide-gray-400">
             <div class="flex justify-between my-4">
               <div class="flex display-start items-center">
-                <%= link_to user_path(comment.user.id) do %>
+                <%= link_to user_path(comment.user.id), data: {"turbolinks" => false} do %>
                   <% if comment.user.profile_image? %>
                     <%= image_tag comment.user.profile_image.url, class: "w-8" %>
                   <% else %>
@@ -213,7 +217,7 @@
                   <% end %>
                 <% end %>
                 <div class="flex">
-                  <%= link_to user_path(comment.user.id) do %>
+                  <%= link_to user_path(comment.user.id), data: {"turbolinks" => false} do %>
                     <p class="ml-2 hover:underline"><%= comment.user.name %></p>
                   <% end %>
                   さんが<%= comment.created_at.to_s(:datetime_jp) %>に投稿
@@ -250,7 +254,7 @@ $(function() {
     $("#contract_submit").prop("disabled", true);
   });
   $("#comment_submit").click(function() {
-    $("#comment_submit", "destroy_submit").prop("disabled", true);
+    $("#comment_submit").prop("disabled", true);
   });
 });
 </script>

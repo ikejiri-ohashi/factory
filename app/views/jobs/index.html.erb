@@ -11,7 +11,7 @@
           <hr>
           <div class="py-4 text-sm flex justify-between items-center">
             <div class="flex display-start items-center">
-              <%= link_to user_path(job.user.id) do %>
+              <%= link_to user_path(job.user.id), data: {"turbolinks" => false} do %>
                 <% if job.user.profile_image? %>
                   <%= image_tag job.user.profile_image.url, class: "w-8" %>
                 <% else %>
@@ -19,7 +19,7 @@
                 <% end %>
               <% end %>
               <div class="flex">
-                <%= link_to user_path(job.user.id) do %>
+                <%= link_to user_path(job.user.id), data: {"turbolinks" => false} do %>
                   <p class="ml-2 hover:underline"><%= job.user.name %></p>
                 <% end %>
                 さんが<%= job.created_at.to_s(:datetime_jp) %>に投稿
@@ -33,7 +33,7 @@
               <% end %>
             <% end %>
           </div>
-          <%= link_to job_path(job.id) do %>
+          <%= link_to job_path(job.id), data: {"turbolinks" => false} do %>
             <div class="text-xl flex p2-4">
               <p class="hover:underline"><%= job.name %></p><br>
             </div>
@@ -81,7 +81,7 @@
               <% unless recommend.user_id == current_user.id || @contracts.include?(recommend.id)  %>
                 <hr>
                 <div class="flex display-start items-center m-2">
-                  <%= link_to job_path(recommend.id) do %>
+                  <%= link_to job_path(recommend.id), data: {"turbolinks" => false} do %>
                     <p class="hover:underline"><%= recommend.name %></p>
                   <% end %>
                 </div>
@@ -103,7 +103,7 @@
               <% unless recommend_user.id == current_user.id || @contracts.include?(@user_posted_job.id)  %>
                 <hr>
                 <div class="flex display-start items-center m-2">
-                  <%= link_to user_path(recommend_user.id) do %>
+                  <%= link_to user_path(recommend_user.id), data: {"turbolinks" => false} do %>
                     <% if recommend_user.profile_image? %>
                       <%= image_tag recommend_user.profile_image.url, class: "w-8" %>
                     <% else %>
@@ -111,7 +111,7 @@
                     <% end %>
                   <% end %>
                   <div class="flex">
-                    <%= link_to user_path(recommend_user.id) do %>
+                    <%= link_to user_path(recommend_user.id), data: {"turbolinks" => false} do %>
                       <p class="ml-2 hover:underline"><%= recommend_user.name %></p>
                     <% end %>
                   </div>
@@ -121,7 +121,7 @@
             <div class="mx-2 p-2 border border-gray-600">
               <b>あなたの最新の投稿</b>
               <div class="flex">
-                <%= link_to job_path(@user_posted_job.id) do %>
+                <%= link_to job_path(@user_posted_job.id), data: {"turbolinks" => false} do %>
                   <p class="hover:underline"><%= @user_posted_job.name %></p>
                 <% end %>
               </div>
@@ -144,7 +144,7 @@
                 <b><%= i %>位 </b>
               </div>
               <div class="ml-2 hover:underline">
-                <%= link_to job_path(job.id) do %>
+                <%= link_to job_path(job.id), data: {"turbolinks" => false} do %>
                   <%= job.name %>
                 <% end %>
               </div>
@@ -159,7 +159,7 @@
         <% @users.each do | user |%>
           <div class=" h-auto">
             <hr>
-            <%= link_to user_path(user.id) do %>
+            <%= link_to user_path(user.id), data: {"turbolinks" => false} do %>
               <div class="flex display-start items-center m-2">
                 <% if user.profile_image? %>
                   <%= image_tag user.profile_image.url, class: "w-8" %>

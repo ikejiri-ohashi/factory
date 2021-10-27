@@ -82,14 +82,14 @@
         </div>
         <% @follows.each do | user |%>
           <div class="flex display-start items-center m-2">
-            <%= link_to user_path(user.follow_id) do %>
+            <%= link_to user_path(user.follow_id), data: {"turbolinks" => false} do %>
               <% if user.follow.profile_image? %>
                 <%= image_tag user.follow.profile_image.url, class: "w-8" %>
               <% else %>
                 <%= image_tag avatar_url(user.follow), class: "w-8" %>
               <% end %>
             <% end %>
-            <%= link_to user_path(user.follow_id) do %>
+            <%= link_to user_path(user.follow_id), data: {"turbolinks" => false} do %>
               <p class="ml-2 text-sm hover:underline"><%= user.follow.name %></p>
             <% end %>
           </div>
@@ -103,14 +103,14 @@
         </div>
         <% @followers.each do | user |%>
           <div class="flex display-start items-center m-2">
-            <%= link_to user_path(user.user_id) do %>
+            <%= link_to user_path(user.user_id), data: {"turbolinks" => false} do %>
               <% if user.user.profile_image? %>
                 <%= image_tag user.user.profile_image.url, class: "w-8" %>
               <% else %>
                 <%= image_tag avatar_url(user.user), class: "w-8" %>
               <% end %>
             <% end %>
-            <%= link_to user_path(user.user_id) do %>
+            <%= link_to user_path(user.user_id), data: {"turbolinks" => false} do %>
               <p class="ml-2 text-sm hover:underline"><%= user.user.name %></p>
             <% end %>
           </div>
@@ -124,7 +124,7 @@
       </div>
       <% @contracts.each do |contract| %>
         <div class="flex h-auto">
-          <%= link_to job_path(contract.job_id) do %>
+          <%= link_to job_path(contract.job_id), data: {"turbolinks" => false} do %>
             <p class="p-2 hover:underline"><%= contract.job.name %></p>
           <% end %>
         </div>
@@ -137,7 +137,7 @@
       </div>
       <% @accepts.each do |accept|%>
         <div class="flex h-auto">
-          <%= link_to job_path(accept.job_id) do %>
+          <%= link_to job_path(accept.job_id), data: {"turbolinks" => false} do %>
             <p class="p-2 hover:underline"><%= accept.job.name %></p>
           <% end %>
         </div>
@@ -152,7 +152,7 @@
         <% @got_requests.each do |request|%>
           <% unless @check_contract.include?(request.job_id)%>
             <div class="flex h-auto">
-              <%= link_to job_path(request.job_id) do %>
+              <%= link_to job_path(request.job_id), data: {"turbolinks" => false} do %>
                 <p class="p-2 hover:underline"><%= request.job.name %></p>
               <% end %>
             </div>
@@ -168,7 +168,7 @@
       <% @jobs.each do | job |%>
         <div class="flex items-center h-auto">
           <% unless @check_contract.include?(job.id)%>
-            <%= link_to job_path(job.id) do %>
+            <%= link_to job_path(job.id), data: {"turbolinks" => false} do %>
               <p class="p-2 hover:underline"><%= job.name %></p>
             <% end %>
             <% if @send_requests.include?(job.id)%>
@@ -185,7 +185,7 @@
       </div>
       <% @favorites.each do | favorite |%>
         <div class="flex items-center h-auto">
-        <%= link_to job_path(favorite.job_id) do %>
+        <%= link_to job_path(favorite.job_id), data: {"turbolinks" => false} do %>
           <p class="p-2 hover:underline"><%= favorite.job.name %></p>
         <% end %>
         </div>

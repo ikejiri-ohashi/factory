@@ -1,5 +1,4 @@
 const buildHTML = (XHR) => {
-  const item = XHR.response.request;
   const html = `
   <div class="mb-2">
     <div class="flex rounded-md border-2 border-green-500">
@@ -26,9 +25,7 @@ function job (){
         return null;
       };
       const list = document.getElementById("request_list");
-      // const formText = document.getElementById("content");
       list.insertAdjacentHTML("afterend", buildHTML(XHR));
-      // formText.value = "";
     };
   });
  };
