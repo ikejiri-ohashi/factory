@@ -44,12 +44,13 @@ class JobsController < ApplicationController
     @comment = @job.comments.includes(:user).order('created_at DESC')
     @contract = Contract.find_by(job_id: params[:id])
     @users = User.order('created_at DESC')
-    @favorites = Favorite.where(job_id: params[:id]).pluck(:user_id)
+    @count_favorites = Favorite.pluck(:job_id)
     @send_requests = Request.where(job_id: params[:id]).includes(:user)
 
     return unless user_signed_in?
 
     @check_request = Request.find_by(job_id: params[:id], request_id: current_user.id)
+    @check_current_user_favorite = Favorite.where(user_id: current_user.id).pluck(:job_id)
   end
 
   def destroy

@@ -51,7 +51,7 @@
             <span class="material-icons">contact_support</span><p class="ml-2">問い合わせ先：</p><%= @job.contact %><br>
           </div>
           <div id="favorite_button">
-            <%= render partial: "favorites/favorites", locals: {favorites: @favorites, job: @job.id} %>
+            <%= render partial: "favorites/favorites", locals: {count_favorites: @count_favorites, check_current_user_favorite: @check_current_user_favorite, job: @job.id} %>
           </div>
         </div>
         <div class="flex justify-end pt-6">
