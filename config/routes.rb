@@ -9,7 +9,8 @@ Rails.application.routes.draw do
   end
   resources :jobs, only: [:new, :create, :show, :destroy] do
     resources :comments, only: [:create, :destroy]
-    resources :favorites, only: [:create, :destroy]
+    post 'favorite/:id' => 'favorites#create', as: 'create_favorite'
+    delete 'favorite/:id' => 'favorites#destroy', as: 'destroy_favorite'
     resources :contracts, only: [:create]
     resources :requests, only: [:create, :destroy]
   end

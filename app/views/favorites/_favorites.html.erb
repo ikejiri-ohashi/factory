@@ -1,0 +1,12 @@
+<div class="flex items-center pt-4">
+  <% if user_signed_in? %>
+    <% unless favorites.include?(current_user.id) %>
+      <%= link_to image_tag("star_outline.png", class:"w-6"), job_create_favorite_path(job), method: :post, remote: true  %>
+    <% else %>
+      <%= link_to image_tag("star.png", class:"w-6"), job_destroy_favorite_path(job), method: :delete, remote: true %>
+    <% end %>
+  <% else %>
+    <%= link_to image_tag("star_outline.png", class:"w-6"), new_user_session_path %>
+  <% end %>
+  <p class="ml-2"><%= favorites.count %></p>
+</div>
