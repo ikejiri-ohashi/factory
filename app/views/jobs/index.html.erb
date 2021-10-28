@@ -48,8 +48,8 @@
             <div class="flex items-center">
               <span class="material-icons">schedule</span><p class="ml-2">希望納期： </p><%= job.deadline.name %><br>
             </div>
-            <div id="favorite_button">
-              <%= render partial: "favorites/favorites", locals: {favorites: @count_favorites, job: job.id} %>
+            <div id="favorite_button_<%= job.id %>">
+              <%= render partial: "favorites/favorites", locals: {count_favorites: @count_favorites, check_current_user_favorite: @check_current_user_favorite, job: job.id} %>
             </div>
           </div>
         </div>
