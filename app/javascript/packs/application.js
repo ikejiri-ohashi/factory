@@ -4,7 +4,6 @@
 // that code so it'll be compiled.
 require('jquery')
 require("../comment")
-require("../request")
 require("../contract")
 require("../favorite")
 

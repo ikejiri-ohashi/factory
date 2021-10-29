@@ -3,7 +3,7 @@ class RequestsController < ApplicationController
   # rubocop:disable all
   def create
     requesting = current_user.requests.create(request_id: params[:request_id], job_id: params[:job_id])
-    render json:{ request: requesting }
+    @send_requests = Request.where(job_id: params[:job_id]).includes(:user)
   end
   # rubocop:enable all
 end

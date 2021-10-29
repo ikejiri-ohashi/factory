@@ -108,35 +108,18 @@
               <p class="ml-2 text-xl">加工のリクエスト</p>
             </div>
             <p>特定のユーザーを選択し、この依頼のリクエストを送信することができます。</p>
-            <div class="pt-6" id="request_list">
-            </div>
-            <div class="contents">
-              <%= form_with url: job_requests_path(@job), id: "request_form" do |f| %>
-                <div class="flex justify-center">
-                  <%= f.collection_select(:request_id, @users, :id, :name, prompt: "選択してください", class:"form-select my-2") %>
-                </div>
-                <div class='flex justify-center pt-4'>
-                  <%= f.submit "リクエストを送信する", id: "request_submit", class:"cursor-pointer px-3 py-2 bg-green-500 text-lg text-white font-semibold rounded hover:bg-green-700" %>
-                </div>
-              <% end %>
-            </div>
-            <p class="py-4">リクエストを送信済みのユーザー</p>
-            <% @send_requests.each do |request|%>
-              <div class="mb-2">
-                <div class="flex display-start items-center">
-                  <%= link_to user_path(request.request.id), data: {"turbolinks" => false} do %>
-                    <% if request.request.profile_image? %>
-                      <%= image_tag request.request.profile_image.url, class: "w-8" %>
-                    <% else %>
-                      <%= image_tag avatar_url(request.request), class: "w-8" %>
-                    <% end %>
-                  <% end %>
-                  <%= link_to user_path(request.request.id), data: {"turbolinks" => false} do %>
-                    <p class="ml-2 hover:underline"><%= request.request.name %></p>
-                  <% end %>
-                </div>
+            <%= form_with url: job_requests_path(@job) do |f| %>
+              <div class="pt-6 flex justify-center">
+                <%= f.collection_select(:request_id, @users, :id, :name, prompt: "選択してください", class:"form-select my-2") %>
+              </div>
+              <div class='flex justify-center pt-4'>
+                <%= f.submit "リクエストを送信する", class:"cursor-pointer px-3 py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-700" %>
               </div>
             <% end %>
+            
+            <div id="request_button">
+              <%= render partial: "requests/requests", locals: {send_requests: @send_requests, message: @message} %>
+            </div>
           </div>
         </div>
         <div class="bg-white rounded-md shadow my-4">
@@ -154,7 +137,7 @@
                   <%= f.collection_select(:contracter_id, @users, :id, :name, prompt: "選択してください", class:"form-select my-2") %>
                 </div>
                 <div class='flex justify-center pt-4'>
-                  <%= f.submit "募集を終了する", id: "contract_submit", class:"cursor-pointer px-3 py-2 bg-green-500 text-lg text-white font-semibold rounded hover:bg-green-700" %>
+                  <%= f.submit "募集を終了する", id: "contract_submit", class:"cursor-pointer px-3 py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-700" %>
                 </div>
               </div>
             <% end %>
@@ -179,11 +162,11 @@
           <span class="material-icons">textsms</span>
           <p class="ml-2 text-xl">コメントを投稿する</p>
         </div>
-        <div class="my-2">
+        <div class="my-4">
           <% if user_signed_in? %>
             <%= form_with model: @comment, url: job_comments_path(@job), method: :post, id: "form" do |f| %>
               <%= f.text_area :content, class:'my-4 w-full', id: "content", placeholder: "コメントを入力" %>
-              <%= f.submit "コメントを投稿する", id:'comment_submit', class:"cursor-pointer px-3 py-2 bg-blue-500 text-lg text-white font-semibold rounded hover:bg-blue-700" %>
+              <%= f.submit "コメントを投稿する", id:'comment_submit', class:"cursor-pointer px-3 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-700" %>
             <% end %>
           <% else %>
             <p class="my-4">ログインするとコメントができます</p>
@@ -232,9 +215,6 @@
 
 <script type="text/javascript">
 $(function() {
-  $("#request_submit").click(function() {
-    $("#request_submit").prop("disabled", true);
-  });
   $("#contract_submit").click(function() {
     $("#contract_submit").prop("disabled", true);
   });

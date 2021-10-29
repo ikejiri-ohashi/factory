@@ -45,6 +45,7 @@ class JobsController < ApplicationController
     @contract = Contract.find_by(job_id: params[:id])
     @users = User.order('created_at DESC')
     @count_favorites = Favorite.pluck(:job_id)
+    @request = Request.new
     @send_requests = Request.where(job_id: params[:id]).includes(:user)
 
     return unless user_signed_in?
