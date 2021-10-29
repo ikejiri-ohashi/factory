@@ -4,8 +4,6 @@
 // that code so it'll be compiled.
 require('jquery')
 require("../comment")
-require("../contract")
-require("../favorite")
 
 import Rails from "@rails/ujs"
 import Turbolinks from "turbolinks"

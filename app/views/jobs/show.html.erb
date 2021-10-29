@@ -116,7 +116,6 @@
                 <%= f.submit "リクエストを送信する", class:"cursor-pointer px-3 py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-700" %>
               </div>
             <% end %>
-            
             <div id="request_button">
               <%= render partial: "requests/requests", locals: {send_requests: @send_requests, message: @message} %>
             </div>
@@ -129,15 +128,13 @@
               <p class="ml-2 text-xl">発注先</p>
             </div>
             <p>発注が決定した場合は発注先のユーザーを選択し、募集を終了してください。</p>
-            <div class="pt-6" id="contract_list">
-            </div>
-            <%= form_with model: @contract, url: job_contracts_path(@job), id: "contract_form" do |f| %>
+            <%= form_with model: @contract, url: job_contracts_path(@job), local: true do |f| %>
               <div class="pt-6">
                 <div class="flex justify-center">
                   <%= f.collection_select(:contracter_id, @users, :id, :name, prompt: "選択してください", class:"form-select my-2") %>
                 </div>
                 <div class='flex justify-center pt-4'>
-                  <%= f.submit "募集を終了する", id: "contract_submit", class:"cursor-pointer px-3 py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-700" %>
+                  <%= f.submit "募集を終了する", class:"cursor-pointer px-3 py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-700" %>
                 </div>
               </div>
             <% end %>
@@ -215,9 +212,6 @@
 
 <script type="text/javascript">
 $(function() {
-  $("#contract_submit").click(function() {
-    $("#contract_submit").prop("disabled", true);
-  });
   $("#comment_submit").click(function() {
     $("#comment_submit").prop("disabled", true);
   });
