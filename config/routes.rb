@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   end
   resources :company_profiles, only: [:new, :create, :edit, :update]
   resources :users, only: [:show] do
-    resources :follows, only:[:create, :destroy]
+    post 'follow/:id' => 'follows#create', as: 'create_follow'
+    delete 'follow/:id' => 'follows#destroy', as: 'destroy_follow'
   end
 end
