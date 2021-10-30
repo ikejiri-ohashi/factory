@@ -41,7 +41,8 @@ class JobsController < ApplicationController
   end
 
   def show
-    @comment = @job.comments.includes(:user).order('created_at DESC')
+    @comment = Comment.new
+    @comments = @job.comments.includes(:user).order('created_at DESC')
     @contract = Contract.find_by(job_id: params[:id])
     @users = User.order('created_at DESC')
     @count_favorites = Favorite.pluck(:job_id)

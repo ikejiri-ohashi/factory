@@ -5,12 +5,16 @@ class CommentsController < ApplicationController
 
   def create
     comment = Comment.create(comment_params)
-    render json:{ comment: comment }
+    @comment = Comment.new
+    @comments = Comment.where(job_id: params[:job_id]).order('created_at DESC')
+    @job_id = params[:job_id]
   end
 
   def destroy
     @comment.destroy
-    redirect_back(fallback_location: root_path)
+    @comment = Comment.new
+    @comments = Comment.where(job_id: params[:job_id]).order('created_at DESC')
+    @job_id = params[:job_id]
   end
 
   private
