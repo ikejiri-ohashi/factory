@@ -1,6 +1,9 @@
 <%= render "shared/header" %>
 
 <div class="container mx-auto px-8">
+  <div id="follow_message">
+    <%= render partial: "follows/message", locals: {message: @message } %>
+  </div>
   <div class="grid grid-cols-3 gap-4">
     <div class="bg-white p-4 rounded-md shadow">
       <div class="mb-4 flex justify-center">
@@ -28,7 +31,7 @@
         <% end %>
       <% else %>
         <div id="follow_button">
-          <%= render partial: "follows/check_follow", locals: {check_follow: @check_follow } %>
+          <%= render partial: "follows/check_follow", locals: {check_follow: @check_follow, message: @message } %>
         </div>
       <% end %>
     </div>
