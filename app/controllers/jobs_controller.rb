@@ -14,16 +14,19 @@ class JobsController < ApplicationController
     @check_current_user_favorite = Favorite.where(user_id: current_user.id).pluck(:job_id)
     @company_profile = CompanyProfile.new
     @company_profile = CompanyProfile.find_by(user_id: current_user.id)
-    @user_posted_job = Job.order('created_at DESC').find_by(user_id: current_user.id)
+    @user_posted_jobs = Job.order('created_at DESC').where(user_id: current_user.id)
 
     unless @company_profile.nil?
       @job_recommends = Job.where(category_id: @company_profile.category_id, place_id: @company_profile.place_id)
     end
+  end
 
-    return if @user_posted_job.nil?
-
-    @recommend_user = User.find(CompanyProfile.where(category_id: @user_posted_job.category_id,
-                                                     place_id: @user_posted_job.place_id).pluck(:user_id))
+  def recommend
+    @contracts = Contract.pluck(:job_id)
+    @user_posted_jobs = Job.order('created_at DESC').where(user_id: current_user.id)
+    @selected_job = Job.find(params[:id])
+    @recommend_user = User.find(CompanyProfile.where(category_id: @selected_job.category_id,
+                                                     place_id: @selected_job.place_id).pluck(:user_id))
   end
 
   def new

@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   devise_scope :user do
     post 'users/guest_sign_in', to: 'users/sessions#guest_sign_in'
   end
+  post '/recommend' => 'jobs#recommend', as: 'jobs_recommend'
   resources :jobs, only: [:new, :create, :show, :destroy] do
     resources :comments, only: [:create, :destroy]
     post 'favorite/:id' => 'favorites#create', as: 'create_favorite'

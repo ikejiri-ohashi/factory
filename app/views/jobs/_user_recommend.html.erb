@@ -1,0 +1,53 @@
+<% if user_signed_in? %>
+  <% @none_contract_jobs = user_posted_jobs.reject{|job| contracts.include?(job.id) } %>
+  <% if recommend_user != nil && selected_job != nil %>
+    <%= form_with url: jobs_recommend_path do |f| %>
+      <div class="pt-4 flex justify-center">
+        <%= f.collection_select(:id, @none_contract_jobs, :id, :name, prompt: "選択してください", class:"form-select my-2") %>
+      </div>
+      <div class='flex justify-center pt-4'>
+        <%= f.submit "検索する", class:"cursor-pointer px-3 py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-700" %>
+      </div>
+    <% end %>
+    <div class="m-4 p-2 border border-gray-600">
+    <b>選択した依頼</b>
+      <div class="flex">
+        <%= link_to job_path(selected_job.id), data: {"turbolinks" => false} do %>
+          <p class="hover:underline"><%= selected_job.name %></p>
+        <% end %>
+      </div>
+    </div>
+    <% recommend_user.each do |recommend_user| %>
+      <% unless recommend_user.id == current_user.id %>
+        <hr>
+        <div class="flex display-start items-center m-2">
+          <%= link_to user_path(recommend_user.id), data: {"turbolinks" => false} do %>
+            <% if recommend_user.profile_image? %>
+              <%= image_tag recommend_user.profile_image.url, class: "w-8" %>
+            <% else %>
+              <%= image_tag avatar_url(recommend_user), class: "w-8" %>
+            <% end %>
+          <% end %>
+          <div class="flex">
+            <%= link_to user_path(recommend_user.id), data: {"turbolinks" => false} do %>
+              <p class="ml-2 hover:underline"><%= recommend_user.name %></p>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  <% else %>
+    <%= form_with url: jobs_recommend_path do |f| %>
+      <div class="pt-4 flex justify-center">
+        <%= f.collection_select(:id, @none_contract_jobs, :id, :name, prompt: "選択してください", class:"form-select my-2") %>
+      </div>
+      <div class='flex justify-center pt-4'>
+        <%= f.submit "検索する", class:"cursor-pointer px-3 py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-700" %>
+      </div>
+    <% end %>
+  <% end %>
+  <p class="text-sm mx-2 pt-6">ここではあなたが投稿した加工依頼とマッチ度が高いユーザーを表示します。</p>
+  <p class="text-sm mx-2 pt-4">依頼の納品場所と同じ県にいて、依頼の加工を得意としているユーザーを検索することができます。</p>
+<% else %>
+  <p class="m-2">ログインするとあなたが投稿した依頼とマッチ度が高いユーザーを検索することができます。</p>
+<% end %>

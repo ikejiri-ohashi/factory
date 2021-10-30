@@ -86,42 +86,11 @@
       </div>
       <div class="bg-white h-auto mb-4 p-2 rounded-md shadow border-2 border-blue-400">
         <div class="m-2 flex items-center">
-          <span class="material-icons">person_search</span><b class="ml-2">あなたにおすすめのユーザー</b>
+          <span class="material-icons">person_search</span><b class="ml-2">依頼を引き受けてくれそうなユーザーを探す</b>
         </div>
-        <% if user_signed_in? %>
-          <% unless @recommend_user == nil %>
-            <% @recommend_user.each do |recommend_user| %>
-              <% unless recommend_user.id == current_user.id || @contracts.include?(@user_posted_job.id)  %>
-                <hr>
-                <div class="flex display-start items-center m-2">
-                  <%= link_to user_path(recommend_user.id), data: {"turbolinks" => false} do %>
-                    <% if recommend_user.profile_image? %>
-                      <%= image_tag recommend_user.profile_image.url, class: "w-8" %>
-                    <% else %>
-                      <%= image_tag avatar_url(recommend_user), class: "w-8" %>
-                    <% end %>
-                  <% end %>
-                  <div class="flex">
-                    <%= link_to user_path(recommend_user.id), data: {"turbolinks" => false} do %>
-                      <p class="ml-2 hover:underline"><%= recommend_user.name %></p>
-                    <% end %>
-                  </div>
-                </div>
-              <% end %>
-            <% end %>
-            <div class="mx-2 p-2 border border-gray-600">
-              <b>あなたの最新の投稿</b>
-              <div class="flex">
-                <%= link_to job_path(@user_posted_job.id), data: {"turbolinks" => false} do %>
-                  <p class="hover:underline"><%= @user_posted_job.name %></p>
-                <% end %>
-              </div>
-            </div>
-            <p class="text-sm mx-2 pt-4">ここではあなたの最新の投稿の使用技術と納品場所を元に、この依頼を引き受ける可能性が高いユーザーが表示されます。</p>
-          <% end %>
-        <% else %>
-          <p class="m-2">ログインするとおすすめの仕事が表示されます</p>
-        <% end %>
+        <div id="user_recommend">
+          <%= render partial: "jobs/user_recommend", locals: {recommend_user: @recommend_user, contracts: @contracts, user_posted_jobs: @user_posted_jobs, selected_job: @selected_job} %>
+        </div>
       </div>
       <div class="bg-white h-auto mb-4 p-2 rounded-md shadow">
         <div class="m-2 flex items-center">
