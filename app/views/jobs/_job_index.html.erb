@@ -1,0 +1,52 @@
+<div class="flex items-center p-4">
+  <span class="material-icons">work</span>
+  <p class="ml-2 text-2xl">新規加工依頼一覧</p>
+</div>
+<% jobs.each do |job|%>
+  <div class="mx-4 pb-4 h-auto">
+    <hr>
+    <div class="py-4 text-sm flex justify-between items-center">
+      <div class="flex display-start items-center">
+        <%= link_to user_path(job.user.id), data: {"turbolinks" => false} do %>
+          <% if job.user.profile_image? %>
+            <%= image_tag job.user.profile_image.url, class: "w-8" %>
+          <% else %>
+            <%= image_tag avatar_url(job.user), class: "w-8" %>
+          <% end %>
+        <% end %>
+        <div class="flex">
+          <%= link_to user_path(job.user.id), data: {"turbolinks" => false} do %>
+            <p class="ml-2 hover:underline"><%= job.user.name %></p>
+          <% end %>
+          さんが<%= job.created_at.to_s(:datetime_jp) %>に投稿
+        </div>
+      </div>
+      <% @contracts.each do |contract|%>
+        <% if contract == job.id %>
+          <div class="flex items-center rounded-md border-2 border-green-500">
+            <span class="material-icons">done</span><p class="mx-2">募集は終了しました</p>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+    <%= link_to job_path(job.id), data: {"turbolinks" => false} do %>
+      <div class="text-xl flex p2-4">
+        <p class="hover:underline"><%= job.name %></p><br>
+      </div>
+    <% end %>
+    <div class="pt-4 flex items-center">
+      <span class="material-icons">build</span><p class="ml-2">加工種別：</p><%= job.category.name %>
+    </div>
+    <div class="pt-2 flex items-center">
+      <span class="material-icons">location_on</span><p class="ml-2">納品場所：</p><%= job.place.name %><br>
+    </div>
+    <div class="flex justify-between pt-2">
+      <div class="flex items-center">
+        <span class="material-icons">schedule</span><p class="ml-2">希望納期： </p><%= job.deadline.name %><br>
+      </div>
+      <div id="favorite_button_<%= job.id %>">
+        <%= render partial: "favorites/favorites", locals: {count_favorites: @count_favorites, check_current_user_favorite: @check_current_user_favorite, job: job.id} %>
+      </div>
+    </div>
+  </div>
+<% end %>
