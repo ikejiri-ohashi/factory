@@ -21,6 +21,24 @@ class JobsController < ApplicationController
     end
   end
 
+  def back_index
+    @jobs = Job.order('created_at DESC').includes(:user)
+    @contracts = Contract.pluck(:job_id)
+    @count_favorites = Favorite.pluck(:job_id)
+
+    return unless user_signed_in?
+
+    @check_current_user_favorite = Favorite.where(user_id: current_user.id).pluck(:job_id)
+  end
+
+  def pre_recommend
+    @contracts = Contract.pluck(:job_id)
+    
+    return unless user_signed_in?
+
+    @user_posted_jobs = Job.order('created_at DESC').where(user_id: current_user.id)
+  end
+
   def recommend
     @contracts = Contract.pluck(:job_id)
     @user_posted_jobs = Job.order('created_at DESC').where(user_id: current_user.id)

@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   devise_scope :user do
     post 'users/guest_sign_in', to: 'users/sessions#guest_sign_in'
   end
+  get '/pre_recommend' => 'jobs#pre_recommend', as: 'jobs_pre_recommend'
+  get '/back_index' => 'jobs#back_index', as: 'jobs_back_index'
   post '/recommend' => 'jobs#recommend', as: 'jobs_recommend'
   resources :jobs, only: [:new, :create, :show, :destroy] do
     resources :comments, only: [:create, :destroy]

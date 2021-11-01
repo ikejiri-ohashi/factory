@@ -1,53 +1,73 @@
-<% if user_signed_in? %>
-  <% @none_contract_jobs = user_posted_jobs.reject{|job| contracts.include?(job.id) } %>
-  <% if recommend_user != nil && selected_job != nil %>
-    <%= form_with url: jobs_recommend_path do |f| %>
-      <div class="pt-4 flex justify-center">
-        <%= f.collection_select(:id, @none_contract_jobs, :id, :name, prompt: "選択してください", class:"form-select my-2") %>
-      </div>
-      <div class='flex justify-center pt-4'>
-        <%= f.submit "検索する", class:"cursor-pointer px-3 py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-700" %>
-      </div>
-    <% end %>
-    <div class="m-4 p-2 border border-gray-600">
-    <b>選択した依頼</b>
-      <div class="flex">
-        <%= link_to job_path(selected_job.id), data: {"turbolinks" => false} do %>
-          <p class="hover:underline"><%= selected_job.name %></p>
-        <% end %>
+<div class="grid grid-cols-2">
+  <%= link_to jobs_back_index_path, data: {"turbolinks" => false}, method: :get, remote: true do %>
+    <div class="bg-gray-100 rounded-tr-md h-auto">
+      <div class="flex items-center p-4">
+        <span class="material-icons">work</span>
+        <p class="ml-2 text-md">受注する依頼を探す</p>
       </div>
     </div>
-    <% recommend_user.each do |recommend_user| %>
-      <% unless recommend_user.id == current_user.id %>
-        <hr>
-        <div class="flex display-start items-center m-2">
-          <%= link_to user_path(recommend_user.id), data: {"turbolinks" => false} do %>
-            <% if recommend_user.profile_image? %>
-              <%= image_tag recommend_user.profile_image.url, class: "w-8" %>
-            <% else %>
-              <%= image_tag avatar_url(recommend_user), class: "w-8" %>
-            <% end %>
+  <% end %>
+  <%= link_to jobs_pre_recommend_path, data: {"turbolinks" => false}, method: :post, remote: true do %>
+    <div class="bg-white rounded-t-md h-auto border-b-2 border-blue-500">
+      <div class="flex items-center p-4">
+        <span class="material-icons">person_search</span>
+        <p class="ml-2 text-md">発注するユーザーを探す</p>
+      </div>
+    </div>
+  <% end %>
+</div>
+<div class="mb-4 p-2 ">
+  <p class="text-sm mx-2 pt-6">ここではあなたが投稿した加工依頼とマッチ度が高いユーザーを表示します。</p>
+  <p class="text-sm mx-2 pt-4">依頼の納品場所と同じ県に工場があり、依頼の加工を得意としているユーザーを検索することができます。</p>
+  <% if user_signed_in? %>
+    <% @none_contract_jobs = user_posted_jobs.reject{|job| contracts.include?(job.id) } %>
+    <% if recommend_user != nil && selected_job != nil %>
+      <%= form_with url: jobs_recommend_path do |f| %>
+        <div class="pt-4 flex justify-center">
+          <%= f.collection_select(:id, @none_contract_jobs, :id, :name, prompt: "選択してください", class:"form-select my-2") %>
+        </div>
+        <div class='flex justify-center pt-4'>
+          <%= f.submit "検索する", class:"cursor-pointer px-3 py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-700" %>
+        </div>
+      <% end %>
+      <div class="m-4 p-2 border border-gray-600">
+      <b>選択した依頼</b>
+        <div class="flex">
+          <%= link_to job_path(selected_job.id), data: {"turbolinks" => false} do %>
+            <p class="hover:underline"><%= selected_job.name %></p>
           <% end %>
-          <div class="flex">
+        </div>
+      </div>
+      <% recommend_user.each do |recommend_user| %>
+        <% unless recommend_user.id == current_user.id %>
+          <hr>
+          <div class="flex display-start items-center m-2">
             <%= link_to user_path(recommend_user.id), data: {"turbolinks" => false} do %>
-              <p class="ml-2 hover:underline"><%= recommend_user.name %></p>
+              <% if recommend_user.profile_image? %>
+                <%= image_tag recommend_user.profile_image.url, class: "w-8" %>
+              <% else %>
+                <%= image_tag avatar_url(recommend_user), class: "w-8" %>
+              <% end %>
             <% end %>
+            <div class="flex">
+              <%= link_to user_path(recommend_user.id), data: {"turbolinks" => false} do %>
+                <p class="ml-2 hover:underline"><%= recommend_user.name %></p>
+              <% end %>
+            </div>
           </div>
+        <% end %>
+      <% end %>
+    <% else %>
+      <%= form_with url: jobs_recommend_path do |f| %>
+        <div class="pt-4 flex justify-center">
+          <%= f.collection_select(:id, @none_contract_jobs, :id, :name, prompt: "選択してください", class:"form-select my-2") %>
+        </div>
+        <div class='flex justify-center pt-4'>
+          <%= f.submit "検索する", class:"cursor-pointer px-3 py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-700" %>
         </div>
       <% end %>
     <% end %>
   <% else %>
-    <%= form_with url: jobs_recommend_path do |f| %>
-      <div class="pt-4 flex justify-center">
-        <%= f.collection_select(:id, @none_contract_jobs, :id, :name, prompt: "選択してください", class:"form-select my-2") %>
-      </div>
-      <div class='flex justify-center pt-4'>
-        <%= f.submit "検索する", class:"cursor-pointer px-3 py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-700" %>
-      </div>
-    <% end %>
+    <p class="text-sm mx-2 pt-6">ユーザーを検索するにはログインしてください。</p>
   <% end %>
-  <p class="text-sm mx-2 pt-6">ここではあなたが投稿した加工依頼とマッチ度が高いユーザーを表示します。</p>
-  <p class="text-sm mx-2 pt-4">依頼の納品場所と同じ県にいて、依頼の加工を得意としているユーザーを検索することができます。</p>
-<% else %>
-  <p class="m-2">ログインするとあなたが投稿した依頼とマッチ度が高いユーザーを検索することができます。</p>
-<% end %>
+</div>

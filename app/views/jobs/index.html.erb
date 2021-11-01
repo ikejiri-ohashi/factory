@@ -2,8 +2,9 @@
 <div class="container mx-auto px-8">
   <div class="grid grid-cols-3 gap-4">
     <div class="col-span-2 bg-white rounded-md shadow">
-      
-      <%= render partial: "jobs/job_index", locals: {jobs: @jobs} %>
+      <div id="view">
+        <%= render partial: "jobs/job_index", locals: {jobs: @jobs} %>
+      </div>
     </div>
     <div class="col-span-1">
       <div class="bg-white h-auto mb-4 p-2 rounded-md shadow">
@@ -33,14 +34,6 @@
         <% else %>
           <p class="m-2">ログインするとおすすめの仕事が表示されます</p>
         <% end %>
-      </div>
-      <div class="bg-white h-auto mb-4 p-2 rounded-md shadow border-2 border-blue-400">
-        <div class="m-2 flex items-center">
-          <span class="material-icons">person_search</span><b class="ml-2">依頼を引き受けてくれそうなユーザーを探す</b>
-        </div>
-        <div id="user_recommend">
-          <%= render partial: "jobs/user_recommend", locals: {recommend_user: @recommend_user, contracts: @contracts, user_posted_jobs: @user_posted_jobs, selected_job: @selected_job} %>
-        </div>
       </div>
       <div class="bg-white h-auto mb-4 p-2 rounded-md shadow">
         <div class="m-2 flex items-center">
