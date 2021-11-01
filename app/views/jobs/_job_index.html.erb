@@ -2,7 +2,7 @@
   <%= link_to jobs_back_index_path, data: {"turbolinks" => false} do %>
     <div class="bg-white rounded-t-md h-auto border-b-2 border-blue-500">
       <div class="flex items-center p-4">
-        <span class="material-icons">work</span>
+        <span class="material-icons">manage_search</span>
         <p class="ml-2 text-md">受注する依頼を探す</p>
       </div>
     </div>
@@ -16,8 +16,85 @@
     </div>
   <% end %>
 </div>
-<% jobs.each do |job|%>
-  <div class="mx-4 pb-4 h-auto">
+<div class="mx-4 h-auto">
+  <div class="pt-4 flex items-center">
+    <span class="material-icons">sentiment_satisfied_alt</span><b class="ml-2">あなたにおすすめの依頼</b>
+  </div>
+  <p class="text-sm py-4">ここではあなたの得意技術と所在地を元に、これらの条件が一致している依頼が表示されます。</p>
+  <% if user_signed_in? %>
+    <% unless job_recommends == nil %>
+      <% @none_contract_jobs = job_recommends.reject{|job| contracts.include?(job.id) } %>
+      <% @none_login_user_jobs_and_recommend = @none_contract_jobs.reject{|job| job.user_id == current_user.id } %>
+      <% @none_login_user_jobs_and_recommend.each do |recommend| %>
+        <div class="py-4 text-sm flex justify-between items-center">
+          <div class="flex display-start items-center">
+            <%= link_to user_path(recommend.user.id), data: {"turbolinks" => false} do %>
+              <% if recommend.user.profile_image? %>
+                <%= image_tag recommend.user.profile_image.url, class: "w-8" %>
+              <% else %>
+                <%= image_tag avatar_url(recommend.user), class: "w-8" %>
+              <% end %>
+            <% end %>
+            <div class="flex">
+              <%= link_to user_path(recommend.user.id), data: {"turbolinks" => false} do %>
+                <p class="ml-2 hover:underline"><%= recommend.user.name %></p>
+              <% end %>
+              さんが<%= recommend.created_at.to_s(:datetime_jp) %>に投稿
+            </div>
+          </div>
+          <div class="flex items-center">
+            <span class="material-icons">sentiment_satisfied_alt</span><p class="mx-2">あなたにおすすめ</p>
+          </div>
+        </div>
+        <%= link_to job_path(recommend.id), data: {"turbolinks" => false} do %>
+          <div class="text-xl flex">
+            <p class="hover:underline"><%= recommend.name %></p><br>
+          </div>
+        <% end %>
+        <div class="pt-4 flex items-center">
+          <span class="material-icons">build</span><p class="ml-2">加工種別：</p><%= recommend.category.name %>
+        </div>
+        <div class="pt-4 flex items-center">
+          <span class="material-icons">location_on</span><p class="ml-2">納品場所：</p><%= recommend.place.name %><br>
+        </div>
+        <div class="flex justify-between py-4">
+          <div class="flex items-center">
+            <span class="material-icons">schedule</span><p class="ml-2">希望納期： </p><%= recommend.deadline.name %><br>
+          </div>
+          <div id="favorite_button_<%= recommend.id %>">
+            <%= render partial: "favorites/favorites", locals: {count_favorites: @count_favorites, check_current_user_favorite: @check_current_user_favorite, job: recommend.id} %>
+          </div>
+        </div>
+        <hr>
+      <% end %>
+      <% @already_recommended = @none_login_user_jobs_and_recommend.pluck(:id)%>
+      <% @not_recommend_jobs = jobs.reject{|job| @already_recommended.include?(job.id) } %>
+      <% if @already_recommended.empty? %>
+        <div class="flex items-center">
+          <span class="material-icons">sentiment_neutral</span><p class="ml-2 text-sm py-4">おすすめは見つかりませんでした。</p>
+        </div>
+      <% end %>
+    <% else %>
+      <p class="text-sm pt-4">あなたのプロフィールの情報を元におすすめが表示されます。</p>
+      <p class="text-sm py-4">まずはユーザーページでプロフィールの登録をしてみましょう。</p>
+    <% end %>
+  <% else %>
+    <div class="flex items-center">
+      <span class="material-icons">notifications_paused</span><p class="ml-2 text-sm py-4">ログインするとおすすめのユーザーが表示されます。</p>
+    </div>
+  <% end %>
+  <hr>
+</div>
+<div class="mx-4 h-auto">
+  <div class="pt-4 flex items-center">
+    <span class="material-icons">work</span><b class="ml-2">その他新規依頼一覧</b>
+  </div>
+</div>
+<% unless user_signed_in? %>
+  <% @not_recommend_jobs = jobs %>
+<% end %>
+<% @not_recommend_jobs.each do |job|%>
+  <div class="mx-4 h-auto">
     <div class="py-4 text-sm flex justify-between items-center">
       <div class="flex display-start items-center">
         <%= link_to user_path(job.user.id), data: {"turbolinks" => false} do %>
@@ -43,17 +120,17 @@
       <% end %>
     </div>
     <%= link_to job_path(job.id), data: {"turbolinks" => false} do %>
-      <div class="text-xl flex p2-4">
+      <div class="text-xl flex">
         <p class="hover:underline"><%= job.name %></p><br>
       </div>
     <% end %>
     <div class="pt-4 flex items-center">
       <span class="material-icons">build</span><p class="ml-2">加工種別：</p><%= job.category.name %>
     </div>
-    <div class="pt-2 flex items-center">
+    <div class="pt-4 flex items-center">
       <span class="material-icons">location_on</span><p class="ml-2">納品場所：</p><%= job.place.name %><br>
     </div>
-    <div class="flex justify-between pt-2">
+    <div class="flex justify-between py-4">
       <div class="flex items-center">
         <span class="material-icons">schedule</span><p class="ml-2">希望納期： </p><%= job.deadline.name %><br>
       </div>
@@ -61,6 +138,6 @@
         <%= render partial: "favorites/favorites", locals: {count_favorites: @count_favorites, check_current_user_favorite: @check_current_user_favorite, job: job.id} %>
       </div>
     </div>
+    <hr>
   </div>
-  <hr>
 <% end %>

@@ -29,6 +29,11 @@ class JobsController < ApplicationController
     return unless user_signed_in?
 
     @check_current_user_favorite = Favorite.where(user_id: current_user.id).pluck(:job_id)
+    @company_profile = CompanyProfile.find_by(user_id: current_user.id)
+
+    unless @company_profile.nil?
+      @job_recommends = Job.where(category_id: @company_profile.category_id, place_id: @company_profile.place_id)
+    end
   end
 
   def pre_recommend
