@@ -7,7 +7,32 @@
       </div>
     </div>
     <div class="col-span-1">
-      <div class="bg-white h-auto mb-4 p-2 rounded-md shadow">
+      <% if user_signed_in? %>
+        <div class="bg-white rounded-md mb-4 p-4 shadow">
+          <div class="flex items-center mb-6">
+            <span class="material-icons">person</span><b class="ml-2">ログインユーザー</b>
+          </div>
+          <div class="flex justify-center mb-6">
+            <% if @login_user.profile_image? %>
+              <%= image_tag @login_user.profile_image.url, class: "w-16" %>
+            <% else %>
+              <%= image_tag avatar_url(@login_user), class: "w-16" %>
+            <% end %>
+          </div>
+          <div class="flex justify-center">
+            <%= link_to user_path(@login_user), data: {"turbolinks" => false} do %>
+              <p class="hover:underline text-xl"><%= @login_user.name %>さん</p>
+            <% end %>
+          </div>
+          <div class="pt-4 flex items-center">
+            <span class="material-icons">build</span><p class="ml-2">得意技術：</p><%= @company_profile.category.name %>
+          </div>
+          <div class="pt-4 flex items-center">
+            <span class="material-icons">location_on</span><p class="ml-2">所在地：</p><%= @company_profile.place.name %>
+          </div>
+        </div>
+      <% end %>
+      <div class="bg-white h-auto mb-4 p-4 rounded-md shadow">
         <div class="m-2 flex items-center">
           <%= image_tag("information.png", class:"w-6") %><b class="ml-2">このサービスについて</b>
         </div>

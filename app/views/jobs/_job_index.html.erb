@@ -20,7 +20,10 @@
   <div class="pt-4 flex items-center">
     <span class="material-icons">sentiment_satisfied_alt</span><b class="ml-2">あなたにおすすめの依頼</b>
   </div>
-  <p class="text-sm py-4">ここではあなたの得意技術と所在地を元に、これらの条件が一致している依頼が表示されます。</p>
+  <p class="text-sm pt-6">ここではあなたの地域で投稿された加工依頼が表示されます。</p>
+  <p class="text-sm pt-4">さらにその依頼があなたの得意分野であればおすすめとして表示されます。</p>
+  <p class="text-sm py-4">おすすめが表示されたら積極的に引き受けてみましょう。</p>
+  <hr>
   <% if user_signed_in? %>
     <% unless job_recommends == nil %>
       <% @none_contract_jobs = job_recommends.reject{|job| contracts.include?(job.id) } %>
@@ -85,18 +88,22 @@
   <% end %>
   <hr>
 </div>
-<div class="mx-4 h-auto">
-  <div class="pt-4 flex items-center">
-    <span class="material-icons">work</span><b class="ml-2">その他新規依頼一覧</b>
-  </div>
-</div>
 <% if user_signed_in? %>
   <% if @user_posted_jobs.empty? %>
     <% @not_recommend_jobs = jobs %>
+    <% @title = "投稿された加工依頼一覧" %>
+  <% else %>
+    <% @title = "そのほかの加工依頼" %>
   <% end %>
 <% else %>
   <% @not_recommend_jobs = jobs %>
+  <% @title = "投稿された加工依頼一覧" %>
 <% end %>
+<div class="mx-4 h-auto">
+  <div class="pt-4 flex items-center">
+    <span class="material-icons">work</span><b class="ml-2"><%= @title %></b>
+  </div>
+</div>
 <% @not_recommend_jobs.each do |job|%>
   <div class="mx-4 h-auto">
     <div class="py-4 text-sm flex justify-between items-center">
