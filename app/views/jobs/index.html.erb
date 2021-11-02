@@ -12,8 +12,8 @@
           <%= image_tag("information.png", class:"w-6") %><b class="ml-2">このサービスについて</b>
         </div>
         <p class="p-2">このサービスは金属加工の仕事を依頼したい企業と、その加工技術を持った企業を繋げるサービスです。</p>
+        <p class="p-2">金属製品の加工をしてくれるユーザーを探したり、自分ができそうな加工依頼を探すことができます。</p>
       </div>
-      
       <div class="bg-white h-auto mb-4 p-2 rounded-md shadow">
         <div class="m-2 flex items-center">
           <span class="material-icons">trending_up</span><b class="ml-2">お気に入り数ランキング</b>
@@ -34,31 +34,7 @@
           </div>
         <% end %>
       </div>
-      <div class="bg-white h-auto p-2 rounded-md shadow">
-        <div class="m-2 flex items-center">
-          <span class="material-icons">people</span><b class="ml-2">新規登録ユーザー</b>
-        </div>
-        <% @users.each do | user |%>
-          <div class=" h-auto">
-            <hr>
-            <%= link_to user_path(user.id), data: {"turbolinks" => false} do %>
-              <div class="flex display-start items-center m-2">
-                <% if user.profile_image? %>
-                  <%= image_tag user.profile_image.url, class: "w-8" %>
-                <% else %>
-                  <%= image_tag avatar_url(user), class: "w-8" %>
-                <% end %>
-                <div class="ml-2">
-                  <p class="hover:underline"><%= user.name %></p>
-                </div>
-              </div>
-            <% end %>
-          </div>
-        <% end %>
-      </div>
     </div>
-    
   </div>
 </div>
-
 <%= render "shared/footer" %>

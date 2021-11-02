@@ -16,7 +16,7 @@
     </div>
   <% end %>
 </div>
-<div class="mb-4 p-2 ">
+<div class="p-4">
   <p class="text-sm mx-2 pt-6">ここではあなたが投稿した加工依頼とマッチ度が高いユーザーを表示します。</p>
   <p class="text-sm mx-2 pt-4">依頼の納品場所と同じ県に工場があり、依頼の加工を得意としているユーザーを検索することができます。</p>
   <% if user_signed_in? %>
@@ -30,32 +30,55 @@
           <%= f.submit "検索する", class:"cursor-pointer px-3 py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-700" %>
         </div>
       <% end %>
-      <div class="m-4 p-2 border border-gray-600">
-      <b>選択した依頼</b>
-        <div class="flex">
-          <%= link_to job_path(selected_job.id), data: {"turbolinks" => false} do %>
-            <p class="hover:underline"><%= selected_job.name %></p>
-          <% end %>
-        </div>
-      </div>
-      <% recommend_user.each do |recommend_user| %>
-        <% unless recommend_user.id == current_user.id %>
-          <hr>
-          <div class="flex display-start items-center m-2">
-            <%= link_to user_path(recommend_user.id), data: {"turbolinks" => false} do %>
-              <% if recommend_user.profile_image? %>
-                <%= image_tag recommend_user.profile_image.url, class: "w-8" %>
-              <% else %>
-                <%= image_tag avatar_url(recommend_user), class: "w-8" %>
-              <% end %>
-            <% end %>
-            <div class="flex">
-              <%= link_to user_path(recommend_user.id), data: {"turbolinks" => false} do %>
-                <p class="ml-2 hover:underline"><%= recommend_user.name %></p>
-              <% end %>
+      <div class="m-4 px-4 border border-gray-600">
+        <%= link_to job_path(selected_job.id), data: {"turbolinks" => false} do %>
+          <div class="flex display-start items-center pt-4">
+            <span class="material-icons">work</span><p class="ml-2">選択した依頼名：</p>
+            <div class="flex ml-2">
+                <p class="hover:underline"><%= selected_job.name %></p>
             </div>
           </div>
+          <div class="pt-4 flex items-center">
+            <span class="material-icons">build</span><p class="ml-2">必要技術：</p><%= selected_job.category.name %>
+          </div>
+          <div class="py-4 flex items-center">
+            <span class="material-icons">location_on</span><p class="ml-2">希望納品場所：</p><%= selected_job.place.name %>
+          </div>
         <% end %>
+      </div>
+      <% @not_login_user_and_recommend = recommend_user.reject{|profile| profile.user_id == current_user.id } %>
+      <% @not_login_user_and_recommend.each do |recommend_user| %>
+        <hr>
+        <div class="flex display-start items-center pt-4">
+          <%= link_to user_path(recommend_user.user_id), data: {"turbolinks" => false} do %>
+            <% if recommend_user.user.profile_image? %>
+              <%= image_tag recommend_user.user.profile_image.url, class: "w-8" %>
+            <% else %>
+              <%= image_tag avatar_url(recommend_user.user), class: "w-8" %>
+            <% end %>
+          <% end %>
+          <div class="flex">
+            <%= link_to user_path(recommend_user.user_id), data: {"turbolinks" => false} do %>
+              <p class="ml-2 hover:underline"><%= recommend_user.user.name %></p>
+            <% end %>
+          </div>
+        </div>
+        <div class="pt-4 flex items-center">
+          <span class="material-icons">build</span><p class="ml-2">得意技術：</p><%= recommend_user.category.name %>
+        </div>
+        <div class="py-4 flex items-center">
+          <span class="material-icons">location_on</span><p class="ml-2">所在地：</p><%= recommend_user.place.name %>
+        </div>
+      <% end %>
+      <% @already_recommended = @not_login_user_and_recommend.pluck(:user_id) %>
+      <% if @not_login_user_and_recommend.empty? %>
+        <div class="flex items-center">
+          <span class="material-icons">sentiment_neutral</span><p class="ml-2 text-sm py-4">マッチ度の高いユーザーは見つかりませんでした。</p>
+        </div>
+      <% else %>
+        <div class="flex items-center">
+          <span class="material-icons">saved_search</span><p class="ml-2 text-sm py-4">上記がマッチ度の高いのユーザーとしてヒットしました！投稿した依頼の詳細画面でリクエストを送ってみましょう。</p>
+        </div>
       <% end %>
     <% else %>
       <%= form_with url: jobs_recommend_path do |f| %>
@@ -70,6 +93,39 @@
   <% else %>
     <div class="flex items-center">
       <span class="material-icons">notifications_paused</span><p class="ml-2 text-sm py-4">ユーザーを検索するにはログインしてください。</p>
+    </div>
+  <% end %>
+  <% if @already_recommended.nil? %>
+    <% @not_recommend_users = users %>
+    <% @title = "新規登録ユーザー" %>
+  <% else %>
+    <% @not_recommend_users = users.reject{|user| @already_recommended.include?(user.user_id) } %>
+    <% @title = "その他登録ユーザー" %>
+  <% end %>
+  <div class="m-2 flex items-center">
+    <span class="material-icons">people</span><b class="ml-2"><%= @title %></b>
+  </div>
+  <% @not_recommend_users.each do | user |%>
+    <hr>
+    <div class="flex display-start items-center pt-4">
+      <%= link_to user_path(user.user_id), data: {"turbolinks" => false} do %>
+        <% if user.user.profile_image? %>
+          <%= image_tag user.user.profile_image.url, class: "w-8" %>
+        <% else %>
+          <%= image_tag avatar_url(user.user), class: "w-8" %>
+        <% end %>
+      <% end %>
+      <div class="flex">
+        <%= link_to user_path(user.user_id), data: {"turbolinks" => false} do %>
+          <p class="ml-2 hover:underline"><%= user.user.name %></p>
+        <% end %>
+      </div>
+    </div>
+    <div class="pt-4 flex items-center">
+      <span class="material-icons">build</span><p class="ml-2">得意技術：</p><%= user.category.name %>
+    </div>
+    <div class="py-4 flex items-center">
+      <span class="material-icons">location_on</span><p class="ml-2">所在地：</p><%= user.place.name %>
     </div>
   <% end %>
 </div>

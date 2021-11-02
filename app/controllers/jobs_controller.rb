@@ -30,6 +30,7 @@ class JobsController < ApplicationController
 
     @check_current_user_favorite = Favorite.where(user_id: current_user.id).pluck(:job_id)
     @company_profile = CompanyProfile.find_by(user_id: current_user.id)
+    @user_posted_jobs = Job.order('created_at DESC').where(user_id: current_user.id)
 
     unless @company_profile.nil?
       @job_recommends = Job.where(category_id: @company_profile.category_id, place_id: @company_profile.place_id)
@@ -37,6 +38,7 @@ class JobsController < ApplicationController
   end
 
   def pre_recommend
+    @users = CompanyProfile.order('created_at DESC').includes(:user)
     @contracts = Contract.pluck(:job_id)
     
     return unless user_signed_in?
@@ -45,11 +47,12 @@ class JobsController < ApplicationController
   end
 
   def recommend
+    @users = CompanyProfile.order('created_at DESC').includes(:user)
     @contracts = Contract.pluck(:job_id)
     @user_posted_jobs = Job.order('created_at DESC').where(user_id: current_user.id)
     @selected_job = Job.find(params[:id])
-    @recommend_user = User.find(CompanyProfile.where(category_id: @selected_job.category_id,
-                                                     place_id: @selected_job.place_id).pluck(:user_id))
+    @recommend_user = CompanyProfile.where(category_id: @selected_job.category_id,
+                                           place_id: @selected_job.place_id).includes(:user)
   end
 
   def new

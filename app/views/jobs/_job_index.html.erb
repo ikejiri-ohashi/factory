@@ -67,11 +67,11 @@
         </div>
         <hr>
       <% end %>
-      <% @already_recommended = @none_login_user_jobs_and_recommend.pluck(:id)%>
+      <% @already_recommended = @none_login_user_jobs_and_recommend.pluck(:id) %>
       <% @not_recommend_jobs = jobs.reject{|job| @already_recommended.include?(job.id) } %>
       <% if @already_recommended.empty? %>
         <div class="flex items-center">
-          <span class="material-icons">sentiment_neutral</span><p class="ml-2 text-sm py-4">おすすめは見つかりませんでした。</p>
+          <span class="material-icons">sentiment_neutral</span><p class="ml-2 text-sm py-4">おすすめの依頼は見つかりませんでした。</p>
         </div>
       <% end %>
     <% else %>
@@ -90,7 +90,11 @@
     <span class="material-icons">work</span><b class="ml-2">その他新規依頼一覧</b>
   </div>
 </div>
-<% unless user_signed_in? %>
+<% if user_signed_in? %>
+  <% if @user_posted_jobs.empty? %>
+    <% @not_recommend_jobs = jobs %>
+  <% end %>
+<% else %>
   <% @not_recommend_jobs = jobs %>
 <% end %>
 <% @not_recommend_jobs.each do |job|%>
