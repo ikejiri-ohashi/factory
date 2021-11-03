@@ -1,3 +1,10 @@
+<% if user_signed_in? %>
+  <% @login_user_rejected = users.reject{|user| user.id == current_user.id} %>
+  <% @login_user_profile_rejected = users_profile.reject{|user| user.user_id == current_user.id} %>
+<% else %>
+  <% @login_user_rejected = users %>
+  <% @login_user_profile_rejected = users_profile %>
+<% end %>
 <div class="grid grid-cols-2">
   <%= link_to jobs_back_index_path, data: {"turbolinks" => false}, method: :get, remote: true do %>
     <div class="bg-gray-100 rounded-tl-md h-auto">
@@ -49,8 +56,8 @@
           </div>
         <% end %>
       </div>
-      <% @not_login_user_and_recommend = recommend_user.reject{|profile| profile.user_id == current_user.id } %>
-      <% @not_login_user_and_recommend.each do |recommend_user| %>
+      <% @recommend_users = recommend_user.reject{|profile| profile.user_id == current_user.id } %>
+      <% @recommend_users.each do |recommend_user| %>
         <hr>
         <div class="flex display-start items-center pt-4">
           <%= link_to user_path(recommend_user.user_id), data: {"turbolinks" => false} do %>
@@ -73,8 +80,8 @@
           <span class="material-icons">location_on</span><p class="ml-2">所在地：</p><%= recommend_user.place.name %>
         </div>
       <% end %>
-      <% @already_recommended = @not_login_user_and_recommend.pluck(:user_id) %>
-      <% if @not_login_user_and_recommend.empty? %>
+      <% @already_recommended = @recommend_users.pluck(:user_id) %>
+      <% if @recommend_users.empty? %>
         <div class="flex items-center">
           <span class="material-icons">sentiment_neutral</span><p class="ml-2 text-sm py-4">マッチ度の高いユーザーは見つかりませんでした。</p>
         </div>
@@ -99,16 +106,16 @@
     </div>
   <% end %>
   <% if @already_recommended.nil? %>
-    <% @not_recommend_users = users %>
+    <% @users_has_profiles = @login_user_profile_rejected %>
     <% @title = "新規登録ユーザー" %>
   <% else %>
-    <% @not_recommend_users = users.reject{|user| @already_recommended.include?(user.user_id) } %>
+    <% @users_has_profiles = @login_user_profile_rejected.reject{|user| @already_recommended.include?(user.user_id) } %>
     <% @title = "その他登録ユーザー" %>
   <% end %>
   <div class="m-2 flex items-center">
     <span class="material-icons">people</span><b class="ml-2"><%= @title %></b>
   </div>
-  <% @not_recommend_users.each do | user |%>
+  <% @users_has_profiles.each do | user |%>
     <hr>
     <div class="flex display-start items-center pt-4">
       <%= link_to user_path(user.user_id), data: {"turbolinks" => false} do %>
@@ -129,6 +136,32 @@
     </div>
     <div class="py-4 flex items-center">
       <span class="material-icons">location_on</span><p class="ml-2">所在地：</p><%= user.place.name %>
+    </div>
+  <% end %>
+  <% @shown_users_id = @users_has_profiles.pluck(:user_id) %>
+  <% @shown_users_id.push(@already_recommended).flatten! %>
+  <% @users_no_profiles = @login_user_rejected.reject{|user| @shown_users_id.include?(user.id)} %>
+  <% @users_no_profiles.each do | user |%>
+    <hr>
+    <div class="flex display-start items-center pt-4">
+      <%= link_to user_path(user.id), data: {"turbolinks" => false} do %>
+        <% if user.profile_image? %>
+          <%= image_tag user.profile_image.url, class: "w-8" %>
+        <% else %>
+          <%= image_tag avatar_url(user), class: "w-8" %>
+        <% end %>
+      <% end %>
+      <div class="flex">
+        <%= link_to user_path(user.id), data: {"turbolinks" => false} do %>
+          <p class="ml-2 hover:underline"><%= user.name %></p>
+        <% end %>
+      </div>
+    </div>
+    <div class="pt-4 flex items-center">
+      <span class="material-icons">build</span><p class="ml-2">得意技術：</p>未登録
+    </div>
+    <div class="py-4 flex items-center">
+      <span class="material-icons">location_on</span><p class="ml-2">所在地：</p>未登録
     </div>
   <% end %>
 </div>

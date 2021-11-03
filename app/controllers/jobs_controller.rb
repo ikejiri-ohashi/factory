@@ -38,7 +38,8 @@ class JobsController < ApplicationController
   end
 
   def pre_recommend
-    @users = CompanyProfile.order('created_at DESC').includes(:user)
+    @users_profile = CompanyProfile.order('created_at DESC').includes(:user)
+    @users = User.order('created_at DESC')
     @contracts = Contract.pluck(:job_id)
     
     return unless user_signed_in?
@@ -47,7 +48,8 @@ class JobsController < ApplicationController
   end
 
   def recommend
-    @users = CompanyProfile.order('created_at DESC').includes(:user)
+    @users_profile = CompanyProfile.order('created_at DESC').includes(:user)
+    @users = User.order('created_at DESC')
     @contracts = Contract.pluck(:job_id)
     @user_posted_jobs = Job.order('created_at DESC').where(user_id: current_user.id)
     @selected_job = Job.find(params[:id])
