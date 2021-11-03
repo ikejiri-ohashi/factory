@@ -154,8 +154,9 @@
   <% if @company_profile != nil %>
     <% @already_recommended_first = @none_login_user_jobs_and_recommend.pluck(:id) %>
     <% @already_recommended_second = @recommend_users_place_jobs.pluck(:id) %>
-    <% @total = @already_recommended_first.push(@already_recommended_second).flatten! %>
-    <% @other_jobs = @not_recommend_jobs.reject{|job| @total.include?(job.id) } %>
+    <% @user_posted_job_ids = @user_posted_jobs.pluck(:id) %>
+    <% @total = @already_recommended_first.push(@already_recommended_second).push(@user_posted_job_ids).flatten! %>
+    <% @other_jobs = @not_recommend_jobs.reject{|job| @total.include?(job.id)} %>
     <% if @company_profile.nil? || @total.empty? %>
       <% @not_recommend_jobs = jobs %>
     <% end %>
@@ -165,12 +166,16 @@
 <% else %>
   <% @other_jobs = jobs %>
 <% end %>
+<% @no_contract_jobs = @other_jobs.reject{|job| contracts.include?(job.id) }%>
 <div class="mx-4 h-auto">
-  <div class="pt-4 flex items-center">
-    <span class="material-icons">work</span><b class="ml-2">加工依頼一覧</b>
+  <div class="py-4 flex items-center">
+    <span class="material-icons">work</span><b class="ml-2">募集中の加工依頼一覧</b>
   </div>
 </div>
-<% @other_jobs.each do |job|%>
+<% if @other_jobs.empty? %>
+  <p class="text-sm py-4 mx-4">受注可能な投稿はありません</p>
+<% end %>
+<% @no_contract_jobs.each do |job|%>
   <div class="mx-4 h-auto">
     <div class="py-4 text-sm flex justify-between items-center">
       <div class="flex display-start items-center">
@@ -188,13 +193,6 @@
           さんが<%= job.created_at.to_s(:datetime_jp) %>に投稿
         </div>
       </div>
-      <% @contracts.each do |contract|%>
-        <% if contract == job.id %>
-          <div class="flex items-center rounded-md border-2 border-green-500">
-            <span class="material-icons">done</span><p class="mx-2">募集は終了しました</p>
-          </div>
-        <% end %>
-      <% end %>
     </div>
     <%= link_to job_path(job.id), data: {"turbolinks" => false} do %>
       <div class="text-xl flex">

@@ -18,6 +18,10 @@
               <div class="bg-gray-500 h-8 rounded-md flex items-center">
                 <%= link_to image_tag("delete.png", class:"w-6"), job_path, class: "p-2", data: { confirm: "本当に削除しますか?" }, method: :delete %>
               </div>
+            <% else %>
+              <div class="flex items-center rounded-md border-2 border-yellow-300">
+                <span class="material-icons">notifications_none</span><p class="mx-2">募集中</p>
+              </div>
             <% end %>
           <% end %>
         </div>
