@@ -1,8 +1,8 @@
 <%= render "shared/header" %>
 <input type="hidden" value=<%= @job.id %> id="hidden_job_id" />
-<div class="container mx-auto">
-  <div class="grid grid-cols-3 gap-4">
-    <div class="col-span-2 bg-white rounded-md shadow">
+<div class="container mx-auto lg:px-8">
+  <div class="lg:grid grid-cols-3">
+    <div class="col-span-2 bg-white rounded-md shadow mt-4 mx-4">
       <div class="p-4 h-auto">
         <div class="flex justify-between mb-6">
           <div class="flex items-center">
@@ -61,7 +61,7 @@
       </div>
     </div>
     <div class="col-span-1">
-      <div class="bg-white rounded-md shadow">
+      <div class="bg-white rounded-md shadow mt-4 mx-4">
         <div class="p-4 h-auto">
           <div class="flex items-center mb-6">
             <span class="material-icons">person</span>
@@ -83,7 +83,7 @@
         </div>
       </div>
       <% if @contract != nil %>
-        <div class="bg-white rounded-md shadow my-4 border-2 border-green-500">
+        <div class="bg-white rounded-md shadow mt-4 mx-4 border-2 border-green-500">
           <div class="p-4 h-auto">
             <div class="flex items-center mb-6">
               <span class="material-icons">done</span>
@@ -105,7 +105,7 @@
           </div>
         </div>
       <% elsif user_signed_in? && current_user.id == @job.user_id %>
-        <div class="bg-white rounded-md shadow my-4">
+        <div class="bg-white rounded-md shadow mt-4 mx-4">
           <div class="p-4 h-auto">
             <div class="flex items-center mb-6">
               <span class="material-icons">send</span>
@@ -125,7 +125,7 @@
             </div>
           </div>
         </div>
-        <div class="bg-white rounded-md shadow my-4">
+        <div class="bg-white rounded-md shadow mt-4 mx-4">
           <div class="p-4 h-auto">
             <div class="flex items-center mb-6">
               <span class="material-icons">manage_search</span>
@@ -145,7 +145,7 @@
           </div>
         </div>
       <% elsif user_signed_in? && @check_request != nil %>
-        <div class="bg-white rounded-md shadow my-4 border-2 border-yellow-300">
+        <div class="bg-white rounded-md shadow mt-4 mx-4 border-2 border-yellow-300">
           <div class="p-4 h-auto">
             <div class="flex items-center mb-6">
               <span class="material-icons">announcement</span>
@@ -157,7 +157,7 @@
         </div>
       <% end %>
     </div>
-    <div class="col-span-2 bg-white rounded-md shadow">
+    <div class="col-span-2 bg-white rounded-md shadow mt-4 mx-4">
       <div class="p-4 h-auto">
         <div class="flex items-center">
           <span class="material-icons">textsms</span>
@@ -168,7 +168,7 @@
         </div>
       </div>
     </div>
-    <div class="col-span-2 flex justify-center">
+    <div class="col-span-2 flex justify-center mt-4">
       <%= link_to "トップページに戻る", root_path, class:"px-3 py-2 text-blue-500 text-xl border border-blue-500 font-semibold rounded hover:bg-blue-100" %>
     </div>
   </div>

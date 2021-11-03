@@ -1,20 +1,15 @@
 <%= render "shared/header" %>
-
-<div class="container mx-auto px-8">
-  <div class="grid grid-cols-2 gap-4">
-    <div class="col-span-1 bg-white rounded-md shadow">
-      <div class="p-4 text-2xl">
-        Welcome!
-      </div>
+<div class="container mx-auto lg:px-8">
+  <div class="lg:grid grid-cols-2">
+    <div class="col-span-1 bg-white rounded-md shadow mt-4 mx-4 p-4">
+      <p class="text-2xl">Welcome!</p>
     </div>
-    <div class="col-span-1 bg-white rounded-md shadow">
+    <div class="col-span-1 bg-white rounded-md shadow mt-4 mx-4 p-4">
       <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-        <div class="p-4 h-auto divide-y divide-gray-400 bg-white rounded-md shadow">
-          <div class='login-flash-message'>
-            <%= flash[:notice] %>
-            <%= flash[:alert] %>
-          </div>
-          <div class="p-4">
+        <div class="h-auto divide-y divide-gray-400">
+          <%= flash[:notice] %>
+          <%= flash[:alert] %>
+          <div class="px-4 pb-4">
             <%= f.label :email %><br />
             <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
           </div>
@@ -23,7 +18,6 @@
             <%= f.label :password %><br />
             <%= f.password_field :password, autocomplete: "current-password" %>
           </div>
-
           <% if devise_mapping.rememberable? %>
             <div class="p-4">
               <%= f.check_box :remember_me %>

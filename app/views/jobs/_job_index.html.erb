@@ -11,7 +11,7 @@
     <div class="bg-gray-100 rounded-tr-md h-auto">
       <div class="flex items-center p-4">
         <span class="material-icons">person_search</span>
-        <p class="ml-2 text-md">発注するユーザーを探す</p>
+        <p class="ml-2 text-md">発注先ユーザーを探す</p>
       </div>
     </div>
   <% end %>
@@ -31,7 +31,7 @@
       <% @none_login_user_jobs_and_recommend = @none_contract_jobs.reject{|job| job.user_id == current_user.id } %>
       <% @none_login_user_jobs_and_recommend.each do |recommend| %>
         <div class="py-4 text-sm flex justify-between items-center">
-          <div class="flex display-start items-center">
+          <div class="flex display-start items-center w-6/12">
             <%= link_to user_path(recommend.user.id), data: {"turbolinks" => false} do %>
               <% if recommend.user.profile_image? %>
                 <%= image_tag recommend.user.profile_image.url, class: "w-8" %>
@@ -46,7 +46,7 @@
               さんが<%= recommend.created_at.to_s(:datetime_jp) %>に投稿
             </div>
           </div>
-          <div class="flex items-center">
+          <div class="flex justify-end items-center w-6/12">
             <span class="material-icons">sentiment_satisfied_alt</span><p class="mx-2">あなたにおすすめ</p>
           </div>
         </div>
@@ -100,7 +100,7 @@
         </div>
         <% @recommend_users_place_jobs.each do |recommend|%>
           <div class="py-4 text-sm flex justify-between items-center">
-            <div class="flex display-start items-center">
+            <div class="flex display-start items-center w-6/12">
               <%= link_to user_path(recommend.user.id), data: {"turbolinks" => false} do %>
                 <% if recommend.user.profile_image? %>
                   <%= image_tag recommend.user.profile_image.url, class: "w-8" %>
@@ -115,7 +115,7 @@
                 さんが<%= recommend.created_at.to_s(:datetime_jp) %>に投稿
               </div>
             </div>
-            <div class="flex items-center">
+            <div class="flex justify-end items-center w-6/12">
               <span class="material-icons">location_on</span><p class="mx-2">同じ地域の投稿</p>
             </div>
           </div>

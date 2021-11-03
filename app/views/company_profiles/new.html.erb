@@ -1,38 +1,38 @@
 <%= render "shared/header" %>
-<div class="container mx-auto">
+<div class="container mx-auto lg:px-8">
   <%= form_with model: @company_profile, url: company_profiles_path, local: true do |f| %>
-    <div class="p-4 h-auto divide-y divide-gray-400 bg-white rounded-md shadow">
-      <div class="p-4">
-        <div class="form-text">得意な加工</div>
-        <%= f.collection_select(:category_id, Category.all, :id, :name, {}, {class:"form-select my-2"}) %>
+    <div class="p-4 h-auto divide-y divide-gray-400 bg-white rounded-md shadow m-4">
+      <div class="px-4 pb-4">
+        <div class="form-text pb-4">得意な加工</div>
+        <%= f.collection_select(:category_id, Category.all, :id, :name, {}, {class:"form-select"}) %>
       </div>
       <div class="p-4">
-        <div class="form-text">２番目に得意な加工</div>
-        <%= f.collection_select(:sub_category_id, SubCategory.all, :id, :name, {}, {class:"form-select my-2"}) %>
+        <div class="form-text pb-4">２番目に得意な加工</div>
+        <%= f.collection_select(:sub_category_id, SubCategory.all, :id, :name, {}, {class:"form-select"}) %>
       </div>
       <div class="p-4">
-        <div class="form-text">得意な加工についての説明</div>
-        <%= f.text_area :content, class:"my-2 w-full" %>
+        <div class="form-text pb-4">得意な加工についての説明</div>
+        <%= f.text_area :content, class:"w-full" %>
       </div>
       <div class="p-4">
-        <div class="form-text">自己紹介</div>
-        <%= f.text_area :self_introduction, class:'my-2 w-full' %>
+        <div class="form-text pb-4">自己紹介</div>
+        <%= f.text_area :self_introduction, class:'w-full' %>
       </div>
       <div class="p-4">
-        <div class="form-text">企業所在地</div>
-        <%= f.collection_select(:place_id, Place.all, :id, :name, {}, {class:"form-select my-2"}) %>
+        <div class="form-text pb-4">企業所在地</div>
+        <%= f.collection_select(:place_id, Place.all, :id, :name, {}, {class:"form-select"}) %>
       </div>
       <div class="p-4">
-        <div class="form-text">会社ホームページ</div>
-        <%= f.text_area :company_url, class:'my-2 w-full' %>
+        <div class="form-text pb-4">会社ホームページ</div>
+        <%= f.text_area :company_url, class:'w-full' %>
       </div>
       <div class="p-4">
-        <div class="form-text">連絡先</div>
-        <%= f.text_area :contact, class:'my-2 w-full' %>
+        <div class="form-text pb-4">連絡先</div>
+        <%= f.text_area :contact, class:'w-full' %>
       </div>
       <div>
-        <p class="py-8 flex justify-center"><%= f.submit "プロフィールを更新する", class:"cursor-pointer px-3 py-2 bg-blue-500 text-xl text-white font-semibold rounded hover:bg-blue-700" %></p>
-        <p class="pb-8 flex justify-center"><%= link_to 'トップページに戻る', root_path, class:"px-3 py-2 text-blue-500 text-xl border border-blue-500 font-semibold rounded hover:bg-blue-100" %></p>
+      <p class="py-4 flex justify-center"><%= f.submit "プロフィールを更新する", class:"cursor-pointer px-3 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-700" %></p>
+      <p class="flex justify-center"><%= link_to 'トップページに戻る', root_path, class:"px-3 py-2 text-blue-500 border border-blue-500 font-semibold rounded hover:bg-blue-100" %></p>
       </div>
     </div>
   <% end %>

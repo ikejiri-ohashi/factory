@@ -1,56 +1,52 @@
 <%= render "shared/header" %>
-
-  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-    <%= render "devise/shared/error_messages", resource: resource %>
-<div class="container mx-auto px-8">
-  <div class="grid grid-cols-3 gap-4">
-    <div class="bg-white h-auto p-4 rounded-md shadow">
-      <div class="mb-4 flex justify-center">
-        <% if @user.profile_image? %>
-          <%= image_tag @user.profile_image.url class: "w-16" %>
-        <% else %>
-          <%= image_tag avatar_url(@user) %>
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+  <%= render "devise/shared/error_messages", resource: resource %>
+  <div class="container mx-auto lg:px-8">
+    <div class="lg:grid grid-cols-3">
+      <div class="bg-white h-auto p-4 rounded-md shadow mx-4 mt-4">
+        <div class="mb-4 flex justify-center">
+          <% if @user.profile_image? %>
+            <%= image_tag @user.profile_image.url class: "w-16" %>
+          <% else %>
+            <%= image_tag avatar_url(@user) %>
+          <% end %>
+        </div>
+        <div class="my-8 flex justify-center">
+          <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
+        </div>
+        <div class="mt-16 flex justify-center">
+          <%= f.submit "設定を更新する", class: "cursor-pointer px-3 py-2 bg-blue-500 text-lg text-white font-semibold rounded hover:bg-blue-700"%>
+        </div>
+      </div>
+      <div class="col-span-2 bg-white p-4 rounded-md shadow mx-4 mt-4">
+        <div class="px-4 pb-4">
+          <p>プロフィール画像</p>
+          <%= f.file_field :profile_image, class: "break-words" %>
+        </div>
+        <div class="p-4">
+          <%= f.label :email %><br />
+          <%= f.text_field :email, autofocus: true, autocomplete: "email" %>
+        </div>
+        <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+          <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
         <% end %>
+        <div class="p-4">
+          新しいパスワード<br>
+          <%= f.password_field :password, autocomplete: "new-password" %>
+          <div class="form-text"></div>
+        </div>
+        <div class="p-4">
+          新しいパスワード(確認用)<br>
+          <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+        </div>
+        <div class="px-4 pt-4">
+          <%= f.label :current_password %><br />
+          <%= f.password_field :current_password, autocomplete: "current-password" %>
+          <br>
+          <p class="text-sm pt-4">設定を変更する場合は現在のパスワードを入力してください</p>
+        </div>
       </div>
-      <div class="my-8 flex justify-center">
-        <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
-      </div>
-      <div class="mt-16 flex justify-center">
-        <%= f.submit "設定を更新する", class: "cursor-pointer px-3 py-2 bg-blue-500 text-lg text-white font-semibold rounded hover:bg-blue-700"%>
-      </div>
-    </div>
-    <div class="col-span-2 bg-white p-4 rounded-md shadow">
-      <div class="p-4">
-        <p>プロフィール画像</p>
-        <%= f.file_field :profile_image, class: "break-words" %>
-      </div>
-      <div class="p-4">
-        <%= f.label :email %><br />
-        <%= f.text_field :email, autofocus: true, autocomplete: "email" %>
-      </div>
-      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-        <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-      <% end %>
-      <div class="p-4">
-        新しいパスワード<br>
-        <%= f.password_field :password, autocomplete: "new-password" %>
-        <div class="form-text"></div>
-      </div>
-
-      <div class="p-4">
-        新しいパスワード(確認用)<br>
-        <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-      </div>
-
-      <div class="p-4">
-        <%= f.label :current_password %><br />
-        <%= f.password_field :current_password, autocomplete: "current-password" %>
-        <br>
-        <em>設定を変更する場合は現在のパスワードを入力してください</em>
-      </div>
-      
     </div>
   </div>
-</div>
-  <% end %>
+<% end %>
 <%= render "shared/footer" %>
