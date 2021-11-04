@@ -1,140 +1,90 @@
 <%= render "shared/header" %>
-<div class="container mx-auto px-8">
-  <div class="grid grid-cols-3 gap-4">
-    <div class="col-span-2 bg-white rounded-md shadow">
-      <div class="flex items-center p-4">
-        <span class="material-icons">work</span>
-        <p class="ml-2 text-2xl">新規加工依頼一覧</p>
+<div class="container mx-auto lg:px-8">
+  <div class="lg:grid grid-cols-3">
+    <div class="col-span-2 bg-white rounded-md shadow m-4 ">
+      <div id="view">
+        <%= render partial: "jobs/job_index", locals: {jobs: @jobs, job_recommends: @job_recommends, contracts: @contracts} %>
       </div>
-      <% @jobs.each do |job|%>
-        <div class="mx-4 pb-4 h-auto">
-          <hr>
-          <div class="py-4 text-sm flex justify-between items-center">
-            <div class="flex display-start items-center">
-              <%= link_to user_path(job.user.id) do %>
-                <% if job.user.profile_image? %>
-                  <%= image_tag job.user.profile_image.url, class: "w-8" %>
-                <% else %>
-                  <%= image_tag avatar_url(job.user), class: "w-8" %>
-                <% end %>
-              <% end %>
-              <div class="flex">
-                <%= link_to user_path(job.user.id) do %>
-                  <p class="ml-2 hover:underline"><%= job.user.name %></p>
-                <% end %>
-                さんが<%= job.created_at.to_s(:datetime_jp) %>に投稿
-              </div>
-            </div>
-            <% @contracts.each do |contract|%>
-              <% if contract == job.id %>
-                <div class="flex items-center rounded-md border-2 border-green-500">
-                  <span class="material-icons">done</span><p class="mx-2">募集は終了しました</p>
-                </div>
-              <% end %>
-            <% end %>
-          </div>
-          <%= link_to job_path(job.id) do %>
-            <div class="text-xl flex p2-4">
-              <p class="hover:underline"><%= job.name %></p><br>
-            </div>
-          <% end %>
-          <div class="pt-4 flex items-center">
-            <span class="material-icons">build</span><p class="ml-2">加工種別：</p><%= job.category.name %>
-          </div>
-          <div class="pt-2 flex items-center">
-            <span class="material-icons">location_on</span><p class="ml-2">納品場所：</p><%= job.place.name %><br>
-          </div>
-          <div class="flex justify-between pt-2">
-            <div class="flex items-center">
-              <span class="material-icons">schedule</span><p class="ml-2">希望納期： </p><%= job.deadline.name %><br>
-            </div>
-            <div class="flex items-center">
-              <% if user_signed_in? %>
-                <% if @check_current_user_favorite.include?(job.id) %>
-                  <%= link_to image_tag("star.png", class:"w-6"), job_favorite_path(id: job.id, job_id: job.id), method: :delete %>
-                <% else %>
-                  <%= link_to image_tag("star_outline.png", class:"w-6"), job_favorites_path(job), method: :post %>
-                <% end %>
-              <% else %>
-                <%= link_to image_tag("star_outline.png", class:"w-6"), new_user_session_path %>
-              <% end %>
-              <p class="ml-2"><%= @count_favorites.count(job.id) %></p>
-            </div>
-          </div>
-        </div>
-      <% end %>
     </div>
     <div class="col-span-1">
-      <div class="bg-white h-auto mb-4 p-2 rounded-md shadow">
+      <% if user_signed_in? %>
+        <div class="bg-white rounded-md m-4 p-4 shadow">
+          <div class="flex items-center mb-6">
+            <span class="material-icons">person</span><b class="ml-2">ログインユーザー</b>
+          </div>
+          <div class="flex justify-center mb-6">
+            <% if @login_user.profile_image? %>
+              <%= image_tag @login_user.profile_image.url, class: "w-16" %>
+            <% else %>
+              <%= image_tag avatar_url(@login_user), class: "w-16" %>
+            <% end %>
+          </div>
+          <div class="flex justify-center">
+            <%= link_to user_path(@login_user), data: {"turbolinks" => false} do %>
+              <p class="hover:underline text-xl"><%= @login_user.name %>さん</p>
+            <% end %>
+          </div>
+          <% if @company_profile != nil %>
+            <% if @company_profile.category_id == 1 %>
+              <% @category = "未登録" %>
+            <% else %>
+              <% @category = @company_profile.category.name %>
+            <% end %>
+            <% if @company_profile.place_id == 1 %>
+              <% @place = "未登録" %>
+            <% else %>
+              <% @place = @company_profile.place.name %>
+            <% end %>
+          <% else %>
+            <% @category = "未登録" %>
+            <% @place = "未登録" %>
+          <% end %>
+          <div class="pt-4 flex items-center">
+            <span class="material-icons">build</span><p class="ml-2">得意技術：</p><%= @category %>
+          </div>
+          <div class="pt-4 flex items-center">
+            <span class="material-icons">location_on</span><p class="ml-2">所在地：</p><%= @place %>
+          </div>
+          <% if @check_request %>
+            <div class="bg-white rounded-md shadow mt-4 mx-4 border-2 border-yellow-300">
+              <div class="p-4 h-auto">
+                <div class="flex items-center mb-4">
+                  <span class="material-icons">announcement</span>
+                  <p class="ml-2">加工依頼のリクエストが届いています！</p>
+                </div>
+                <%= link_to job_path(@check_request.job_id), data: {"turbolinks" => false} do %>
+                  <p class="hover:underline"><%= @check_request.job.name %></p>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+      <div class="bg-white h-auto mx-4 mt-4 p-4 rounded-md shadow">
         <div class="m-2 flex items-center">
           <%= image_tag("information.png", class:"w-6") %><b class="ml-2">このサービスについて</b>
         </div>
         <p class="p-2">このサービスは金属加工の仕事を依頼したい企業と、その加工技術を持った企業を繋げるサービスです。</p>
+        <p class="p-2">金属製品の加工をしてくれるユーザーを探したり、自分ができそうな加工依頼を探すことができます。</p>
       </div>
-      <div class="bg-white h-auto mb-4 p-2 rounded-md shadow border-2 border-blue-400">
+      <div class="bg-white h-auto m-4 p-2 rounded-md shadow">
         <div class="m-2 flex items-center">
-          <span class="material-icons">person_search</span><b class="ml-2">あなたにおすすめの依頼</b>
+          <span class="material-icons">done</span><b class="ml-2">最近契約された依頼</b>
         </div>
-        <% if user_signed_in? %>
-          <% unless @job_recommends == nil %>
-            <% @job_recommends.each do |recommend| %>
-              <% unless recommend.user_id == current_user.id || @contracts.include?(recommend.id)  %>
-                <hr>
-                <div class="flex display-start items-center m-2">
-                  <%= link_to job_path(recommend.id) do %>
-                    <p class="hover:underline"><%= recommend.name %></p>
-                  <% end %>
-                </div>
+        <% @view_contracts.each do |contract| %>
+          <div class=" h-auto">
+            <hr>
+            <div class="flex display-start items-center m-2">
+              <%= link_to job_path(contract.job_id), data: {"turbolinks" => false} do %>
+                <p class="hover:underline"><%= contract.job.name %></p>
               <% end %>
-            <% end %>
-            <p class="text-sm mx-2 pt-4">ここではあなたの得意技術と所在地を元に、これらの条件が一致している依頼が表示されます。</p>
-          <% end %>
-        <% else %>
-          <p class="m-2">ログインするとおすすめの仕事が表示されます</p>
-        <% end %>
-      </div>
-      <div class="bg-white h-auto mb-4 p-2 rounded-md shadow border-2 border-blue-400">
-        <div class="m-2 flex items-center">
-          <span class="material-icons">person_search</span><b class="ml-2">あなたにおすすめのユーザー</b>
-        </div>
-        <% if user_signed_in? %>
-          <% unless @recommend_user == nil %>
-            <% @recommend_user.each do |recommend_user| %>
-              <% unless recommend_user.id == current_user.id || @contracts.include?(@user_posted_job.id)  %>
-                <hr>
-                <div class="flex display-start items-center m-2">
-                  <%= link_to user_path(recommend_user.id) do %>
-                    <% if recommend_user.profile_image? %>
-                      <%= image_tag recommend_user.profile_image.url, class: "w-8" %>
-                    <% else %>
-                      <%= image_tag avatar_url(recommend_user), class: "w-8" %>
-                    <% end %>
-                  <% end %>
-                  <div class="flex">
-                    <%= link_to user_path(recommend_user.id) do %>
-                      <p class="ml-2 hover:underline"><%= recommend_user.name %></p>
-                    <% end %>
-                  </div>
-                </div>
-              <% end %>
-            <% end %>
-            <div class="mx-2 p-2 border border-gray-600">
-              <b>あなたの最新の投稿</b>
-              <div class="flex">
-                <%= link_to job_path(@user_posted_job.id) do %>
-                  <p class="hover:underline"><%= @user_posted_job.name %></p>
-                <% end %>
-              </div>
             </div>
-            <p class="text-sm mx-2 pt-4">ここではあなたの最新の投稿の使用技術と納品場所を元に、この依頼を引き受ける可能性が高いユーザーが表示されます。</p>
-          <% end %>
-        <% else %>
-          <p class="m-2">ログインするとおすすめの仕事が表示されます</p>
+          </div>
         <% end %>
       </div>
-      <div class="bg-white h-auto mb-4 p-2 rounded-md shadow">
+      <div class="bg-white h-auto mx-4 p-2 rounded-md shadow">
         <div class="m-2 flex items-center">
-          <span class="material-icons">trending_up</span><b class="ml-2">注目の仕事ランキング</b>
+          <span class="material-icons">trending_up</span><b class="ml-2">お気に入り数ランキング</b>
         </div>
         <% @job_ranks.each.with_index(1) do | job, i | %>
           <div class=" h-auto">
@@ -143,40 +93,14 @@
               <div class="ranks">
                 <b><%= i %>位 </b>
               </div>
-              <div class="ml-2 hover:underline">
-                <%= link_to job_path(job.id) do %>
-                  <%= job.name %>
-                <% end %>
-              </div>
+              <%= link_to job_path(job.id), data: {"turbolinks" => false} do %>
+                <p class="hover:underline"><%= job.name %></p>
+              <% end %>
             </div>
           </div>
         <% end %>
       </div>
-      <div class="bg-white h-auto p-2 rounded-md shadow">
-        <div class="m-2 flex items-center">
-          <span class="material-icons">people</span><b class="ml-2">新規登録ユーザー</b>
-        </div>
-        <% @users.each do | user |%>
-          <div class=" h-auto">
-            <hr>
-            <%= link_to user_path(user.id) do %>
-              <div class="flex display-start items-center m-2">
-                <% if user.profile_image? %>
-                  <%= image_tag user.profile_image.url, class: "w-8" %>
-                <% else %>
-                  <%= image_tag avatar_url(user), class: "w-8" %>
-                <% end %>
-                <div class="ml-2">
-                  <p class="hover:underline"><%= user.name %></p>
-                </div>
-              </div>
-            <% end %>
-          </div>
-        <% end %>
-      </div>
     </div>
-    
   </div>
 </div>
-
 <%= render "shared/footer" %>

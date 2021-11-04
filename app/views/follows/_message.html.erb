@@ -1,0 +1,11 @@
+<div class="mx-4 mt-4">
+  <% if message == "create" %>
+    <div class="flex justify-center rounded-md border-2 border-green-500">
+      <span class="material-icons">done</span><p class="mx-2">フォローしました</p>
+    </div>
+  <% elsif message == "delete" %>
+    <div class="flex justify-center rounded-md border-2 border-red-500">
+      <span class="material-icons">done</span><p class="mx-2">フォローを外しました</p>
+    </div>
+  <% end %>
+</div>

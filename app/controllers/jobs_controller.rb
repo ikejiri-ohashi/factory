@@ -5,25 +5,59 @@ class JobsController < ApplicationController
 
   def index
     @jobs = Job.order('created_at DESC').includes(:user)
-    @users = User.order('created_at DESC')
     @contracts = Contract.pluck(:job_id)
+    @view_contracts = Contract.order('created_at DESC').includes(:job)
     @count_favorites = Favorite.pluck(:job_id)
     @job_ranks = Job.find(Favorite.group(:job_id).order('count(job_id) desc').limit(3).pluck(:job_id))
     return unless user_signed_in?
 
+    @login_user = User.find(current_user.id)
     @check_current_user_favorite = Favorite.where(user_id: current_user.id).pluck(:job_id)
     @company_profile = CompanyProfile.new
     @company_profile = CompanyProfile.find_by(user_id: current_user.id)
-    @user_posted_job = Job.order('created_at DESC').find_by(user_id: current_user.id)
+    @user_posted_jobs = Job.order('created_at DESC').where(user_id: current_user.id)
+    @check_request = Request.find_by(request_id: current_user.id)
 
-    unless @company_profile.nil?
-      @job_recommends = Job.where(category_id: @company_profile.category_id, place_id: @company_profile.place_id)
-    end
+    return if @company_profile.nil?
 
-    return if @user_posted_job.nil?
+    @job_recommends = Job.where(category_id: @company_profile.category_id, place_id: @company_profile.place_id)
+  end
 
-    @recommend_user = User.find(CompanyProfile.where(category_id: @user_posted_job.category_id,
-                                                     place_id: @user_posted_job.place_id).pluck(:user_id))
+  def back_index
+    @jobs = Job.order('created_at DESC').includes(:user)
+    @contracts = Contract.pluck(:job_id)
+    @count_favorites = Favorite.pluck(:job_id)
+
+    return unless user_signed_in?
+
+    @check_current_user_favorite = Favorite.where(user_id: current_user.id).pluck(:job_id)
+    @company_profile = CompanyProfile.find_by(user_id: current_user.id)
+    @user_posted_jobs = Job.order('created_at DESC').where(user_id: current_user.id)
+
+    return if @company_profile.nil?
+
+    @job_recommends = Job.where(category_id: @company_profile.category_id, place_id: @company_profile.place_id)
+  end
+
+  def pre_recommend
+    @users_profile = CompanyProfile.order('created_at DESC').includes(:user)
+    @users = User.order('created_at DESC')
+    @contracts = Contract.pluck(:job_id)
+
+    return unless user_signed_in?
+
+    @user_posted_jobs = Job.order('created_at DESC').where(user_id: current_user.id)
+  end
+
+  def recommend
+    @users_profile = CompanyProfile.order('created_at DESC').includes(:user)
+    @users = User.order('created_at DESC')
+    @contracts = Contract.pluck(:job_id)
+    @user_posted_jobs = Job.order('created_at DESC').where(user_id: current_user.id)
+    @selected_job = Job.find(params[:id])
+    @send_requests = Request.where(user_id: current_user.id) if user_signed_in?
+    @recommend_user = CompanyProfile.where(category_id: @selected_job.category_id,
+                                           place_id: @selected_job.place_id).includes(:user)
   end
 
   def new
@@ -41,15 +75,19 @@ class JobsController < ApplicationController
   end
 
   def show
-    @comment = @job.comments.includes(:user).order('created_at DESC')
+    @comment = Comment.new
+    @comments = @job.comments.includes(:user).order('created_at DESC')
     @contract = Contract.find_by(job_id: params[:id])
     @users = User.order('created_at DESC')
-    @favorites = Favorite.where(job_id: params[:id]).pluck(:user_id)
+    @count_favorites = Favorite.pluck(:job_id)
+    @request = Request.new
     @send_requests = Request.where(job_id: params[:id]).includes(:user)
 
     return unless user_signed_in?
 
     @check_request = Request.find_by(job_id: params[:id], request_id: current_user.id)
+    @check_current_user_favorite = Favorite.where(user_id: current_user.id).pluck(:job_id)
+    @user_profile = CompanyProfile.find_by(user_id: current_user.id)
   end
 
   def destroy

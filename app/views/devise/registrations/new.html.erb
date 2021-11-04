@@ -1,19 +1,14 @@
 <%= render "shared/header" %>
-
-<div class="container mx-auto px-8">
-  <div class="grid grid-cols-2 gap-4">
-    <div class="col-span-1 bg-white rounded-md shadow">
-      <div class="p-4 text-2xl">
-       Welcome!
-      </div>
+<div class="container mx-auto lg:px-8">
+  <div class="lg:grid grid-cols-2 pt-4 pb-24">
+    <div class="col-span-1 bg-white rounded-md shadow mt-4 mx-4 p-4">
+      <p class="text-2xl">Welcome!</p>
     </div>
-    <div class="col-span-1 bg-white rounded-md shadow">
+    <div class="col-span-1 bg-white rounded-md shadow mt-4 mx-4 p-4">
       <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-        <div class="p-4 h-auto divide-y divide-gray-400 bg-white rounded-md shadow">
-          <div class="p-4">
-            <%= render "shared/error_messages", model: f.object %>
-          </div>
-          <div class="p-4">
+        <div class="h-auto divide-y divide-gray-400">
+          <%= render "shared/error_messages", model: f.object %>
+          <div class="px-4 pb-4">
             <%= f.label :name %><br />
             <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
           </div>
@@ -36,13 +31,9 @@
             <%= f.label :password_confirmation %><br />
             <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
           </div>
-          <div class="p-4 flex justify-center">
-            <div class="">
-              <%= f.submit "新規登録する", class:"p-3 mx-2 rounded-lg bg-blue-500 text-white hover:bg-blue-700" %>
-            </div>
-            <div class="p-3">
-              <%= link_to 'トップページに戻る', root_path, class:"p-3 mx-2 rounded-lg bg-blue-500 text-white hover:bg-blue-700" %>
-            </div>
+          <div class="pt-4 flex justify-around">
+            <%= f.submit "新規登録する", class:"cursor-pointer px-3 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-700" %>
+            <%= link_to 'トップページに戻る', root_path, class:"px-3 py-2 text-blue-500 border border-blue-500 font-semibold rounded hover:bg-blue-100" %>
           </div>
         </div>
       <% end %>

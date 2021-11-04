@@ -12,5 +12,6 @@ class UsersController < ApplicationController
     @accepts = Contract.where(contracter_id: params[:id]).includes(:job)
     @got_requests = Request.where(request_id: params[:id]).includes(:job)
     @send_requests = Request.where(user_id: params[:id]).pluck(:job_id)
+    @current_user_job = Job.where(user_id: current_user.id) if user_signed_in?
   end
 end

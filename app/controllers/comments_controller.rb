@@ -2,19 +2,20 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!, only: [:create, :destroy]
   before_action :set_comment, only: [:destroy]
   before_action :move_to_index, only: [:destroy]
-
+  # rubocop:disable all
   def create
-    @comment = Comment.create(comment_params)
-    if @comment.save
-      redirect_back(fallback_location: root_path)
-    else
-      render :new
-    end
+    comment = Comment.create(comment_params)
+    @comment = Comment.new
+    @comments = Comment.where(job_id: params[:job_id]).order('created_at DESC')
+    @job_id = params[:job_id]
   end
+  # rubocop:enable all
 
   def destroy
     @comment.destroy
-    redirect_back(fallback_location: root_path)
+    @comment = Comment.new
+    @comments = Comment.where(job_id: params[:job_id]).order('created_at DESC')
+    @job_id = params[:job_id]
   end
 
   private

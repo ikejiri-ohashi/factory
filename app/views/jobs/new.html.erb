@@ -1,45 +1,39 @@
 <%= render "shared/header" %>
-<div class="container mx-auto px-8">
+<div class="container mx-auto lg:px-8">
   <%= form_with model: @job, url: jobs_path, local: true do |f| %>
-    <div class="p-4 h-auto divide-y divide-gray-400 bg-white rounded-md shadow">
-      <div class="p-4">
-        <%= render 'shared/error_messages', model: f.object %>
+    <div class="m-4 p-4 h-auto divide-y divide-gray-400 bg-white rounded-md shadow">
+      <%= render 'shared/error_messages', model: f.object %>
+      <div class="px-4 pb-4">
+        <div class="form-text pb-4">仕事のタイトルを記入してください（必須）</div>
+        <%= f.text_area :name, class:"w-full" %>
       </div>
       <div class="p-4">
-        <div class="form-text">仕事のタイトルを記入してください（必須）</div>
-        <%= f.text_area :name, class:"my-3 w-full" %>
+        <div class="form-text pb-4">納品場所を記入してください（必須）</div>
+        <%= f.collection_select(:place_id, Place.all, :id, :name, {}, {class:"form-select"}) %>
       </div>
       <div class="p-4">
-        <div class="form-text">納品場所を記入してください（必須）</div>
-        <%= f.collection_select(:place_id, Place.all, :id, :name, {}, {class:"form-select my-2"}) %>
+        <div class="form-text pb-4">希望納期を選択してください（必須）</div>
+        <%= f.collection_select(:deadline_id, Deadline.all, :id, :name, {}, {class:"form-select"}) %>
       </div>
       <div class="p-4">
-        <div class="form-text">希望納期を選択してください（必須）</div>
-        <%= f.collection_select(:deadline_id, Deadline.all, :id, :name, {}, {class:"form-select my-2"}) %>
+        <div class="form-text pb-4">加工種別を選択してください（必須）</div>
+        <%= f.collection_select(:category_id, Category.all, :id, :name, {}, {class:"form-select"}) %>
       </div>
       <div class="p-4">
-        <div class="form-text">加工種別を選択してください（必須）</div>
-        <%= f.collection_select(:category_id, Category.all, :id, :name, {}, {class:"form-select my-2"}) %>
+        <div class="form-text pb-4">補足事項がありましたら記入してください（任意）</div>
+        <%= f.text_area :memo, class:'w-full' %>
       </div>
       <div class="p-4">
-        <div class="form-text">補足事項がありましたら記入してください（任意）</div>
-        <%= f.text_area :memo, class:'my-2 w-full' %>
+        <div class="form-text pb-4">参考画像がありましたら選択してください（任意）</div>
+        <%= f.file_field :job_image, class: "image" %>
       </div>
       <div class="p-4">
-        <div class="form-text">参考画像がありましたら選択してください（任意）</div>
-        <%= f.file_field :job_image, class: "my-2 image" %>
+        <div class="form-text pb-4">見積書などの送付先を記入してください（任意）</div>
+        <%= f.text_area :contact, class:'w-full' %>
       </div>
-      <div class="p-4">
-        <div class="form-text">見積書などの送付先を記入してください（任意）</div>
-        <%= f.text_area :contact, class:'my-2 w-full' %>
-      </div>
-      <div class="p-4 flex justify-center">
-        <div class="">
-          <%= f.submit "加工依頼を投稿する", class:"p-3 mx-2 rounded-lg bg-blue-500 text-white hover:bg-blue-700" %>
-        </div>
-        <div class="p-3">
-          <%= link_to 'トップページに戻る', root_path, class:"p-3 mx-2 rounded-lg bg-blue-500 text-white hover:bg-blue-700" %>
-        </div>
+      <div>
+        <p class="py-4 flex justify-center"><%= f.submit "依頼を投稿する", class:"cursor-pointer px-3 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-700" %></p>
+        <p class="flex justify-center"><%= link_to 'トップページに戻る', root_path, class:"px-3 py-2 text-blue-500 border border-blue-500 font-semibold rounded hover:bg-blue-100" %></p>
       </div>
     </div>
   <% end %>

@@ -1,8 +1,8 @@
 <%= render "shared/header" %>
-
-<div class="container mx-auto">
-  <div class="grid grid-cols-3 gap-4">
-    <div class="col-span-2 bg-white rounded-md shadow">
+<input type="hidden" value=<%= @job.id %> id="hidden_job_id" />
+<div class="container mx-auto lg:px-8">
+  <div class="lg:grid grid-cols-3">
+    <div class="col-span-2 bg-white rounded-md shadow mt-4 mx-4">
       <div class="p-4 h-auto">
         <div class="flex justify-between mb-6">
           <div class="flex items-center">
@@ -18,12 +18,16 @@
               <div class="bg-gray-500 h-8 rounded-md flex items-center">
                 <%= link_to image_tag("delete.png", class:"w-6"), job_path, class: "p-2", data: { confirm: "本当に削除しますか?" }, method: :delete %>
               </div>
+            <% else %>
+              <div class="flex items-center rounded-md border-2 border-yellow-300">
+                <span class="material-icons">notifications_none</span><p class="mx-2">募集中</p>
+              </div>
             <% end %>
           <% end %>
         </div>
         <p class="text-2xl mb-6"><%= @job.name %></p>
         <div class="py-2 flex items-center">
-          <span class="material-icons">build</span><p class="ml-2">加工種別：</p><%= @job.category.name %>
+          <span class="material-icons">build</span><p class="ml-2">必要技術：</p><%= @job.category.name %>
         </div>
         <div class="py-2 flex items-center">
           <span class="material-icons">location_on</span><p class="ml-2">納品場所：</p><%= @job.place.name %><br>
@@ -50,23 +54,14 @@
           <div class="pt-4 flex items-center">
             <span class="material-icons">contact_support</span><p class="ml-2">問い合わせ先：</p><%= @job.contact %><br>
           </div>
-          <div class="flex items-center pt-4">
-            <% if user_signed_in? %>
-              <% if @favorites.include?(current_user.id) %>
-                <%= link_to image_tag("star.png", class:"w-6"), job_favorite_path(@job), method: :delete %>
-              <% else %>
-                <%= link_to image_tag("star_outline.png", class:"w-6"), job_favorites_path(@job), method: :post %>
-              <% end %>
-            <% else %>
-              <%= link_to image_tag("star_outline.png", class:"w-6"), new_user_session_path %>
-            <% end %>
-            <p class="ml-2"><%= @favorites.count %></p>
+          <div id="favorite_button_<%= @job.id %>">
+            <%= render partial: "favorites/favorites", locals: {count_favorites: @count_favorites, check_current_user_favorite: @check_current_user_favorite, job: @job.id} %>
           </div>
         </div>
       </div>
     </div>
     <div class="col-span-1">
-      <div class="bg-white rounded-md shadow">
+      <div class="bg-white rounded-md shadow mt-4 mx-4">
         <div class="p-4 h-auto">
           <div class="flex items-center mb-6">
             <span class="material-icons">person</span>
@@ -80,7 +75,7 @@
             <% end %>
           </div>
           <div class="mb-4 flex justify-center">
-            <%= link_to user_path(@job.user) do %>
+            <%= link_to user_path(@job.user), data: {"turbolinks" => false} do %>
               <p class="hover:underline text-xl"><%= @job.user.name %>さん</p>
             <% end %>
           </div>
@@ -88,7 +83,7 @@
         </div>
       </div>
       <% if @contract != nil %>
-        <div class="bg-white rounded-md shadow my-4 border-2 border-green-500">
+        <div class="bg-white rounded-md shadow mt-4 mx-4 border-2 border-green-500">
           <div class="p-4 h-auto">
             <div class="flex items-center mb-6">
               <span class="material-icons">done</span>
@@ -102,7 +97,7 @@
               <% end %>
             </div>
             <div class="mb-4 flex justify-center">
-              <%= link_to user_path(@contract.contracter.id) do %>
+              <%= link_to user_path(@contract.contracter.id), data: {"turbolinks" => false} do %>
                 <p class="hover:underline text-xl"><%= @contract.contracter.name %>さん</p>
               <% end %>
             </div>
@@ -110,43 +105,27 @@
           </div>
         </div>
       <% elsif user_signed_in? && current_user.id == @job.user_id %>
-        <div class="bg-white rounded-md shadow my-4">
+        <div class="bg-white rounded-md shadow mt-4 mx-4">
           <div class="p-4 h-auto">
             <div class="flex items-center mb-6">
               <span class="material-icons">send</span>
               <p class="ml-2 text-xl">加工のリクエスト</p>
             </div>
             <p>特定のユーザーを選択し、この依頼のリクエストを送信することができます。</p>
-            <%= form_with model: @request, url: job_requests_path(@job), local: true do |f| %>
-              <div class="pt-6">
-                <div class="flex justify-center">
-                  <%= f.collection_select(:request_id, @users, :id, :name, prompt: "選択してください", class:"form-select my-2") %>
-                  </div>
-                <div class='flex justify-center pt-4'>
-                  <%= f.submit "リクエストを送信する",  id: "submit", class:"p-2 rounded-lg bg-green-500 text-white hover:bg-green-700" %>
-                </div>
+            <%= form_with url: job_requests_path(@job) do |f| %>
+              <div class="pt-6 flex justify-center">
+                <%= f.collection_select(:request_id, @users, :id, :name, prompt: "選択してください", class:"form-select my-2") %>
+              </div>
+              <div class='flex justify-center pt-4'>
+                <%= f.submit "リクエストを送信する", class:"cursor-pointer px-3 py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-700" %>
               </div>
             <% end %>
-            <p class="py-4">リクエストを送信済みのユーザー</p>
-            <% @send_requests.each do |request|%>
-              <div class="mb-2">
-                <div class="flex display-start items-center">
-                  <%= link_to user_path(request.request.id) do %>
-                    <% if request.request.profile_image? %>
-                      <%= image_tag request.request.profile_image.url, class: "w-8" %>
-                    <% else %>
-                      <%= image_tag avatar_url(request.request), class: "w-8" %>
-                    <% end %>
-                  <% end %>
-                  <%= link_to user_path(request.request.id) do %>
-                    <p class="ml-2 hover:underline"><%= request.request.name %></p>
-                  <% end %>
-                </div>
-              </div>
-            <% end %>
+            <div id="request_button">
+              <%= render partial: "requests/requests", locals: {send_requests: @send_requests, message: @message} %>
+            </div>
           </div>
         </div>
-        <div class="bg-white rounded-md shadow my-4">
+        <div class="bg-white rounded-md shadow mt-4 mx-4">
           <div class="p-4 h-auto">
             <div class="flex items-center mb-6">
               <span class="material-icons">manage_search</span>
@@ -157,78 +136,54 @@
               <div class="pt-6">
                 <div class="flex justify-center">
                   <%= f.collection_select(:contracter_id, @users, :id, :name, prompt: "選択してください", class:"form-select my-2") %>
-                  </div>
+                </div>
                 <div class='flex justify-center pt-4'>
-                  <%= f.submit "募集を終了する",  id: "submit", class:"p-2 rounded-lg bg-green-500 text-white hover:bg-green-700" %>
+                  <%= f.submit "募集を終了する", class:"cursor-pointer px-3 py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-700" %>
                 </div>
               </div>
             <% end %>
           </div>
         </div>
       <% elsif user_signed_in? && @check_request != nil %>
-        <div class="bg-white rounded-md shadow my-4 border-2 border-yellow-300">
-          <div class="p-4 h-auto">
-            <div class="flex items-center mb-6">
-              <span class="material-icons">announcement</span>
-              <p class="ml-2 text-xl">あなたにリクエストが届いています！</p>
+        <% if @check_request != nil %>
+          <div class="bg-white rounded-md shadow mt-4 mx-4 border-2 border-yellow-300">
+            <div class="p-4 h-auto">
+              <div class="flex items-center">
+                <span class="material-icons">announcement</span>
+                <p class="ml-2"><b>あなたにリクエストが届いています！</b></p>
+              </div>
+              <p class="text-sm pt-4"><%= @check_request.job.created_at.to_s(:datetime_jp) %>に</p>
+              <p class="text-sm">依頼者からリクエストがありました。</p>
+              <p class="text-sm pt-4">詳細についてコメントで問い合わせてみましょう。</p>
             </div>
-            <u><%= @check_request.job.created_at.to_s(:datetime_jp) %></u>に
-            <p>依頼者からリクエストがありました。<br>この依頼の受注について不明点があればコメントで聞いてみましょう。</p>
           </div>
-        </div>
+        <% elsif @user_profile.category_id == @job.category_id && @user_profile.place_id == @job.place_id %>
+          <div class="bg-white rounded-md shadow mt-4 mx-4 border-2 border-yellow-300">
+            <div class="p-4 h-auto">
+              <div class="flex items-center">
+                <span class="material-icons">sentiment_satisfied_alt</span>
+                <p class="ml-2"><b>あなたにおすすめ</b></p>
+              </div>
+              <p class="text-sm pt-4">この依頼はあなたの地域で投稿されており、さらにこの依頼で必要な加工技術とあなたの得意技術がマッチしています！</p>
+              <p class="text-sm pt-4">興味があればコメントで問い合わせてみましょう。</p>
+            </div>
+          </div>
+        <% end %>
       <% end %>
     </div>
-    <div class="col-span-2 bg-white rounded-md shadow">
+    <div class="col-span-2 bg-white rounded-md shadow mt-4 mx-4">
       <div class="p-4 h-auto">
         <div class="flex items-center">
           <span class="material-icons">textsms</span>
           <p class="ml-2 text-xl">コメントを投稿する</p>
         </div>
-        <div class="my-2">
-          <% if user_signed_in? %>
-            <%= form_with model: @comment, url: job_comments_path(@job), local: true do |f| %>
-              <%= f.text_area :content, class:'my-4 w-full', placeholder: "コメントを入力" %>
-              <%= f.submit "コメントを投稿する", class:"mb-4 p-2 rounded-lg bg-blue-500 text-white hover:bg-blue-700" %>
-            <% end %>
-          <% else %>
-            <p class="my-4">ログインするとコメントができます</p>
-          <% end %>
+        <div id="comment">
+          <%= render partial: "comments/comments", locals: {comments: @comments, new_comment: @comment,  job_id: @job.id, message: @message} %>
         </div>
-          <hr>
-        <% @comment.each do |comment|%>
-          <div class="py-2 h-auto divide-y divide-gray-400">
-            <div class="flex justify-between my-4">
-              <div class="flex display-start items-center">
-                <%= link_to user_path(comment.user.id) do %>
-                  <% if comment.user.profile_image? %>
-                    <%= image_tag comment.user.profile_image.url, class: "w-8" %>
-                  <% else %>
-                    <%= image_tag avatar_url(comment.user), class: "w-8" %>
-                  <% end %>
-                <% end %>
-                <div class="flex">
-                  <%= link_to user_path(comment.user.id) do %>
-                    <p class="ml-2 hover:underline"><%= comment.user.name %></p>
-                  <% end %>
-                  さんが<%= comment.created_at.to_s(:datetime_jp) %>に投稿
-                </div>
-              </div>
-              <% if current_user == comment.user %>
-                <div class="bg-gray-500 h-8 rounded-md flex items-center">
-                  <%= link_to image_tag("delete.png", class:"w-6"), job_comment_path(@job, comment), class: "p-2", data: { confirm: "コメントを削除しますか?" }, method: :delete %>
-                </div>
-              <% end %>
-            </div>
-            <%= comment.content %>
-          </div>
-         <hr>
-        <% end %>
       </div>
     </div>
-    <div class="col-span-2 flex justify-center">
-      <div class="bg-gray-500 w-auto rounded-md">
-        <%= link_to "トップページに戻る", root_path, class:"p-4 text-white" %>
-      </div>
+    <div class="col-span-2 flex justify-center mt-4 pb-28">
+      <%= link_to "トップページに戻る", root_path, class:"px-3 py-2 text-blue-500 text-xl border border-blue-500 font-semibold rounded hover:bg-blue-100" %>
     </div>
   </div>
 </div>
