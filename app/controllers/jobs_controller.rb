@@ -18,9 +18,9 @@ class JobsController < ApplicationController
     @user_posted_jobs = Job.order('created_at DESC').where(user_id: current_user.id)
     @check_request = Request.find_by(request_id: current_user.id)
 
-    unless @company_profile.nil?
-      @job_recommends = Job.where(category_id: @company_profile.category_id, place_id: @company_profile.place_id)
-    end
+    return if @company_profile.nil?
+
+    @job_recommends = Job.where(category_id: @company_profile.category_id, place_id: @company_profile.place_id)
   end
 
   def back_index
@@ -34,16 +34,16 @@ class JobsController < ApplicationController
     @company_profile = CompanyProfile.find_by(user_id: current_user.id)
     @user_posted_jobs = Job.order('created_at DESC').where(user_id: current_user.id)
 
-    unless @company_profile.nil?
-      @job_recommends = Job.where(category_id: @company_profile.category_id, place_id: @company_profile.place_id)
-    end
+    return if @company_profile.nil?
+
+    @job_recommends = Job.where(category_id: @company_profile.category_id, place_id: @company_profile.place_id)
   end
 
   def pre_recommend
     @users_profile = CompanyProfile.order('created_at DESC').includes(:user)
     @users = User.order('created_at DESC')
     @contracts = Contract.pluck(:job_id)
-    
+
     return unless user_signed_in?
 
     @user_posted_jobs = Job.order('created_at DESC').where(user_id: current_user.id)
