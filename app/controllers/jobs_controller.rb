@@ -55,6 +55,7 @@ class JobsController < ApplicationController
     @contracts = Contract.pluck(:job_id)
     @user_posted_jobs = Job.order('created_at DESC').where(user_id: current_user.id)
     @selected_job = Job.find(params[:id])
+    @send_requests = Request.where(user_id: current_user.id) if user_signed_in?
     @recommend_user = CompanyProfile.where(category_id: @selected_job.category_id,
                                            place_id: @selected_job.place_id).includes(:user)
   end

@@ -145,28 +145,30 @@
           </div>
         </div>
       <% elsif user_signed_in? && @check_request != nil %>
-        <div class="bg-white rounded-md shadow mt-4 mx-4 border-2 border-yellow-300">
-          <div class="p-4 h-auto">
-            <div class="flex items-center">
-              <span class="material-icons">announcement</span>
-              <p class="ml-2"><b>あなたにリクエストが届いています！</b></p>
+        <% if @check_request != nil %>
+          <div class="bg-white rounded-md shadow mt-4 mx-4 border-2 border-yellow-300">
+            <div class="p-4 h-auto">
+              <div class="flex items-center">
+                <span class="material-icons">announcement</span>
+                <p class="ml-2"><b>あなたにリクエストが届いています！</b></p>
+              </div>
+              <p class="text-sm pt-4"><%= @check_request.job.created_at.to_s(:datetime_jp) %>に</p>
+              <p class="text-sm">依頼者からリクエストがありました。</p>
+              <p class="text-sm pt-4">詳細についてコメントで問い合わせてみましょう。</p>
             </div>
-            <p class="text-sm pt-4"><%= @check_request.job.created_at.to_s(:datetime_jp) %>に</p>
-            <p class="text-sm">依頼者からリクエストがありました。</p>
-            <p class="text-sm pt-4">詳細についてコメントで問い合わせてみましょう。</p>
           </div>
-        </div>
-      <% elsif @user_profile.category_id == @job.category_id && @user_profile.place_id == @job.place_id %>
-        <div class="bg-white rounded-md shadow mt-4 mx-4 border-2 border-yellow-300">
-          <div class="p-4 h-auto">
-            <div class="flex items-center">
-              <span class="material-icons">sentiment_satisfied_alt</span>
-              <p class="ml-2"><b>あなたにおすすめ</b></p>
+        <% elsif @user_profile.category_id == @job.category_id && @user_profile.place_id == @job.place_id %>
+          <div class="bg-white rounded-md shadow mt-4 mx-4 border-2 border-yellow-300">
+            <div class="p-4 h-auto">
+              <div class="flex items-center">
+                <span class="material-icons">sentiment_satisfied_alt</span>
+                <p class="ml-2"><b>あなたにおすすめ</b></p>
+              </div>
+              <p class="text-sm pt-4">この依頼はあなたの地域で投稿されており、さらにこの依頼で必要な加工技術とあなたの得意技術がマッチしています！</p>
+              <p class="text-sm pt-4">興味があればコメントで問い合わせてみましょう。</p>
             </div>
-            <p class="text-sm pt-4">この依頼はあなたの地域で投稿されており、さらにこの依頼で必要な加工技術とあなたの得意技術がマッチしています！</p>
-            <p class="text-sm pt-4">興味があればコメントで問い合わせてみましょう。</p>
           </div>
-        </div>
+        <% end %>
       <% end %>
     </div>
     <div class="col-span-2 bg-white rounded-md shadow mt-4 mx-4">
@@ -180,7 +182,7 @@
         </div>
       </div>
     </div>
-    <div class="col-span-2 flex justify-center mt-4">
+    <div class="col-span-2 flex justify-center mt-4 pb-28">
       <%= link_to "トップページに戻る", root_path, class:"px-3 py-2 text-blue-500 text-xl border border-blue-500 font-semibold rounded hover:bg-blue-100" %>
     </div>
   </div>

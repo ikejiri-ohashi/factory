@@ -27,8 +27,8 @@
   <% if user_signed_in? %>
     <% unless job_recommends == nil %>
       <%# 同じ技術と地域で投稿された依頼から契約済みの投稿とログインユーザー自身の投稿を排除 %>
-      <% @none_contract_jobs = job_recommends.reject{|job| contracts.include?(job.id) } %>
-      <% @none_login_user_jobs_and_recommend = @none_contract_jobs.reject{|job| job.user_id == current_user.id } %>
+      <% @none_contract_jobs = job_recommends.reject{ |job| contracts.include?(job.id) } %>
+      <% @none_login_user_jobs_and_recommend = @none_contract_jobs.reject{ |job| job.user_id == current_user.id } %>
       <% @none_login_user_jobs_and_recommend.each do |recommend| %>
         <div class="py-4 text-sm flex justify-between items-center">
           <div class="flex display-start items-center w-6/12">

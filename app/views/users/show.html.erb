@@ -75,6 +75,30 @@
   </div>
   <div class="lg:grid grid-cols-3">
     <div class="bg-white rounded-md shadow mt-4 mx-4">
+      <% if @user == current_user %>
+        <div class="accepted_requests p-4">
+          <div class="flex items-center">
+            <span class="material-icons">announcement</span>
+            <p class="ml-2">受け取ったリクエスト</p>
+          </div>
+          <% @got_requests_no_contract = @got_requests.reject{|request| @check_contract.include?(request.job_id)} %>
+          <% if @got_requests_no_contract.empty? %>
+            <p class="text-sm pt-4">受け取ったリクエストはありません</p>
+          <% end %>
+          <% @got_requests_no_contract.each do |request|%>
+            <div class="flex h-auto">
+              <%= link_to job_path(request.job_id), data: {"turbolinks" => false} do %>
+                <p class="p-2 hover:underline"><%= request.job.name %></p>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+        <hr>
+      <% elsif user_signed_in? %>
+        <div id="send_request">
+          <%= render partial: "requests/send_request", locals: {current_user_job: @current_user_job, current_user_job: @current_user_job, message: @message} %>
+        </div>
+      <% end %>
       <div class="follows flex">
         <div class="h-auto w-6/12 p-4">
           <p class="text-base ml-2">フォロー中</p>
@@ -96,31 +120,12 @@
         </div>
         <hr>
         <div class="h-auto w-6/12 p-4">
-          <div class="">
-            <p class="text-base ml-2">フォロワー</p>
-            <hr>
-          </div>
+          <p class="text-base ml-2">フォロワー</p>
+          <hr>
           <div id="follower_index">
             <%= render partial: "follows/follows", locals: {followers: @followers } %>
           </div>
         </div>
-      </div>
-      <div class="requests p-4">
-        <% if @user == current_user %>
-          <div class="flex items-center">
-            <span class="material-icons">announcement</span>
-            <p class="ml-2">受け取ったリクエスト</p>
-          </div>
-          <% @got_requests.each do |request|%>
-            <% unless @check_contract.include?(request.job_id)%>
-              <div class="flex h-auto">
-                <%= link_to job_path(request.job_id), data: {"turbolinks" => false} do %>
-                  <p class="p-2 hover:underline"><%= request.job.name %></p>
-                <% end %>
-              </div>
-            <% end %>
-          <% end %>
-        <% end %>
       </div>
     </div>
     <div class="col-span-2 bg-white rounded-md shadow mt-4 mx-4">
@@ -159,15 +164,14 @@
             <span class="material-icons">work</span>
             <p class="ml-2">募集中の仕事</p>
           </div>
-          <% @jobs.each do | job |%>
+          <% @non_contract_jobs = @jobs.reject{ |job| @check_contract.include?(job.id) } %>
+          <% @non_contract_jobs.each do | job |%>
             <div class="flex items-center h-auto">
-              <% unless @check_contract.include?(job.id)%>
-                <%= link_to job_path(job.id), data: {"turbolinks" => false} do %>
-                  <p class="p-2 hover:underline"><%= job.name %></p>
-                <% end %>
-                <% if @send_requests.include?(job.id)%>
-                  <span class="material-icons">send</span>
-                <% end %>
+              <%= link_to job_path(job.id), data: {"turbolinks" => false} do %>
+                <p class="p-2 hover:underline"><%= job.name %></p>
+              <% end %>
+              <% if @send_requests.include?(job.id)%>
+                <span class="material-icons">send</span>
               <% end %>
             </div>
           <% end %>
@@ -188,8 +192,8 @@
       </div>
     </div>
   </div>
-  <div class="py-4 flex justify-center">
-    <%= link_to "トップページに戻る", root_path, class:"px-3 py-2 text-blue-500 text-xl border border-blue-500 font-semibold rounded hover:bg-blue-100" %>
+  <div class="pt-8 pb-28 flex justify-center">
+    <%= link_to "トップページにもどる", root_path, class:"px-3 py-2 text-blue-500 text-xl border border-blue-500 font-semibold rounded hover:bg-blue-100" %>
   </div>
 </div>
 <%= render "shared/footer" %> 

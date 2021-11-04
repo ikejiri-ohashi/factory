@@ -59,19 +59,25 @@
       <% @recommend_users = recommend_user.reject{|profile| profile.user_id == current_user.id } %>
       <% @recommend_users.each do |recommend_user| %>
         <hr>
-        <div class="flex display-start items-center pt-4">
-          <%= link_to user_path(recommend_user.user_id), data: {"turbolinks" => false} do %>
-            <% if recommend_user.user.profile_image? %>
-              <%= image_tag recommend_user.user.profile_image.url, class: "w-8" %>
-            <% else %>
-              <%= image_tag avatar_url(recommend_user.user), class: "w-8" %>
+        <div class="flex justify-between pt-4">
+          <div class="flex display-start items-center">
+            <%= link_to user_path(recommend_user.user_id), data: {"turbolinks" => false} do %>
+              <% if recommend_user.user.profile_image? %>
+                <%= image_tag recommend_user.user.profile_image.url, class: "w-8" %>
+              <% else %>
+                <%= image_tag avatar_url(recommend_user.user), class: "w-8" %>
+              <% end %>
             <% end %>
-          <% end %>
-          <div class="flex">
             <%= link_to user_path(recommend_user.user_id), data: {"turbolinks" => false} do %>
               <p class="ml-2 hover:underline"><%= recommend_user.user.name %></p>
             <% end %>
           </div>
+          <% @judge_request = @send_requests.select{|request| request.request_id == recommend_user.user_id && request.job_id == selected_job.id } %>
+          <% unless @judge_request.empty? %>
+            <div class="flex items-center rounded-md border-2 border-green-500">
+              <span class="material-icons">done</span><p class="mx-2 text-sm">リクエスト送信済み</p>
+            </div>
+          <% end %>
         </div>
         <div class="pt-4 flex items-center">
           <span class="material-icons">build</span><p class="ml-2">得意技術：</p><%= recommend_user.category.name %>
@@ -117,19 +123,27 @@
   </div>
   <% @users_has_profiles.each do | user |%>
     <hr>
-    <div class="flex display-start items-center pt-4">
-      <%= link_to user_path(user.user_id), data: {"turbolinks" => false} do %>
-        <% if user.user.profile_image? %>
-          <%= image_tag user.user.profile_image.url, class: "w-8" %>
-        <% else %>
-          <%= image_tag avatar_url(user.user), class: "w-8" %>
+    <div class="flex justify-between pt-4">
+      <div class="flex display-start items-center">
+        <%= link_to user_path(user.user_id), data: {"turbolinks" => false} do %>
+          <% if user.user.profile_image? %>
+            <%= image_tag user.user.profile_image.url, class: "w-8" %>
+          <% else %>
+            <%= image_tag avatar_url(user.user), class: "w-8" %>
+          <% end %>
         <% end %>
-      <% end %>
-      <div class="flex">
         <%= link_to user_path(user.user_id), data: {"turbolinks" => false} do %>
           <p class="ml-2 hover:underline"><%= user.user.name %></p>
         <% end %>
       </div>
+      <% unless @send_requests.nil? %>
+        <% @judge_request = @send_requests.select{|request| request.request_id == user.user_id && request.job_id == selected_job.id } %>
+        <% unless @judge_request.empty? %>
+          <div class="flex items-center rounded-md border-2 border-green-500">
+            <span class="material-icons">done</span><p class="mx-2 text-sm">リクエスト送信済み</p>
+          </div>
+        <% end %>
+      <% end %>
     </div>
     <div class="pt-4 flex items-center">
       <span class="material-icons">build</span><p class="ml-2">得意技術：</p><%= user.category.name %>
