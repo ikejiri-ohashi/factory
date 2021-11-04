@@ -16,6 +16,7 @@ class JobsController < ApplicationController
     @company_profile = CompanyProfile.new
     @company_profile = CompanyProfile.find_by(user_id: current_user.id)
     @user_posted_jobs = Job.order('created_at DESC').where(user_id: current_user.id)
+    @check_request = Request.find_by(request_id: current_user.id)
 
     unless @company_profile.nil?
       @job_recommends = Job.where(category_id: @company_profile.category_id, place_id: @company_profile.place_id)
@@ -85,6 +86,7 @@ class JobsController < ApplicationController
 
     @check_request = Request.find_by(job_id: params[:id], request_id: current_user.id)
     @check_current_user_favorite = Favorite.where(user_id: current_user.id).pluck(:job_id)
+    @user_profile = CompanyProfile.find_by(user_id: current_user.id)
   end
 
   def destroy

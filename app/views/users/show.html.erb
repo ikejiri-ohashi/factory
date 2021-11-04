@@ -1,10 +1,10 @@
 <%= render "shared/header" %>
 <div class="container mx-auto">
   <div id="follow_message">
-    <%= render partial: "follows/message", locals: {message: @message } %>
+    <%= render partial: "follows/message", locals: { message: @message } %>
   </div>
   <div class="lg:grid grid-cols-3">
-    <div class="lg:flex flex-wrap content-between bg-white p-4 rounded-md shadow mt-4 mx-4">
+    <div class="bg-white p-4 rounded-md shadow mt-4 mx-4">
       <div class="user_info mx-auto">
         <div class="mb-4 mx-auto flex justify-center">
           <% if @user.profile_image? %>

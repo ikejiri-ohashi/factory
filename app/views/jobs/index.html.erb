@@ -45,6 +45,19 @@
           <div class="pt-4 flex items-center">
             <span class="material-icons">location_on</span><p class="ml-2">所在地：</p><%= @place %>
           </div>
+          <% if @check_request %>
+            <div class="bg-white rounded-md shadow mt-4 mx-4 border-2 border-yellow-300">
+              <div class="p-4 h-auto">
+                <div class="flex items-center mb-4">
+                  <span class="material-icons">announcement</span>
+                  <p class="ml-2">加工依頼のリクエストが届いています！</p>
+                </div>
+                <%= link_to job_path(@check_request.job_id), data: {"turbolinks" => false} do %>
+                  <p class="hover:underline"><%= @check_request.job.name %></p>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
         </div>
       <% end %>
       <div class="bg-white h-auto mx-4 mt-4 p-4 rounded-md shadow">
@@ -62,11 +75,9 @@
           <div class=" h-auto">
             <hr>
             <div class="flex display-start items-center m-2">
-              <div class="ml-2 hover:underline">
-                <%= link_to job_path(contract.job_id), data: {"turbolinks" => false} do %>
-                  <%= contract.job.name %>
-                <% end %>
-              </div>
+              <%= link_to job_path(contract.job_id), data: {"turbolinks" => false} do %>
+                <p class="hover:underline"><%= contract.job.name %></p>
+              <% end %>
             </div>
           </div>
         <% end %>
@@ -82,11 +93,9 @@
               <div class="ranks">
                 <b><%= i %>位 </b>
               </div>
-              <div class="ml-2 hover:underline">
-                <%= link_to job_path(job.id), data: {"turbolinks" => false} do %>
-                  <%= job.name %>
-                <% end %>
-              </div>
+              <%= link_to job_path(job.id), data: {"turbolinks" => false} do %>
+                <p class="hover:underline"><%= job.name %></p>
+              <% end %>
             </div>
           </div>
         <% end %>
