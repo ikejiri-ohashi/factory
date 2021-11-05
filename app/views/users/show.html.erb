@@ -1,5 +1,5 @@
 <%= render "shared/header" %>
-<div class="container mx-auto">
+<div class="container mx-auto lg:px-8 xl:px-36">
   <div id="follow_message">
     <%= render partial: "follows/message", locals: { message: @message } %>
   </div>
@@ -49,12 +49,14 @@
             <p class="text-xl m-2">得意加工：<%= @company_profile.category.name %></p>
             <p class="text-ml m-2">得意加工２：<%= @company_profile.sub_category.name %></p>
             <hr>
-            <div class="mt-2">
-              得意技術について：<%= @company_profile.content %>
+            <p class="m-2">得意技術について</p>
+            <div class="whitespace-pre-line">
+              <%= @company_profile.content %>
             </div>
           </div>
-          <div class="m-2">
-            企業紹介：<%= @company_profile.self_introduction %>
+          <p class="m-2">企業紹介：</p>
+          <div class="whitespace-pre-line">
+            <%= @company_profile.self_introduction %>
           </div>
           <hr>
           <div class="m-2">
@@ -79,7 +81,7 @@
         <div class="accepted_requests p-4">
           <div class="flex items-center">
             <span class="material-icons">announcement</span>
-            <p class="ml-2">受け取ったリクエスト</p>
+            <p class="ml-2"><b>受け取ったリクエスト</b></p>
           </div>
           <% @got_requests_no_contract = @got_requests.reject{|request| @check_contract.include?(request.job_id)} %>
           <% if @got_requests_no_contract.empty? %>
@@ -101,7 +103,7 @@
       <% end %>
       <div class="follows flex">
         <div class="h-auto w-6/12 p-4">
-          <p class="text-base ml-2">フォロー中</p>
+          <p class="text-base ml-2"><b>フォロー中</b></p>
           <hr>
           <% @follows.each do | user |%>
             <div class="flex display-start items-center m-2">
@@ -120,7 +122,7 @@
         </div>
         <hr>
         <div class="h-auto w-6/12 p-4">
-          <p class="text-base ml-2">フォロワー</p>
+          <p class="text-base ml-2"><b>フォロワー</b></p>
           <hr>
           <div id="follower_index">
             <%= render partial: "follows/follows", locals: {followers: @followers } %>
@@ -133,7 +135,7 @@
         <div class="accept-contract w-6/12 p-4">
           <div class="flex items-center">
             <span class="material-icons">done</span>
-            <p class="ml-2">発注した仕事</p>
+            <p class="ml-2"><b>募集終了した依頼</b></p>
           </div>
           <% @contracts.each do |contract| %>
             <div class="flex h-auto">
@@ -146,7 +148,7 @@
         <div class="order_contract w-6/12 p-4">
           <div class="flex items-center">
             <span class="material-icons">task</span>
-            <p class="ml-2">受注した仕事</p>
+            <p class="ml-2"><b>受注した他ユーザーの依頼</b></p>
           </div>
           <% @accepts.each do |accept|%>
             <div class="flex h-auto">
@@ -162,7 +164,7 @@
         <div class="posted_contract w-6/12 p-4">
           <div class="flex items-center">
             <span class="material-icons">work</span>
-            <p class="ml-2">募集中の仕事</p>
+            <p class="ml-2"><b>投稿した依頼</b></p>
           </div>
           <% @non_contract_jobs = @jobs.reject{ |job| @check_contract.include?(job.id) } %>
           <% @non_contract_jobs.each do | job |%>
@@ -179,7 +181,7 @@
         <div class="favorite w-6/12 p-4">
           <div class="flex items-center">
             <%= image_tag("star.png", class:"w-6") %>
-            <p class="ml-2">お気に入りした仕事</p>
+            <p class="ml-2"><b>お気に入りした依頼</b></p>
           </div>
           <% @favorites.each do | favorite |%>
             <div class="flex items-center h-auto">
@@ -192,7 +194,7 @@
       </div>
     </div>
   </div>
-  <div class="pt-8 pb-28 flex justify-center">
+  <div class="py-8 lg:pb-28 flex justify-center">
     <%= link_to "トップページにもどる", root_path, class:"px-3 py-2 text-blue-500 text-xl border border-blue-500 font-semibold rounded hover:bg-blue-100" %>
   </div>
 </div>

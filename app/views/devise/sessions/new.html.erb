@@ -1,10 +1,10 @@
 <%= render "shared/header" %>
-<div class="container mx-auto lg:px-8">
-  <div class="lg:grid grid-cols-2 pt-4 pb-80">
-    <div class="col-span-1 bg-white rounded-md shadow mt-4 mx-4 p-4">
-      <p class="text-2xl">Welcome!</p>
+<div class="container mx-auto lg:px-8 xl:px-60">
+  <div class="lg:grid grid-cols-2 pt-4 lg:pb-80">
+    <div class="col-span-1 bg-white rounded-md shadow mx-4 my-4 flex justify-center">
+      <%= image_tag("welcome.png", class:"h-80") %>
     </div>
-    <div class="col-span-1 bg-white rounded-md shadow mt-4 mx-4 p-4">
+    <div class="col-span-1 bg-white rounded-md shadow mx-4 my-4 p-4">
       <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
         <div class="h-auto divide-y divide-gray-400">
           <%= flash[:notice] %>

@@ -1,5 +1,5 @@
 <%= render "shared/header" %>
-<div class="container mx-auto lg:px-8">
+<div class="container mx-auto lg:px-8 xl:px-80">
   <%= form_with model: @company_profile, url: company_profiles_path, local: true do |f| %>
     <div class="p-4 h-auto divide-y divide-gray-400 bg-white rounded-md shadow m-4">
       <div class="px-4 pb-4">
@@ -31,7 +31,7 @@
         <%= f.text_area :contact, class:'w-full' %>
       </div>
       <div>
-      <p class="py-4 flex justify-center"><%= f.submit "プロフィールを更新する", class:"cursor-pointer px-3 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-700" %></p>
+      <p class="py-4 flex justify-center"><%= f.submit "プロフィールを登録する", class:"cursor-pointer px-3 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-700" %></p>
       <p class="flex justify-center"><%= link_to 'トップページに戻る', root_path, class:"px-3 py-2 text-blue-500 border border-blue-500 font-semibold rounded hover:bg-blue-100" %></p>
       </div>
     </div>
