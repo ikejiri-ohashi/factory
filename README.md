@@ -16,10 +16,10 @@ https://www.factory-app.com
   - Jquery
   - TailwindCSS
 - バックエンド
-  -　 Ruby(3.0.2)
-  -　 Ruby on Rails(6.1.3)
-  -　 Rubocop
-  -　 Rspec(テスト)
+  - Ruby(3.0.2)
+  - Ruby on Rails(6.1.3)
+  - Rubocop
+  - Rspec(テスト)
 - インフラ・開発環境
   - Docker/Docker-compose
   - AWS（ECR,ECS,VPC,S3,Route53,ALB,RDS,ACM）
