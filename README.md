@@ -27,7 +27,7 @@ https://www.factory-app.com
 ## インフラ構成図
 
 ## ER図
-![ER図](https://d.kuku.lu/d4d3c6488)
+<img src="factory_er.png" alt="ER図" title="ER図">
 ## 機能一覧
 - ユーザー関連
   - ユーザー登録機能
