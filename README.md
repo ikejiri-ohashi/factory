@@ -21,7 +21,7 @@ https://www.factory-app.com
   -　 Rubocop
   -　 Rspec(テスト)
 -　 インフラ・開発環境
-  -　 Docker/Docker-compose
+  - Docker/Docker-compose
   - AWS（ECR,ECS,VPC,S3,Route53,ALB,RDS,ACM）
   - CircleCI（自動テストのみ）
 ## インフラ構成図
