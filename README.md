@@ -27,7 +27,7 @@ https://www.factory-app.com
 ## インフラ構成図
 
 ## ER図
-<img src="factory_er.png" alt="エビフライトライアングル" title="サンプル">
+![factory_er](https://user-images.githubusercontent.com/87586109/140602645-d39f045d-f4f6-415e-86ce-c692a2e8ceb5.png)
 ## 機能一覧
 - ユーザー関連
   - ユーザー登録機能
