@@ -33,10 +33,29 @@ class JobsController < ApplicationController
     @check_current_user_favorite = Favorite.where(user_id: current_user.id).pluck(:job_id)
     @company_profile = CompanyProfile.find_by(user_id: current_user.id)
     @user_posted_jobs = Job.order('created_at DESC').where(user_id: current_user.id)
+    @category_params = params[:category_id].to_i
+    @place_params = params[:place_id].to_i
+    if @category_params.in?([ 0, 1 ])
+      @category_params = nil
+    end
+    if @place_params.in?([ 0, 1 ])
+      @place_params = nil
+    end
+
+    if @category_params.present? && @place_params.present?
+      @research_jobs = Job.where(category_id: @category_params, place_id: @place_params).order('created_at DESC')
+    elsif @category_params.present?
+      @research_jobs = Job.where(category_id: @category_params).order('created_at DESC')
+    elsif @place_params.present?
+      @research_jobs = Job.where(place_id: @place_params).order('created_at DESC')
+    else
+      @research_jobs = @jobs
+    end
 
     return if @company_profile.nil?
 
     @job_recommends = Job.where(category_id: @company_profile.category_id, place_id: @company_profile.place_id)
+    @match_place_jobs = Job.where(place_id: @company_profile.place_id)
   end
 
   def pre_recommend

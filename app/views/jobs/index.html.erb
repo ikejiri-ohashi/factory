@@ -3,7 +3,7 @@
   <div class="lg:grid grid-cols-3 pt-4">
     <div class="col-span-2 bg-white rounded-md shadow m-4 ">
       <div id="view">
-        <%= render partial: "jobs/job_index", locals: {jobs: @jobs, job_recommends: @job_recommends, contracts: @contracts} %>
+        <%= render partial: "jobs/job_index", locals: {jobs: @jobs, job_recommends: @job_recommends, contracts: @contracts, match_place_jobs: @jobs, research_jobs: @jobs} %>
       </div>
     </div>
     <div class="col-span-1">
