@@ -45,7 +45,7 @@ class JobsController < ApplicationController
     else
       @research_jobs = @jobs
     end
-    
+
     return unless user_signed_in?
 
     @check_current_user_favorite = Favorite.where(user_id: current_user.id).pluck(:job_id)
