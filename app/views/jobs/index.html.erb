@@ -1,9 +1,9 @@
 <%= render "shared/header" %>
-<div class="container mx-auto lg:px-8">
-  <div class="lg:grid grid-cols-3">
+<div class="container mx-auto lg:px-8 xl:px-36">
+  <div class="lg:grid grid-cols-3 pt-4">
     <div class="col-span-2 bg-white rounded-md shadow m-4 ">
       <div id="view">
-        <%= render partial: "jobs/job_index", locals: {jobs: @jobs, job_recommends: @job_recommends, contracts: @contracts} %>
+        <%= render partial: "jobs/job_index", locals: {jobs: @jobs, job_recommends: @job_recommends, contracts: @contracts, match_place_jobs: @jobs, research_jobs: @jobs} %>
       </div>
     </div>
     <div class="col-span-1">
@@ -69,7 +69,7 @@
       </div>
       <div class="bg-white h-auto m-4 p-2 rounded-md shadow">
         <div class="m-2 flex items-center">
-          <span class="material-icons">done</span><b class="ml-2">最近契約された依頼</b>
+          <span class="material-icons">done</span><b class="ml-2">募集終了した依頼</b>
         </div>
         <% @view_contracts.each do |contract| %>
           <div class=" h-auto">

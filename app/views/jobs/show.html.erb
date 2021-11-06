@@ -1,13 +1,13 @@
 <%= render "shared/header" %>
 <input type="hidden" value=<%= @job.id %> id="hidden_job_id" />
-<div class="container mx-auto lg:px-8">
+<div class="container mx-auto lg:px-8 xl:px-36">
   <div class="lg:grid grid-cols-3">
     <div class="col-span-2 bg-white rounded-md shadow mt-4 mx-4">
       <div class="p-4 h-auto">
         <div class="flex justify-between mb-6">
           <div class="flex items-center">
             <span class="material-icons">work</span>
-            <p class="ml-2 text-2xl">依頼内容詳細</p>
+            <p class="ml-2"><b>依頼内容</b></p>
           </div>
           <% if @contract != nil && @contract.job_id == @job.id %>
             <div class="flex items-center rounded-md border-2 border-green-500">
@@ -25,33 +25,36 @@
             <% end %>
           <% end %>
         </div>
-        <p class="text-2xl mb-6"><%= @job.name %></p>
-        <div class="py-2 flex items-center">
+        <p class="text-2xl m4-6"><%= @job.name %></p>
+        <div class="py-4 flex items-center">
           <span class="material-icons">build</span><p class="ml-2">必要技術：</p><%= @job.category.name %>
         </div>
-        <div class="py-2 flex items-center">
+        <div class="pb-4 flex items-center">
           <span class="material-icons">location_on</span><p class="ml-2">納品場所：</p><%= @job.place.name %><br>
         </div>
-        <div class="py-2 flex items-center">
+        <div class="pb-4 flex items-center">
           <span class="material-icons">schedule</span><p class="ml-2">希望納期：</p><%= @job.deadline.name %><br>
         </div>
-        <div class="py-2 flex items-center">
-          <span class="material-icons">notes</span><p class="ml-2">備考：</p><%= @job.memo %><br>
+        <div class="flex items-center">
+          <span class="material-icons">notes</span><p class="ml-2">備考：</p>
+        </div>
+        <div class="pb-4 whitespace-pre-line">
+          <%= @job.memo %>
         </div>
           <% if @job.job_image? %>
-            <div class="py-2 flex items-center">
+            <div class="pb-4 flex items-center">
               <span class="material-icons">photo_camera</span><p class="ml-2">参考画像：</p>
             </div>
-            <div class="py-2 flex justify-center border-4">
+            <div class="pb-4 flex justify-center border-4">
               <%= image_tag @job.job_image.url %>
             </div>
           <% else %>
-            <div class="py-2 flex items-center">
+            <div class="pb-4 flex items-center">
               <span class="material-icons">photo_camera</span><p class="ml-2">参考画像：画像は登録されていません</p>
             </div>
           <% end %>
-        <div class="flex justify-between">
-          <div class="pt-4 flex items-center">
+        <div class="flex justify-between items-center">
+          <div class="flex items-center">
             <span class="material-icons">contact_support</span><p class="ml-2">問い合わせ先：</p><%= @job.contact %><br>
           </div>
           <div id="favorite_button_<%= @job.id %>">
@@ -63,11 +66,11 @@
     <div class="col-span-1">
       <div class="bg-white rounded-md shadow mt-4 mx-4">
         <div class="p-4 h-auto">
-          <div class="flex items-center mb-6">
+          <div class="flex items-center mb-4">
             <span class="material-icons">person</span>
-            <p class="ml-2 text-2xl">依頼者</p>
+            <p class="ml-2"><b>依頼を投稿したユーザー</b></p>
           </div>
-          <div class="flex justify-center mb-6">
+          <div class="flex justify-center mb-4">
             <% if @job.user.profile_image? %>
               <%= image_tag @job.user.profile_image.url, class: "w-16" %>
             <% else %>
@@ -107,13 +110,13 @@
       <% elsif user_signed_in? && current_user.id == @job.user_id %>
         <div class="bg-white rounded-md shadow mt-4 mx-4">
           <div class="p-4 h-auto">
-            <div class="flex items-center mb-6">
+            <div class="flex items-center">
               <span class="material-icons">send</span>
-              <p class="ml-2 text-xl">加工のリクエスト</p>
+              <p class="ml-2"><b>加工のリクエスト</b></p>
             </div>
-            <p>特定のユーザーを選択し、この依頼のリクエストを送信することができます。</p>
+            <p class="ml-2 text-sm py-4">ユーザーを選択してこの依頼の引き受けをリクエストすることができます。</p>
             <%= form_with url: job_requests_path(@job) do |f| %>
-              <div class="pt-6 flex justify-center">
+              <div class="flex justify-center">
                 <%= f.collection_select(:request_id, @users, :id, :name, prompt: "選択してください", class:"form-select my-2") %>
               </div>
               <div class='flex justify-center pt-4'>
@@ -129,13 +132,13 @@
           <div class="p-4 h-auto">
             <div class="flex items-center mb-6">
               <span class="material-icons">manage_search</span>
-              <p class="ml-2 text-xl">発注先</p>
+              <p class="ml-2"><b>募集を終了する</b></p>
             </div>
             <p>発注が決定した場合は発注先のユーザーを選択し、募集を終了してください。</p>
             <%= form_with model: @contract, url: job_contracts_path(@job), local: true do |f| %>
               <div class="pt-6">
                 <div class="flex justify-center">
-                  <%= f.collection_select(:contracter_id, @users, :id, :name, prompt: "選択してください", class:"form-select my-2") %>
+                  <%= f.collection_select(:contracter_id, @users, :id, :name, prompt: "選択してください", class:"form-select") %>
                 </div>
                 <div class='flex justify-center pt-4'>
                   <%= f.submit "募集を終了する", class:"cursor-pointer px-3 py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-700" %>
@@ -153,7 +156,7 @@
                 <p class="ml-2"><b>あなたにリクエストが届いています！</b></p>
               </div>
               <p class="text-sm pt-4"><%= @check_request.job.created_at.to_s(:datetime_jp) %>に</p>
-              <p class="text-sm">依頼者からリクエストがありました。</p>
+              <p class="text-sm">依頼者からこの加工の引き受けのリクエストがありました。</p>
               <p class="text-sm pt-4">詳細についてコメントで問い合わせてみましょう。</p>
             </div>
           </div>
@@ -175,14 +178,14 @@
       <div class="p-4 h-auto">
         <div class="flex items-center">
           <span class="material-icons">textsms</span>
-          <p class="ml-2 text-xl">コメントを投稿する</p>
+          <p class="ml-2"><b>コメントを投稿する</b></p>
         </div>
         <div id="comment">
           <%= render partial: "comments/comments", locals: {comments: @comments, new_comment: @comment,  job_id: @job.id, message: @message} %>
         </div>
       </div>
     </div>
-    <div class="col-span-2 flex justify-center mt-4 pb-28">
+    <div class="col-span-2 flex justify-center mt-4">
       <%= link_to "トップページに戻る", root_path, class:"px-3 py-2 text-blue-500 text-xl border border-blue-500 font-semibold rounded hover:bg-blue-100" %>
     </div>
   </div>

@@ -1,8 +1,8 @@
 <%= render "shared/header" %>
-<div class="container mx-auto lg:px-8">
-  <div class="lg:grid grid-cols-2 pt-4 pb-24">
-    <div class="col-span-1 bg-white rounded-md shadow mt-4 mx-4 p-4">
-      <p class="text-2xl">Welcome!</p>
+<div class="container mx-auto lg:px-8 xl:px-40">
+  <div class="lg:grid grid-cols-2 pt-4 lg:pb-24">
+    <div class="col-span-1 bg-white rounded-md shadow mx-4 mt-4 flex justify-center">
+      <%= image_tag("welcome.png", class:"h-80") %>
     </div>
     <div class="col-span-1 bg-white rounded-md shadow mt-4 mx-4 p-4">
       <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
