@@ -12,10 +12,10 @@ https://www.factory-app.com
 このポートフォリオを制作しました。
 ## 使用技術
 - フロントエンド
-  -　HTML/CSS
-  -　Jquery
-  -　TailwindCSS
--　バックエンド
+  - HTML/CSS
+  - Jquery
+  - TailwindCSS
+- バックエンド
   -　 Ruby(3.0.2)
   -　 Ruby on Rails(6.1.3)
   -　 Rubocop
