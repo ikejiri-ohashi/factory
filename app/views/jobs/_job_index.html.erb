@@ -51,33 +51,32 @@
       <%# 同じ地域の表示 %>
       <%= render partial: "jobs/match_place", locals: {recommend_users_place_jobs: @recommend_users_place_jobs} %>
     <% end %>
-    <hr>
-    <div class="pt-4 flex items-center">
-      <span class="material-icons">work</span><b class="ml-2">募集中の加工依頼一覧</b>
-    </div>
-    <div class="research pb-4">
-      <%= form_with url: jobs_back_index_path(category_id: :category_id, place_id: :place_id), method: :get do |f| %>
-        <div class="flex justify-around">
-          <div class="category">
-            <p class="text-sm py-4">必要技術</p>
-            <%= f.collection_select(:category_id, Category.all, :id, :name, class:"form-select my-2") %>
-          </div>
-          <div class="place">
-            <p class="text-sm py-4">納品場所</p>
-            <%= f.collection_select(:place_id, Place.all, :id, :name, class:"form-select my-2") %>
-          </div>
-        </div>
-        <div class='flex justify-center pt-4'>
-          <%= f.submit "条件を指定して検索する", class:"cursor-pointer px-3 py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-700" %>
-        </div>
-      <% end %>
-    </div>
-    <hr>
   <% else %>
     <div class="flex items-center">
       <span class="material-icons">notifications_paused</span><p class="ml-2 text-sm py-4">ログインするとおすすめの依頼が表示されます。</p>
     </div>
+    <hr>
   <% end %>
+  <div class="pt-4 flex items-center">
+    <span class="material-icons">work</span><b class="ml-2">募集中の加工依頼一覧</b>
+  </div>
+  <div class="research pb-4">
+    <%= form_with url: jobs_back_index_path(category_id: :category_id, place_id: :place_id), method: :get do |f| %>
+      <div class="flex justify-around">
+        <div class="category">
+          <p class="text-sm py-4">必要技術</p>
+          <%= f.collection_select(:category_id, Category.all, :id, :name, class:"form-select my-2") %>
+        </div>
+        <div class="place">
+          <p class="text-sm py-4">納品場所</p>
+          <%= f.collection_select(:place_id, Place.all, :id, :name, class:"form-select my-2") %>
+        </div>
+      </div>
+      <div class='flex justify-center pt-4'>
+        <%= f.submit "条件を指定して検索する", class:"cursor-pointer px-3 py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-700" %>
+      </div>
+    <% end %>
+  </div>
   <hr>
 </div>
 <% if user_signed_in? %>
@@ -94,7 +93,11 @@
     <% @other_jobs = research_jobs %>
   <% end %>
 <% else %>
-  <% @other_jobs = jobs %>
+  <% if research_jobs.present? %>
+    <% @other_jobs = research_jobs %>
+  <% else %>
+    <% @other_jobs = [] %>
+  <% end %>
 <% end %>
 <% @no_contract_jobs = @other_jobs.reject{|job| contracts.include?(job.id) }%>
 <div class="px-4 pt-4 flex justify-between">

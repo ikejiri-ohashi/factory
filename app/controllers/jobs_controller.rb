@@ -27,12 +27,6 @@ class JobsController < ApplicationController
     @jobs = Job.order('created_at DESC').includes(:user)
     @contracts = Contract.pluck(:job_id)
     @count_favorites = Favorite.pluck(:job_id)
-
-    return unless user_signed_in?
-
-    @check_current_user_favorite = Favorite.where(user_id: current_user.id).pluck(:job_id)
-    @company_profile = CompanyProfile.find_by(user_id: current_user.id)
-    @user_posted_jobs = Job.order('created_at DESC').where(user_id: current_user.id)
     @category_params = params[:category_id].to_i
     @place_params = params[:place_id].to_i
     if @category_params.in?([ 0, 1 ])
@@ -51,6 +45,12 @@ class JobsController < ApplicationController
     else
       @research_jobs = @jobs
     end
+    
+    return unless user_signed_in?
+
+    @check_current_user_favorite = Favorite.where(user_id: current_user.id).pluck(:job_id)
+    @company_profile = CompanyProfile.find_by(user_id: current_user.id)
+    @user_posted_jobs = Job.order('created_at DESC').where(user_id: current_user.id)
 
     return if @company_profile.nil?
 
