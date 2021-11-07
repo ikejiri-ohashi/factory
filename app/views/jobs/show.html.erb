@@ -105,7 +105,9 @@
               <div class="mb-4 flex justify-center">
                   <%= @contract.contracter.name %>さん
               </div>
-              登録日時：<%= @contract.created_at.to_s(:datetime_jp) %>
+              <div class="flex justify-center">
+                登録日時：<%= time_ago_in_words(@contract.created_at) %>前
+              </div>
             </div>
           </div>
         <% end %>
@@ -147,16 +149,15 @@
             <% end %>
           </div>
         </div>
-      <% elsif user_signed_in? && @check_request != nil %>
-        <% if @check_request != nil %>
+      <% elsif user_signed_in? %>
+        <% if @check_request.present? %>
           <div class="bg-white rounded-md shadow mt-4 mx-4 border-2 border-yellow-300">
             <div class="p-4 h-auto">
               <div class="flex items-center">
                 <span class="material-icons">announcement</span>
                 <p class="ml-2"><b>あなたにリクエストが届いています！</b></p>
               </div>
-              <p class="text-sm pt-4"><%= @check_request.job.created_at.to_s(:datetime_jp) %>に</p>
-              <p class="text-sm">依頼者からこの加工の引き受けのリクエストがありました。</p>
+              <p class="text-sm pt-4"><%= time_ago_in_words(@check_request.created_at) %>前にこの投稿主からリクエストがありました。</p>
               <p class="text-sm pt-4">詳細についてコメントで問い合わせてみましょう。</p>
             </div>
           </div>
@@ -168,7 +169,7 @@
                 <p class="ml-2"><b>あなたにおすすめ</b></p>
               </div>
               <p class="text-sm pt-4">この依頼はあなたの地域で投稿されており、さらにこの依頼で必要な加工技術とあなたの得意技術がマッチしています！</p>
-              <p class="text-sm pt-4">興味があればコメントで問い合わせてみましょう。</p>
+              <p class="text-sm pt-4">是非一度コメントで詳細を問い合わせてみましょう。</p>
             </div>
           </div>
         <% end %>
