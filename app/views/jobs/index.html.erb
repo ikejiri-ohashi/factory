@@ -59,13 +59,29 @@
             </div>
           <% end %>
         </div>
+        <div class="bg-white rounded-md m-4 p-4 shadow">
+          <div class="flex items-center mb-4">
+            <span class="material-icons">work</span><b class="ml-2">あなたが最近投稿した依頼</b>
+          </div>
+          <% if @login_user_jobs.empty? %>
+            <p class="text-sm">投稿した依頼はありません</p>
+          <% end %>
+          <% @login_user_jobs.each do |job| %>
+            <hr>
+            <%= link_to job_path(job.id), data: {"turbolinks" => false} do %>
+              <div class="flex display-start items-center p-4 hover:bg-gray-50 active:bg-gray-100">
+                  <%= job.name %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
       <% end %>
       <div class="bg-white h-auto mx-4 mt-4 p-4 rounded-md shadow">
         <div class="m-2 flex items-center">
           <%= image_tag("information.png", class:"w-6") %><b class="ml-2">このサービスについて</b>
         </div>
-        <p class="p-2">このサービスは金属加工の仕事を依頼したい企業と、その加工技術を持った企業を繋げるサービスです。</p>
-        <p class="p-2">金属製品の加工をしてくれるユーザーを探したり、自分ができそうな加工依頼を探すことができます。</p>
+        <p class="p-2">このサービスでは金属製品の加工依頼を投稿し、加工ができる業者を募集することができます。</p>
+        <p class="p-2">ユーザーは加工依頼の投稿と、<br>他ユーザーが投稿した依頼の受注ができます。</p>
       </div>
       <div class="bg-white h-auto m-4 p-2 rounded-md shadow">
         <div class="m-2 flex items-center">
@@ -74,11 +90,11 @@
         <% @view_contracts.each do |contract| %>
           <div class=" h-auto">
             <hr>
-            <div class="flex display-start items-center m-2">
-              <%= link_to job_path(contract.job_id), data: {"turbolinks" => false} do %>
-                <p class="hover:underline"><%= contract.job.name %></p>
-              <% end %>
-            </div>
+            <%= link_to job_path(contract.job_id), data: {"turbolinks" => false} do %>
+              <div class="flex display-start items-center p-4 hover:bg-gray-50 active:bg-gray-100">
+                <%= contract.job.name %>
+              </div>
+            <% end %>
           </div>
         <% end %>
       </div>
@@ -87,17 +103,15 @@
           <span class="material-icons">trending_up</span><b class="ml-2">お気に入り数ランキング</b>
         </div>
         <% @job_ranks.each.with_index(1) do | job, i | %>
-          <div class=" h-auto">
-            <hr>
-            <div class="flex display-start items-center m-2">
-              <div class="ranks">
+          <hr>
+          <%= link_to job_path(job.id), data: {"turbolinks" => false} do %>
+            <div class="flex display-start items-center p-4 hover:bg-gray-50 active:bg-gray-100">
+              <div class="flex-shrink-0">
                 <b><%= i %>位 </b>
               </div>
-              <%= link_to job_path(job.id), data: {"turbolinks" => false} do %>
-                <p class="hover:underline"><%= job.name %></p>
-              <% end %>
+                <p class="ml-2"><%= job.name %></p>
             </div>
-          </div>
+          <% end %>
         <% end %>
       </div>
     </div>

@@ -15,8 +15,8 @@ class CompanyProfilesController < ApplicationController
   def create
     @company_profile = CompanyProfile.new(company_profile_params)
     if @company_profile.save
-      # redirect_to "https://www.factory-app.com/users/#{@company_profile.user_id}"
-      redirect_to user_url(@company_profile.user_id)
+      redirect_to "https://www.factory-app.com/users/#{@company_profile.user_id}"
+      # redirect_to user_url(@company_profile.user_id)
     else
       render :new
     end
@@ -28,8 +28,8 @@ class CompanyProfilesController < ApplicationController
   def update
     @company_profile.update(company_profile_params)
     if @company_profile.save
-      # redirect_to "https://www.factory-app.com/users/#{@company_profile.user_id}"
-      redirect_to user_url(@company_profile.user_id)
+      redirect_to "https://www.factory-app.com/users/#{@company_profile.user_id}"
+      # redirect_to user_url(@company_profile.user_id)
     else
       render :edit
     end

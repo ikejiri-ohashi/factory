@@ -17,6 +17,7 @@ class JobsController < ApplicationController
     @company_profile = CompanyProfile.find_by(user_id: current_user.id)
     @user_posted_jobs = Job.order('created_at DESC').where(user_id: current_user.id)
     @check_request = Request.find_by(request_id: current_user.id)
+    @login_user_jobs = Job.where(user_id: current_user.id).order('created_at DESC').limit(3)
 
     return if @company_profile.nil?
 
@@ -86,8 +87,8 @@ class JobsController < ApplicationController
   def create
     @job = Job.new(job_params)
     if @job.save
-      redirect_to root_url
-      # redirect_to "https://www.factory-app.com/jobs/#{@job.id}"
+      # redirect_to root_url
+      redirect_to "https://www.factory-app.com/jobs/#{@job.id}"
     else
       render :new
     end
@@ -111,8 +112,8 @@ class JobsController < ApplicationController
 
   def destroy
     @job.destroy
-    redirect_to root_url
-    # redirect_to "https://www.factory-app.com/"
+    # redirect_to root_url
+    redirect_to "https://www.factory-app.com/"
   end
 
   private

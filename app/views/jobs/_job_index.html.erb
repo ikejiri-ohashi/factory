@@ -16,69 +16,67 @@
     </div>
   <% end %>
 </div>
-<div class="mx-4 h-auto">
-  <div class="py-4 flex items-center">
-    <span class="material-icons">sentiment_satisfied_alt</span><b class="ml-2">あなたにおすすめの依頼</b>
-  </div>
-  <hr>
-  <% if user_signed_in? %>
-    <% unless job_recommends == nil %>
-      <%# 契約済みの投稿とログインユーザー自身の投稿を排除し残った要素を集計 %>
-      <% @none_contract_jobs = job_recommends.reject{ |job| contracts.include?(job.id) } %>
-      <% @none_login_user_jobs_and_recommend = @none_contract_jobs.reject{ |job| job.user_id == current_user.id } %>
-      <% @already_recommended = @none_login_user_jobs_and_recommend.pluck(:id) %>
-      <%# 要素を集計した結果が空だった場合 %>
-      <% if @already_recommended.empty? %>
-        <div class="flex items-center">
-          <span class="material-icons">sentiment_neutral</span><p class="ml-2 text-sm py-4">おすすめの依頼は見つかりませんでした。</p>
-        </div>
-        <hr>
-      <% end %>
-      <%# おすすめの表示 %>
-      <%= render partial: "jobs/match_both", locals: {none_login_user_jobs_and_recommend: @none_login_user_jobs_and_recommend} %>
-      <%# すべての投稿からおすすめされた投稿を排除 %>
-      <% @not_recommend_jobs = match_place_jobs.reject{|job| @already_recommended.include?(job.id) } %>
-    <% else %>
-      <p class="text-sm pt-4">あなたのプロフィールの情報を元におすすめが表示されます。</p>
-      <p class="text-sm py-4">まずはユーザーページでプロフィールの登録をしてみましょう。</p>
-    <% end %>
-    <% if @company_profile != nil %>
-      <%# place_idが同じものを集計 %>
-      <% @users_place_jobs = @not_recommend_jobs.select{|job| @company_profile.place_id == job.place_id } %>
-      <% @no_contract_jobs = @users_place_jobs.reject{|job| contracts.include?(job.id) } %>
-      <% @no_login_user_and_no_contract = @no_contract_jobs.reject{|job| job.user_id == current_user.id } %>
-      <% @recommend_users_place_jobs = @no_login_user_and_no_contract %>
-      <%# 同じ地域の表示 %>
-      <%= render partial: "jobs/match_place", locals: {recommend_users_place_jobs: @recommend_users_place_jobs} %>
-    <% end %>
-  <% else %>
-    <div class="flex items-center">
-      <span class="material-icons">notifications_paused</span><p class="ml-2 text-sm py-4">ログインするとおすすめの依頼が表示されます。</p>
-    </div>
-    <hr>
-  <% end %>
-  <div class="pt-4 flex items-center">
-    <span class="material-icons">work</span><b class="ml-2">募集中の加工依頼一覧</b>
-  </div>
-  <div class="research pb-4">
-    <%= form_with url: jobs_back_index_path(category_id: :category_id, place_id: :place_id), method: :get do |f| %>
-      <div class="flex justify-around">
-        <div class="category">
-          <p class="text-sm py-4">必要技術</p>
-          <%= f.collection_select(:category_id, Category.all, :id, :name, class:"form-select my-2") %>
-        </div>
-        <div class="place">
-          <p class="text-sm py-4">納品場所</p>
-          <%= f.collection_select(:place_id, Place.all, :id, :name, class:"form-select my-2") %>
-        </div>
-      </div>
-      <div class='flex justify-center pt-4'>
-        <%= f.submit "条件を指定して検索する", class:"cursor-pointer px-3 py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-700" %>
-      </div>
-    <% end %>
-  </div>
-  <hr>
+<div class="p-4 flex items-center">
+  <span class="material-icons">sentiment_satisfied_alt</span><b class="ml-2">あなたにおすすめの依頼</b>
 </div>
+<hr>
+<% if user_signed_in? %>
+  <% unless job_recommends == nil %>
+    <%# 契約済みの投稿とログインユーザー自身の投稿を排除し残った要素を集計 %>
+    <% @none_contract_jobs = job_recommends.reject{ |job| contracts.include?(job.id) } %>
+    <% @none_login_user_jobs_and_recommend = @none_contract_jobs.reject{ |job| job.user_id == current_user.id } %>
+    <% @already_recommended = @none_login_user_jobs_and_recommend.pluck(:id) %>
+    <%# 要素を集計した結果が空だった場合 %>
+    <% if @already_recommended.empty? %>
+      <div class="flex items-center">
+        <span class="material-icons">sentiment_neutral</span><p class="ml-2 text-sm py-4">おすすめの依頼は見つかりませんでした。</p>
+      </div>
+      <hr>
+    <% end %>
+    <%# おすすめの表示 %>
+    <%= render partial: "jobs/match_both", locals: {none_login_user_jobs_and_recommend: @none_login_user_jobs_and_recommend} %>
+    <%# すべての投稿からおすすめされた投稿を排除 %>
+    <% @not_recommend_jobs = match_place_jobs.reject{|job| @already_recommended.include?(job.id) } %>
+  <% else %>
+    <p class="text-sm pt-4">あなたのプロフィールの情報を元におすすめが表示されます。</p>
+    <p class="text-sm py-4">まずはユーザーページでプロフィールの登録をしてみましょう。</p>
+  <% end %>
+  <% if @company_profile != nil %>
+    <%# place_idが同じものを集計 %>
+    <% @users_place_jobs = @not_recommend_jobs.select{|job| @company_profile.place_id == job.place_id } %>
+    <% @no_contract_jobs = @users_place_jobs.reject{|job| contracts.include?(job.id) } %>
+    <% @no_login_user_and_no_contract = @no_contract_jobs.reject{|job| job.user_id == current_user.id } %>
+    <% @recommend_users_place_jobs = @no_login_user_and_no_contract %>
+    <%# 同じ地域の表示 %>
+    <%= render partial: "jobs/match_place", locals: {recommend_users_place_jobs: @recommend_users_place_jobs} %>
+  <% end %>
+<% else %>
+  <div class="flex items-center px-4">
+    <span class="material-icons">notifications_paused</span><p class="ml-2 text-sm py-4">ログインするとおすすめの依頼が表示されます。</p>
+  </div>
+  <hr>
+<% end %>
+<div class="p-4 flex items-center">
+  <span class="material-icons">work</span><b class="ml-2">募集中の加工依頼一覧</b>
+</div>
+<div class="research pb-4">
+  <%= form_with url: jobs_back_index_path(category_id: :category_id, place_id: :place_id), method: :get do |f| %>
+    <div class="flex justify-around">
+      <div class="category">
+        <p class="text-sm pb-2">必要技術</p>
+        <%= f.collection_select(:category_id, Category.all, :id, :name, class:"form-select my-2") %>
+      </div>
+      <div class="place">
+        <p class="text-sm pb-2">納品場所</p>
+        <%= f.collection_select(:place_id, Place.all, :id, :name, class:"form-select my-2") %>
+      </div>
+    </div>
+    <div class='flex justify-center pt-4'>
+      <%= f.submit "条件を指定して検索する", class:"cursor-pointer px-3 py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-700" %>
+    </div>
+  <% end %>
+</div>
+<hr>
 <% if user_signed_in? %>
   <% if @company_profile != nil %>
     <% @already_recommended_first = @none_login_user_jobs_and_recommend.pluck(:id) %>
@@ -100,18 +98,21 @@
   <% end %>
 <% end %>
 <% @no_contract_jobs = @other_jobs.reject{|job| contracts.include?(job.id) }%>
-<div class="px-4 pt-4 flex justify-between">
+<div class="p-4 flex justify-between">
   <p class="text-sm">※おすすめ以外の依頼が表示されます。</p>
   <div class="flex items-center">
-    <p class="text-sm">検索件数</p><p class="ml-2"><%= @no_contract_jobs.count %></p>
+    <p class="text-sm">検索結果</p><p class="ml-2"><%= @no_contract_jobs.count %>件</p>
   </div>
 </div>
 <% if @no_contract_jobs.empty? %>
-  <p class="text-sm py-4 mx-4">受注可能な投稿は見つかりませんでした</p>
+  <div class="flex justify-center my-4">
+    <p class="text-sm"><b>受注可能な依頼は見つかりませんでした</b></p>
+  </div>
+  <%= image_tag("factory_resarch.png", class:"mx-auto w-80") %>
 <% end %>
 <% @no_contract_jobs.each do |job|%>
-  <div class="mx-4 h-auto">
-    <div class="py-4 text-sm flex justify-between items-center">
+  <div class="p-4 hover:bg-gray-50 active:bg-gray-100">
+    <div class="text-sm flex justify-between items-center">
       <div class="flex display-start items-center">
         <%= link_to user_path(job.user.id), data: {"turbolinks" => false} do %>
           <% if job.user.profile_image? %>
@@ -124,29 +125,33 @@
           <%= link_to user_path(job.user.id), data: {"turbolinks" => false} do %>
             <p class="ml-2 hover:underline"><%= job.user.name %></p>
           <% end %>
-          さんが<%= job.created_at.to_s(:datetime_jp) %>に投稿
+          <%= link_to job_path(job.id), data: {"turbolinks" => false} do %>
+            <div class="pr-80">
+              さんが<%= time_ago_in_words(job.created_at) %>前に投稿
+            </div>
+          <% end %>
         </div>
       </div>
     </div>
     <%= link_to job_path(job.id), data: {"turbolinks" => false} do %>
-      <div class="text-xl flex">
-        <p class="hover:underline"><%= job.name %></p><br>
+      <div class="pt-4 text-xl flex">
+        <%= job.name %>
+      </div>
+      <div class="pt-4 flex items-center">
+        <span class="material-icons">build</span><p class="ml-2">必要技術：</p><%= job.category.name %>
+      </div>
+      <div class="pt-4 flex items-center">
+        <span class="material-icons">location_on</span><p class="ml-2">納品場所：</p><%= job.place.name %><br>
+      </div>
+      <div class="flex justify-between pt-4">
+        <div class="flex items-center pr-80">
+          <span class="material-icons">schedule</span><p class="ml-2">希望納期：</p><%= job.deadline.name %><br>
+        </div>
+        <div id="favorite_button_<%= job.id %>">
+          <%= render partial: "favorites/favorites", locals: {count_favorites: @count_favorites, check_current_user_favorite: @check_current_user_favorite, job: job.id} %>
+        </div>
       </div>
     <% end %>
-    <div class="pt-4 flex items-center">
-      <span class="material-icons">build</span><p class="ml-2">必要技術：</p><%= job.category.name %>
-    </div>
-    <div class="pt-4 flex items-center">
-      <span class="material-icons">location_on</span><p class="ml-2">納品場所：</p><%= job.place.name %><br>
-    </div>
-    <div class="flex justify-between py-4">
-      <div class="flex items-center">
-        <span class="material-icons">schedule</span><p class="ml-2">希望納期： </p><%= job.deadline.name %><br>
-      </div>
-      <div id="favorite_button_<%= job.id %>">
-        <%= render partial: "favorites/favorites", locals: {count_favorites: @count_favorites, check_current_user_favorite: @check_current_user_favorite, job: job.id} %>
-      </div>
-    </div>
-    <hr>
   </div>
+  <hr>
 <% end %>

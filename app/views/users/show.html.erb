@@ -4,7 +4,7 @@
     <%= render partial: "follows/message", locals: { message: @message } %>
   </div>
   <div class="lg:grid grid-cols-3">
-    <div class="bg-white p-4 rounded-md shadow mt-4 mx-4">
+    <div class="flex flex-wrap content-around bg-white p-4 rounded-md shadow mt-4 mx-4">
       <div class="user_info mx-auto">
         <div class="mb-4 mx-auto flex justify-center">
           <% if @user.profile_image? %>
@@ -54,8 +54,8 @@
               <%= @company_profile.content %>
             </div>
           </div>
-          <p class="m-2">企業紹介：</p>
-          <div class="whitespace-pre-line">
+          <p class="mx-2">企業紹介：</p>
+          <div class="whitespace-pre-line pb-4">
             <%= @company_profile.self_introduction %>
           </div>
           <hr>
