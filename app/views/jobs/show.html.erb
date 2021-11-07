@@ -64,70 +64,68 @@
       </div>
     </div>
     <div class="col-span-1">
-      <div class="bg-white rounded-md shadow mt-4 mx-4">
-        <div class="p-4 h-auto">
-          <div class="flex items-center mb-4">
-            <span class="material-icons">person</span>
-            <p class="ml-2"><b>依頼を投稿したユーザー</b></p>
-          </div>
-          <div class="flex justify-center mb-4">
-            <% if @job.user.profile_image? %>
-              <%= image_tag @job.user.profile_image.url, class: "w-16" %>
-            <% else %>
-              <%= image_tag avatar_url(@job.user), class: "w-16" %>
-            <% end %>
-          </div>
-          <div class="mb-4 flex justify-center">
-            <%= link_to user_path(@job.user), data: {"turbolinks" => false} do %>
-              <p class="hover:underline text-xl"><%= @job.user.name %>さん</p>
-            <% end %>
-          </div>
-          <div class="flex justify-center">
-            投稿日時：<%= time_ago_in_words(@job.created_at) %>前
-          </div>
-        </div>
-      </div>
-      <% if @contract != nil %>
-        <div class="bg-white rounded-md shadow mt-4 mx-4 border-2 border-green-500">
+      <%= link_to user_path(@job.user), data: {"turbolinks" => false} do %>
+        <div class="bg-white rounded-md shadow mt-4 mx-4 hover:bg-gray-50 active:bg-gray-100">
           <div class="p-4 h-auto">
-            <div class="flex items-center mb-6">
-              <span class="material-icons">done</span>
-              <p class="ml-2 text-xl">発注済み</p>
+            <div class="flex items-center mb-4">
+              <span class="material-icons">person</span>
+              <p class="ml-2"><b>依頼を投稿したユーザー</b></p>
             </div>
-            <div class="flex justify-center mb-6">
-              <% if @contract.contracter.profile_image? %>
-                <%= image_tag @contract.contracter.profile_image.url, class: "w-16" %>
+            <div class="flex justify-center mb-4">
+              <% if @job.user.profile_image? %>
+                <%= image_tag @job.user.profile_image.url, class: "w-16" %>
               <% else %>
-                <%= image_tag avatar_url(@contract.contracter), class: "w-16" %>
+                <%= image_tag avatar_url(@job.user), class: "w-16" %>
               <% end %>
             </div>
             <div class="mb-4 flex justify-center">
-              <%= link_to user_path(@contract.contracter.id), data: {"turbolinks" => false} do %>
-                <p class="hover:underline text-xl"><%= @contract.contracter.name %>さん</p>
-              <% end %>
+                <%= @job.user.name %>さん
             </div>
-            登録日時：<%= @contract.created_at.to_s(:datetime_jp) %>
+            <div class="flex justify-center">
+              投稿日時：<%= time_ago_in_words(@job.created_at) %>前
+            </div>
           </div>
         </div>
+      <% end %>
+      <% if @contract != nil %>
+        <%= link_to user_path(@contract.contracter.id), data: {"turbolinks" => false} do %>
+          <div class="bg-white rounded-md shadow mt-4 mx-4 border-2 border-green-500 hover:bg-gray-50 active:bg-gray-100">
+            <div class="p-4 h-auto">
+              <div class="flex items-center mb-6">
+                <span class="material-icons">done</span>
+                <p class="ml-2 text-xl">発注済み</p>
+              </div>
+              <div class="flex justify-center mb-6">
+                <% if @contract.contracter.profile_image? %>
+                  <%= image_tag @contract.contracter.profile_image.url, class: "w-16" %>
+                <% else %>
+                  <%= image_tag avatar_url(@contract.contracter), class: "w-16" %>
+                <% end %>
+              </div>
+              <div class="mb-4 flex justify-center">
+                  <%= @contract.contracter.name %>さん
+              </div>
+              登録日時：<%= @contract.created_at.to_s(:datetime_jp) %>
+            </div>
+          </div>
+        <% end %>
       <% elsif user_signed_in? && current_user.id == @job.user_id %>
-        <div class="bg-white rounded-md shadow mt-4 mx-4">
-          <div class="p-4 h-auto">
-            <div class="flex items-center">
-              <span class="material-icons">send</span>
-              <p class="ml-2"><b>加工のリクエスト</b></p>
+        <div class="bg-white rounded-md shadow mt-4 mx-4 py-4">
+          <div class="flex items-center px-4">
+            <span class="material-icons">send</span>
+            <p class="ml-2"><b>加工のリクエスト</b></p>
+          </div>
+          <p class="text-sm p-4">ユーザーを選択してこの依頼の引き受けをリクエストすることができます。</p>
+          <%= form_with url: job_requests_path(@job) do |f| %>
+            <div class="flex justify-center">
+              <%= f.collection_select(:request_id, @users, :id, :name, prompt: "選択してください", class:"form-select my-2") %>
             </div>
-            <p class="ml-2 text-sm py-4">ユーザーを選択してこの依頼の引き受けをリクエストすることができます。</p>
-            <%= form_with url: job_requests_path(@job) do |f| %>
-              <div class="flex justify-center">
-                <%= f.collection_select(:request_id, @users, :id, :name, prompt: "選択してください", class:"form-select my-2") %>
-              </div>
-              <div class='flex justify-center pt-4'>
-                <%= f.submit "リクエストを送信する", class:"cursor-pointer px-3 py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-700" %>
-              </div>
-            <% end %>
-            <div id="request_button">
-              <%= render partial: "requests/requests", locals: {send_requests: @send_requests, message: @message} %>
+            <div class='flex justify-center pt-4'>
+              <%= f.submit "リクエストを送信する", class:"cursor-pointer px-3 py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-700" %>
             </div>
+          <% end %>
+          <div id="request_button">
+            <%= render partial: "requests/requests", locals: {send_requests: @send_requests, message: @message} %>
           </div>
         </div>
         <div class="bg-white rounded-md shadow mt-4 mx-4">

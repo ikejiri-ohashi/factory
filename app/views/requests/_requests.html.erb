@@ -1,24 +1,22 @@
 <% unless message.nil? %>
-  <div class="mt-4">
+  <div class="mt-4 mx-4">
     <div class="flex rounded-md border-2 border-green-500">
       <span class="material-icons">done</span><p class="mx-2">リクエストを送信しました</p>
     </div>
   </div>
 <% end %>
-<p class="py-4">リクエストを送信済みのユーザー</p>
+<p class="p-4">リクエストを送信済みのユーザー</p>
 <% send_requests.each do |request|%>
-  <div class="mb-2">
-    <div class="flex display-start items-center">
-      <%= link_to user_path(request.request.id), data: {"turbolinks" => false} do %>
-        <% if request.request.profile_image? %>
-          <%= image_tag request.request.profile_image.url, class: "w-8" %>
-        <% else %>
-          <%= image_tag avatar_url(request.request), class: "w-8" %>
-        <% end %>
-      <% end %>
-      <%= link_to user_path(request.request.id), data: {"turbolinks" => false} do %>
-        <p class="ml-2 hover:underline"><%= request.request.name %></p>
-      <% end %>
+  <%= link_to user_path(request.request.id), data: {"turbolinks" => false} do %>
+    <div class="px-4 py-2 hover:bg-gray-50 active:bg-gray-100">
+      <div class="flex display-start items-center">
+          <% if request.request.profile_image? %>
+            <%= image_tag request.request.profile_image.url, class: "w-8" %>
+          <% else %>
+            <%= image_tag avatar_url(request.request), class: "w-8" %>
+          <% end %>
+          <p class="ml-2"><%= request.request.name %></p>
+      </div>
     </div>
-  </div>
+  <% end %>
 <% end %>
