@@ -25,7 +25,7 @@ https://www.factory-app.com
   - AWS（ECR,ECS(EC2起動タイプ),VPC,S3,Route53,ALB,RDS,ACM）
   - CircleCI（自動テストのみ）
 ## インフラ構成図
-
+![Untitled Diagram drawio (1)](https://user-images.githubusercontent.com/87586109/140628104-46091f1c-6455-444b-b014-9e84399c74bf.png)
 ## ER図
 ![factory_er](https://user-images.githubusercontent.com/87586109/140602645-d39f045d-f4f6-415e-86ce-c692a2e8ceb5.png)
 ## 機能一覧
