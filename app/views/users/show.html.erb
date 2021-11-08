@@ -78,21 +78,21 @@
   <div class="lg:grid grid-cols-3">
     <div class="bg-white rounded-md shadow mt-4 mx-4">
       <% if @user == current_user %>
-        <div class="accepted_requests p-4">
-          <div class="flex items-center">
+        <div class="accepted_requests">
+          <div class="flex items-center px-4 pt-4">
             <span class="material-icons">announcement</span>
             <p class="ml-2"><b>受け取ったリクエスト</b></p>
           </div>
           <% @got_requests_no_contract = @got_requests.reject{|request| @check_contract.include?(request.job_id)} %>
           <% if @got_requests_no_contract.empty? %>
-            <p class="text-sm pt-4">受け取ったリクエストはありません</p>
+            <p class="text-sm px-4 pt-4">受け取ったリクエストはありません</p>
           <% end %>
           <% @got_requests_no_contract.each do |request|%>
-            <div class="flex h-auto">
-              <%= link_to job_path(request.job_id), data: {"turbolinks" => false} do %>
-                <p class="p-2 hover:underline"><%= request.job.name %></p>
-              <% end %>
-            </div>
+            <%= link_to job_path(request.job_id), data: {"turbolinks" => false} do %>
+              <div class="flex hover:bg-gray-50 active:bg-gray-100">
+                <p class="p-4"><%= request.job.name %></p>
+              </div>
+            <% end %>
           <% end %>
         </div>
         <hr>
@@ -102,28 +102,24 @@
         </div>
       <% end %>
       <div class="follows flex">
-        <div class="h-auto w-6/12 p-4">
-          <p class="text-base ml-2"><b>フォロー中</b></p>
-          <hr>
+        <div class="h-auto w-6/12">
+          <p class="text-base ml-2 px-4 pt-4"><b>フォロー中</b></p>
           <% @follows.each do | user |%>
-            <div class="flex display-start items-center m-2">
-              <%= link_to user_path(user.follow_id), data: {"turbolinks" => false} do %>
-                <% if user.follow.profile_image? %>
-                  <%= image_tag user.follow.profile_image.url, class: "w-8" %>
-                <% else %>
-                  <%= image_tag avatar_url(user.follow), class: "w-8" %>
-                <% end %>
-              <% end %>
-              <%= link_to user_path(user.follow_id), data: {"turbolinks" => false} do %>
-                <p class="ml-2 text-sm hover:underline"><%= user.follow.name %></p>
-              <% end %>
-            </div>
+            <%= link_to user_path(user.follow_id), data: {"turbolinks" => false} do %>
+              <div class="flex display-start items-center p-4 hover:bg-gray-50 active:bg-gray-100">
+                  <% if user.follow.profile_image? %>
+                    <%= image_tag user.follow.profile_image.url, class: "w-8" %>
+                  <% else %>
+                    <%= image_tag avatar_url(user.follow), class: "w-8" %>
+                  <% end %>
+                <p class="ml-2 text-sm"><%= user.follow.name %></p>
+              </div>
+            <% end %>
           <% end %>
         </div>
         <hr>
-        <div class="h-auto w-6/12 p-4">
-          <p class="text-base ml-2"><b>フォロワー</b></p>
-          <hr>
+        <div class="h-auto w-6/12">
+          <p class="text-base px-4 pt-4"><b>フォロワー</b></p>
           <div id="follower_index">
             <%= render partial: "follows/follows", locals: {followers: @followers } %>
           </div>
@@ -132,63 +128,63 @@
     </div>
     <div class="col-span-2 bg-white rounded-md shadow mt-4 mx-4">
       <div class="flex">
-        <div class="accept-contract w-6/12 p-4">
-          <div class="flex items-center">
+        <div class="accept-contract w-6/12">
+          <div class="flex items-center px-4 pt-4">
             <span class="material-icons">done</span>
             <p class="ml-2"><b>募集終了した依頼</b></p>
           </div>
           <% @contracts.each do |contract| %>
-            <div class="flex h-auto">
-              <%= link_to job_path(contract.job_id), data: {"turbolinks" => false} do %>
-                <p class="p-2 hover:underline"><%= contract.job.name %></p>
-              <% end %>
-            </div>
+            <%= link_to job_path(contract.job_id), data: {"turbolinks" => false} do %>
+              <div class="flex p-4 hover:bg-gray-50 active:bg-gray-100">
+                <%= contract.job.name %>
+              </div>
+            <% end %>
           <% end %>
         </div>
-        <div class="order_contract w-6/12 p-4">
-          <div class="flex items-center">
+        <div class="order_contract w-6/12">
+          <div class="flex items-center px-4 pt-4">
             <span class="material-icons">task</span>
             <p class="ml-2"><b>受注した他ユーザーの依頼</b></p>
           </div>
           <% @accepts.each do |accept|%>
-            <div class="flex h-auto">
-              <%= link_to job_path(accept.job_id), data: {"turbolinks" => false} do %>
-                <p class="p-2 hover:underline"><%= accept.job.name %></p>
-              <% end %>
-            </div>
+            <%= link_to job_path(accept.job_id), data: {"turbolinks" => false} do %>
+              <div class="flex p-4 hover:bg-gray-50 active:bg-gray-100">
+                <%= accept.job.name %>
+              </div>
+            <% end %>
           <% end %>
         </div>
       </div>
       <hr>
       <div class="flex">
-        <div class="posted_contract w-6/12 p-4">
-          <div class="flex items-center">
+        <div class="posted_contract w-6/12">
+          <div class="flex items-center px-4 pt-4">
             <span class="material-icons">work</span>
             <p class="ml-2"><b>投稿した依頼</b></p>
           </div>
           <% @non_contract_jobs = @jobs.reject{ |job| @check_contract.include?(job.id) } %>
           <% @non_contract_jobs.each do | job |%>
-            <div class="flex items-center h-auto">
-              <%= link_to job_path(job.id), data: {"turbolinks" => false} do %>
-                <p class="p-2 hover:underline"><%= job.name %></p>
-              <% end %>
-              <% if @send_requests.include?(job.id)%>
-                <span class="material-icons">send</span>
-              <% end %>
-            </div>
+            <%= link_to job_path(job.id), data: {"turbolinks" => false} do %>
+              <div class="flex items-center p-4 hover:bg-gray-50 active:bg-gray-100">
+                  <p class="mr-2"><%= job.name %></p>
+                <% if @send_requests.include?(job.id)%>
+                  <span class="material-icons">send</span>
+                <% end %>
+              </div>
+            <% end %>
           <% end %>
         </div>
-        <div class="favorite w-6/12 p-4">
-          <div class="flex items-center">
+        <div class="favorite w-6/12">
+          <div class="flex items-center px-4 pt-4">
             <%= image_tag("star.png", class:"w-6") %>
             <p class="ml-2"><b>お気に入りした依頼</b></p>
           </div>
           <% @favorites.each do | favorite |%>
-            <div class="flex items-center h-auto">
             <%= link_to job_path(favorite.job_id), data: {"turbolinks" => false} do %>
-              <p class="p-2 hover:underline"><%= favorite.job.name %></p>
+              <div class="flex items-center p-4 hover:bg-gray-50 active:bg-gray-100">
+                <p class="mr-2"><%= favorite.job.name %></p>
+              </div>
             <% end %>
-            </div>
           <% end %>
         </div>
       </div>
