@@ -29,10 +29,6 @@ describe JobsController, type: :request do
       get root_path
       expect(response.body).to include(@job.user.name)
     end
-    it 'indexアクションにリクエストするとレスポンスに投稿済みの仕事の投稿時間が存在する' do
-      get root_path
-      expect(response.body).to include(@job.created_at.to_s(:datetime_jp))
-    end
   end
 
   describe 'GET #show' do
@@ -43,10 +39,6 @@ describe JobsController, type: :request do
     it 'showアクションにリクエストするとレスポンスに投稿済みの仕事の投稿者名が存在する' do
       get job_path(@job)
       expect(response.body).to include(@job.user.name)
-    end
-    it 'showアクションにリクエストするとレスポンスに投稿済みの仕事の投稿日時が存在する' do
-      get job_path(@job)
-      expect(response.body).to include(@job.created_at.to_s(:datetime_jp))
     end
     it 'showアクションにリクエストするとレスポンスに投稿済みの仕事の仕事概要が存在する' do
       get job_path(@job)
