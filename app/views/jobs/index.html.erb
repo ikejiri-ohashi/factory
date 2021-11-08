@@ -60,20 +60,20 @@
             <% end %>
           <% end %>
         </div>
-        <div class="bg-white rounded-md m-4 p-4 shadow">
-          <div class="flex items-center mb-4">
+        <div class="bg-white rounded-md m-4 shadow">
+          <div class="flex items-center px-4 pt-4">
             <span class="material-icons">work</span><b class="ml-2">あなたが最近投稿した依頼</b>
           </div>
           <% if @login_user_jobs.empty? %>
             <p class="text-sm">投稿した依頼はありません</p>
           <% end %>
           <% @login_user_jobs.each do |job| %>
-            <hr>
             <%= link_to job_path(job.id), data: {"turbolinks" => false} do %>
-              <div class="flex display-start items-center p-4 hover:bg-gray-50 active:bg-gray-100">
+              <div class="flex display-start items-center p-4 hover:bg-gray-50 active:bg-gray-100 hover:rounded-md">
                   <%= job.name %>
               </div>
             <% end %>
+            <hr>
           <% end %>
         </div>
       <% end %>
@@ -84,35 +84,33 @@
         <p class="p-2">このサービスでは金属製品の加工依頼を投稿し、加工ができる業者を募集することができます。</p>
         <p class="p-2">ユーザーは加工依頼の投稿と、<br>他ユーザーが投稿した依頼の受注ができます。</p>
       </div>
-      <div class="bg-white h-auto m-4 p-2 rounded-md shadow">
-        <div class="m-2 flex items-center">
+      <div class="bg-white h-auto m-4 rounded-md shadow">
+        <div class="m-2 flex items-center px-4 pt-4">
           <span class="material-icons">done</span><b class="ml-2">募集終了した依頼</b>
         </div>
         <% @view_contracts.each do |contract| %>
-          <div class=" h-auto">
-            <hr>
-            <%= link_to job_path(contract.job_id), data: {"turbolinks" => false} do %>
-              <div class="flex display-start items-center p-4 hover:bg-gray-50 active:bg-gray-100">
-                <%= contract.job.name %>
-              </div>
-            <% end %>
-          </div>
+          <%= link_to job_path(contract.job_id), data: {"turbolinks" => false} do %>
+            <div class="flex display-start items-center p-4 hover:bg-gray-50 active:bg-gray-100 hover:rounded-md">
+              <%= contract.job.name %>
+            </div>
+          <% end %>
+          <hr>
         <% end %>
       </div>
-      <div class="bg-white h-auto mx-4 p-2 rounded-md shadow">
-        <div class="m-2 flex items-center">
+      <div class="bg-white h-auto mx-4 rounded-md shadow">
+        <div class="m-2 flex items-center px-4 pt-4">
           <span class="material-icons">trending_up</span><b class="ml-2">お気に入り数ランキング</b>
         </div>
         <% @job_ranks.each.with_index(1) do | job, i | %>
-          <hr>
           <%= link_to job_path(job.id), data: {"turbolinks" => false} do %>
-            <div class="flex display-start items-center p-4 hover:bg-gray-50 active:bg-gray-100">
+            <div class="flex display-start items-center p-4 hover:bg-gray-50 active:bg-gray-100 hover:rounded-md">
               <div class="flex-shrink-0">
                 <b><%= i %>位 </b>
               </div>
                 <p class="ml-2"><%= job.name %></p>
             </div>
           <% end %>
+          <hr>
         <% end %>
       </div>
     </div>

@@ -76,7 +76,7 @@
     </div>
   </div>
   <div class="lg:grid grid-cols-3">
-    <div class="bg-white rounded-md shadow mt-4 mx-4">
+    <div class="bg-white rounded-md shadow mt-4 mx-4 hover:rounded-md">
       <% if @user == current_user %>
         <div class="accepted_requests">
           <div class="flex items-center px-4 pt-4">
@@ -165,7 +165,7 @@
           <% @non_contract_jobs = @jobs.reject{ |job| @check_contract.include?(job.id) } %>
           <% @non_contract_jobs.each do | job |%>
             <%= link_to job_path(job.id), data: {"turbolinks" => false} do %>
-              <div class="flex items-center p-4 hover:bg-gray-50 active:bg-gray-100">
+              <div class="flex items-center p-4 hover:bg-gray-50 active:bg-gray-100 hover:rounded-md">
                   <p class="mr-2"><%= job.name %></p>
                 <% if @send_requests.include?(job.id)%>
                   <span class="material-icons">send</span>
@@ -181,7 +181,7 @@
           </div>
           <% @favorites.each do | favorite |%>
             <%= link_to job_path(favorite.job_id), data: {"turbolinks" => false} do %>
-              <div class="flex items-center p-4 hover:bg-gray-50 active:bg-gray-100">
+              <div class="flex items-center p-4 hover:bg-gray-50 active:bg-gray-100 hover:rounded-md">
                 <p class="mr-2"><%= favorite.job.name %></p>
               </div>
             <% end %>
