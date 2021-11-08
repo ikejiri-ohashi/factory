@@ -1,12 +1,14 @@
-<div class="flex items-center">
-  <% if user_signed_in? %>
-    <% unless check_current_user_favorite.include?(job) %>
-      <%= link_to image_tag("star_outline.png", class:"w-6"), job_create_favorite_path(job, id:job), method: :post, remote: true  %>
+<div class="flex justify-end items-center">
+  <div class=" rounded-full p-2 hover:bg-yellow-100">
+    <% if user_signed_in? %>
+      <% unless check_current_user_favorite.include?(job) %>
+        <%= link_to image_tag("star_outline.png", class:"w-6"), job_create_favorite_path(job, id:job), method: :post, remote: true  %>
+      <% else %>
+        <%= link_to image_tag("star.png", class:"w-6"), job_destroy_favorite_path(job, id:job), method: :delete, remote: true %>
+      <% end %>
     <% else %>
-      <%= link_to image_tag("star.png", class:"w-6"), job_destroy_favorite_path(job, id:job), method: :delete, remote: true %>
+      <%= link_to image_tag("star_outline.png", class:"w-6"), new_user_session_path %>
     <% end %>
-  <% else %>
-    <%= link_to image_tag("star_outline.png", class:"w-6"), new_user_session_path %>
-  <% end %>
-  <p class="ml-2"><%= count_favorites.count(job) %></p>
+  </div>
+  <p class="pr-2"><%= count_favorites.count(job) %></p>
 </div>
