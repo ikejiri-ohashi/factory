@@ -1,14 +1,12 @@
 <% followers.each do | follower |%>
-  <div class="flex display-start items-center m-2">
-    <%= link_to user_path(follower.user_id), data: {"turbolinks" => false} do %>
-      <% if follower.user.profile_image? %>
-        <%= image_tag follower.user.profile_image.url, class: "w-8" %>
-      <% else %>
-        <%= image_tag avatar_url(follower.user), class: "w-8" %>
-      <% end %>
-    <% end %>
-    <%= link_to user_path(follower.user_id), data: {"turbolinks" => false} do %>
-      <p class="ml-2 text-sm hover:underline"><%= follower.user.name %></p>
-    <% end %>
-  </div>
+  <%= link_to user_path(follower.user_id), data: {"turbolinks" => false} do %>
+    <div class="flex display-start items-center p-4 hover:bg-gray-50 active:bg-gray-100">
+        <% if follower.user.profile_image? %>
+          <%= image_tag follower.user.profile_image.url, class: "w-8" %>
+        <% else %>
+          <%= image_tag avatar_url(follower.user), class: "w-8" %>
+        <% end %>
+      <p class="ml-2 text-sm"><%= follower.user.name %></p>
+    </div>
+  <% end %>
 <% end %>
