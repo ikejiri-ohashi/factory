@@ -1,0 +1,9 @@
+<% if user_select == "jobs" %>
+  <%= render partial: "users/jobs", locals: { jobs: jobs, check_contract: check_contract, send_requests: send_requests } %>
+<% elsif user_select == "favorites" %>
+  更新
+<% elsif user_select == "contracts" %>
+  <%= render partial: "users/contracts", locals: { contracts: contracts } %>
+<% elsif user_select == "accepts" %>
+  <%= render partial: "users/accepts", locals: { } %>
+<% end %>

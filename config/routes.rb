@@ -22,5 +22,9 @@ Rails.application.routes.draw do
     post 'follow/:id' => 'follows#create', as: 'create_follow'
     delete 'follow/:id' => 'follows#destroy', as: 'destroy_follow'
     post 'request_from_user/:id' => 'requests#create_from_user', as: 'create_from_user'
+    get '/select_jobs/:id' => 'users#select_jobs', as: 'select_jobs'
+    get '/select_favorites/:id' => 'users#select_favorites', as: 'select_favorites'
+    get '/select_contracts/:id' => 'users#select_contracts', as: 'select_contracts'
+    get '/select_accepts/:id' => 'users#select_accepts', as: 'select_accepts'
   end
 end

@@ -1,0 +1,18 @@
+<div class="accepts">
+  <div class="flex items-center px-4 pt-4">
+    <span class="material-icons">task</span>
+    <p class="ml-2"><b>受注した他ユーザーの依頼</b></p>
+  </div>
+  <% if accepts.empty? %>
+    <div class="flex px-4 py-2 hover:bg-gray-50">
+      <p class="text-sm text-gray-400">受注した他ユーザーの依頼はありません</p>
+    </div>
+  <% end %>
+  <% accepts.each do |accept|%>
+    <%= link_to job_path(accept.job_id), data: {"turbolinks" => false} do %>
+      <div class="flex px-4 py-2 hover:bg-gray-50">
+        <%= accept.job.name %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

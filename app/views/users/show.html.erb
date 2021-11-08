@@ -128,86 +128,8 @@
       </div>
     </div>
     <div class="col-span-2 bg-white rounded-md shadow mt-4 mx-4">
-      <div class="flex">
-        <div class="posted_contract w-6/12">
-          <div class="flex items-center px-4 pt-4">
-            <span class="material-icons">work</span>
-            <p class="ml-2"><b>投稿した依頼</b></p>
-          </div>
-          <% @non_contract_jobs = @jobs.reject{ |job| @check_contract.include?(job.id) } %>
-          <% if @non_contract_jobs.empty? %>
-            <div class="flex px-4 py-2 hover:bg-gray-50">
-              <p class="text-sm text-gray-400">投稿した依頼はありません</p>
-            </div>
-          <% end %>
-          <% @non_contract_jobs.each do | job |%>
-            <%= link_to job_path(job.id), data: {"turbolinks" => false} do %>
-              <div class="flex items-center px-4 py-2 hover:bg-gray-50 active:bg-gray-100 hover:rounded-md">
-                  <p class="mr-2"><%= job.name %></p>
-                <% if @send_requests.include?(job.id)%>
-                  <span class="material-icons">send</span>
-                <% end %>
-              </div>
-            <% end %>
-          <% end %>
-        </div>
-        <div class="favorite w-6/12">
-          <div class="flex items-center px-4 pt-4">
-            <%= image_tag("star.png", class:"w-6") %>
-            <p class="ml-2"><b>お気に入りした依頼</b></p>
-          </div>
-          <% if @favorites.empty? %>
-            <div class="flex px-4 py-2 hover:bg-gray-50">
-              <p class="text-sm text-gray-400">お気に入りした依頼はありません</p>
-            </div>
-          <% end %>
-          <% @favorites.each do | favorite |%>
-            <%= link_to job_path(favorite.job_id), data: {"turbolinks" => false} do %>
-              <div class="flex items-center px-4 py-2 hover:bg-gray-50 active:bg-gray-100 hover:rounded-md">
-                <p class="mr-2"><%= favorite.job.name %></p>
-              </div>
-            <% end %>
-          <% end %>
-        </div>
-      </div>
-      <hr>
-      <div class="flex">
-        <div class="accept-contract w-6/12">
-          <div class="flex items-center px-4 pt-4">
-            <span class="material-icons">done</span>
-            <p class="ml-2"><b>募集終了した依頼</b></p>
-          </div>
-          <% if @contracts.empty? %>
-            <div class="flex px-4 py-2 hover:bg-gray-50">
-              <p class="text-sm text-gray-400">募集終了した投稿はありません</p>
-            </div>
-          <% end %>
-          <% @contracts.each do |contract| %>
-            <%= link_to job_path(contract.job_id), data: {"turbolinks" => false} do %>
-              <div class="flex px-4 py-2 hover:bg-gray-50 active:bg-gray-100">
-                <%= contract.job.name %>
-              </div>
-            <% end %>
-          <% end %>
-        </div>
-        <div class="order_contract w-6/12">
-          <div class="flex items-center px-4 pt-4">
-            <span class="material-icons">task</span>
-            <p class="ml-2"><b>受注した他ユーザーの依頼</b></p>
-          </div>
-          <% if @accepts.empty? %>
-            <div class="flex px-4 py-2 hover:bg-gray-50">
-              <p class="text-sm text-gray-400">受注した他ユーザーの依頼はありません</p>
-            </div>
-          <% end %>
-          <% @accepts.each do |accept|%>
-            <%= link_to job_path(accept.job_id), data: {"turbolinks" => false} do %>
-              <div class="flex px-4 py-2 hover:bg-gray-50">
-                <%= accept.job.name %>
-              </div>
-            <% end %>
-          <% end %>
-        </div>
+      <div id="select">
+        <%= render partial: "users/jobs", locals: { jobs: @jobs, check_contract: @check_contract, send_requests: @send_requests } %>
       </div>
     </div>
   </div>

@@ -1,0 +1,46 @@
+<div class="grid grid-cols-4">
+  <div class="bg-white rounded-tl-md h-auto border-b-2 border-white">
+    <div class="flex items-center p-4">
+      <p class="ml-2 text-md">投稿した依頼</p>
+    </div>
+  </div>
+  <%= link_to user_select_favorites_path(user_id: params[:id]), data: {"turbolinks" => false}, method: :get, remote: true do %>
+    <div class="bg-gray-100 h-auto hover:border-b-2 border-blue-500 active:bg-gray-200">
+      <div class="flex items-center p-4">
+        <p class="ml-2 text-md">お気に入り</p>
+      </div>
+    </div>
+  <% end %>
+  <div class="bg-gray-100 h-auto hover:border-b-2 border-blue-500 active:bg-gray-200">
+    <div class="flex items-center p-4">
+      <p class="ml-2 text-md">発注した依頼</p>
+    </div>
+  </div>
+  <div class="bg-gray-100 rounded-tr-md h-auto hover:border-b-2 border-blue-500 active:bg-gray-200">
+    <div class="flex items-center p-4">
+      <p class="ml-2 text-md">受注した依頼</p>
+    </div>
+  </div>
+</div>
+<div class="posted_contract">
+  <div class="flex items-center px-4 pt-4">
+    <span class="material-icons">work</span>
+    <p class="ml-2"><b>投稿した依頼</b></p>
+  </div>
+  <% @non_contract_jobs = jobs.reject{ |job| check_contract.include?(job.id) } %>
+  <% if @non_contract_jobs.empty? %>
+    <div class="flex px-4 py-2 hover:bg-gray-50">
+      <p class="text-sm text-gray-400">投稿した依頼はありません</p>
+    </div>
+  <% end %>
+  <% @non_contract_jobs.each do | job |%>
+    <%= link_to job_path(job.id), data: {"turbolinks" => false} do %>
+      <div class="flex items-center px-4 py-2 hover:bg-gray-50 active:bg-gray-100 hover:rounded-md">
+          <p class="mr-2"><%= job.name %></p>
+        <% if send_requests.include?(job.id)%>
+          <span class="material-icons">send</span>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
+</div>
