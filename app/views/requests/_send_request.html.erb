@@ -1,22 +1,21 @@
 <% @non_contract_jobs = @current_user_job.reject{ |job| @check_contract.include?(job.id) } %>
-<div class="send_requests p-4">
-  <% unless message.nil? %>
-    <div class="flex rounded-md border-2 border-green-500 mb-4">
-      <span class="material-icons">done</span><p class="mx-2">リクエストを送信しました</p>
-    </div>
-  <% end %>
-  <div class="flex items-center">
+<% unless message.nil? %>
+  <div class="flex rounded-md border-2 border-green-500 m-4">
+    <span class="material-icons">done</span><p class="mx-2">リクエストを送信しました</p>
+  </div>
+<% end %>
+<div class="accepted_requests rounded-md shadow border-2 border-gray-300 m-4">
+  <div class="flex items-center px-4 pt-4">
     <span class="material-icons">send</span>
     <p class="ml-2">加工のリクエスト</p>
   </div>
-  <p class="ml-2 text-sm py-4">このユーザーにあなたの依頼の引き受けをリクエストすることができます。</p>
+  <p class="text-sm p-4">このユーザーにあなたの依頼の引き受けをリクエストすることができます。</p>
   <%= form_with url: user_create_from_user_path(user_id: current_user.id) do |f| %>
     <div class="flex justify-center">
       <%= f.collection_select :job_id, @non_contract_jobs, :id, :name, {prompt: "選択してください"}, {class: 'form-select w-48'} %>
     </div>
-    <div class='flex justify-center pt-4'>
+    <div class='flex justify-center py-4'>
       <%= f.submit "リクエストを送信する", class:"cursor-pointer px-3 py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-700" %>
     </div>
   <% end %>
 </div>
-<hr>

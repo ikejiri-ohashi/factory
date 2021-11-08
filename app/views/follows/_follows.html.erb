@@ -1,6 +1,6 @@
 <% followers.each do | follower |%>
   <%= link_to user_path(follower.user_id), data: {"turbolinks" => false} do %>
-    <div class="flex display-start items-center p-4 hover:bg-gray-50 active:bg-gray-100">
+    <div class="flex display-start items-center px-4 py-2 hover:bg-gray-50 active:bg-gray-100">
         <% if follower.user.profile_image? %>
           <%= image_tag follower.user.profile_image.url, class: "w-8" %>
         <% else %>

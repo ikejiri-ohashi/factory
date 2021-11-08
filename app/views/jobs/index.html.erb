@@ -78,14 +78,14 @@
         </div>
       <% end %>
       <div class="bg-white h-auto mx-4 mt-4 p-4 rounded-md shadow">
-        <div class="m-2 flex items-center">
+        <div class="flex items-center">
           <%= image_tag("information.png", class:"w-6") %><b class="ml-2">このサービスについて</b>
         </div>
         <p class="p-2">このサービスでは金属製品の加工依頼を投稿し、加工ができる業者を募集することができます。</p>
         <p class="p-2">ユーザーは加工依頼の投稿と、<br>他ユーザーが投稿した依頼の受注ができます。</p>
       </div>
       <div class="bg-white h-auto m-4 rounded-md shadow">
-        <div class="m-2 flex items-center px-4 pt-4">
+        <div class="flex items-center px-4 pt-4">
           <span class="material-icons">done</span><b class="ml-2">募集終了した依頼</b>
         </div>
         <% @view_contracts.each do |contract| %>
@@ -98,7 +98,7 @@
         <% end %>
       </div>
       <div class="bg-white h-auto mx-4 rounded-md shadow">
-        <div class="m-2 flex items-center px-4 pt-4">
+        <div class="flex items-center px-4 pt-4">
           <span class="material-icons">trending_up</span><b class="ml-2">お気に入り数ランキング</b>
         </div>
         <% @job_ranks.each.with_index(1) do | job, i | %>
