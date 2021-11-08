@@ -28,8 +28,10 @@
     <%# すべての投稿からおすすめされた投稿を排除 %>
     <% @not_recommend_jobs = match_place_jobs.reject{|job| @already_recommended.include?(job.id) } %>
   <% else %>
-    <p class="text-sm pt-4">あなたのプロフィールの情報を元におすすめが表示されます。</p>
-    <p class="text-sm py-4">まずはユーザーページでプロフィールの登録をしてみましょう。</p>
+    <div class="p-4">
+      <p class="text-sm pb-4">あなたのプロフィールの情報を元におすすめが表示されます。</p>
+      <p class="text-sm">まずはユーザーページでプロフィールの登録をしてみましょう。</p>
+    </div>
   <% end %>
   <% if @company_profile != nil %>
     <%# place_idが同じものを集計 %>
