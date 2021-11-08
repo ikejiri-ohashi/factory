@@ -39,18 +39,18 @@
       </div>
       <div class="request">
         <% if @user == current_user %>
-          <div class="accepted_requests rounded-md shadow border-2 border-yellow-300 mx-4 mt-8">
+          <div class="accepted_requests rounded-md shadow border-2 border-yellow-300 mx-4 my-4">
             <div class="flex items-center px-4 pt-4">
               <span class="material-icons">announcement</span>
               <p class="ml-2"><b>受け取ったリクエスト</b></p>
             </div>
             <% @got_requests_no_contract = @got_requests.reject{|request| @check_contract.include?(request.job_id)} %>
             <% if @got_requests_no_contract.empty? %>
-              <p class="text-sm p-4">受け取ったリクエストはありません</p>
+              <p class="text-sm p-4">リクエストはありません</p>
             <% end %>
             <% @got_requests_no_contract.each do |request|%>
               <%= link_to job_path(request.job_id), data: {"turbolinks" => false} do %>
-                <div class="flex hover:bg-gray-100 active:bg-gray-200 p-4">
+                <div class="flex hover:bg-gray-100 active:bg-gray-200 px-4 py-2">
                   <%= request.job.name %>
                 </div>
               <% end %>

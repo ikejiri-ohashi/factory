@@ -16,7 +16,8 @@ class JobsController < ApplicationController
     @company_profile = CompanyProfile.new
     @company_profile = CompanyProfile.find_by(user_id: current_user.id)
     @user_posted_jobs = Job.order('created_at DESC').where(user_id: current_user.id)
-    @check_request = Request.find_by(request_id: current_user.id)
+    @check_requests = Request.where(request_id: current_user.id)
+    @check_contracts = Contract.pluck(:job_id)
     @login_user_jobs = Job.where(user_id: current_user.id).order('created_at DESC').limit(3)
 
     return if @company_profile.nil?

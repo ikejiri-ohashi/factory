@@ -10,8 +10,8 @@
   <hr>
   <% none_login_user_jobs_and_recommend.each do |recommend| %>
     <div class="flex justify-between hover:bg-gray-50 active:bg-gray-100">
-      <div>
-        <div class="text-sm flex justify-between items-center p-4">
+      <div class="w-11/12">
+        <div class="text-sm flex items-center p-4">
           <div class="flex items-center">
             <%= link_to user_path(recommend.user.id), data: {"turbolinks" => false} do %>
               <% if recommend.user.profile_image? %>
@@ -43,7 +43,7 @@
           </div>
         <% end %>
       </div>
-      <div class="flex flex-wrap content-end p-2">
+      <div class="flex flex-wrap content-end w-1/12">
         <div id="favorite_button_<%= recommend.id %>">
           <%= render partial: "favorites/favorites", locals: {count_favorites: @count_favorites, check_current_user_favorite: @check_current_user_favorite, job: recommend.id} %>
         </div>

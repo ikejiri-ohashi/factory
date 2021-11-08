@@ -22,7 +22,6 @@
             </div>
             <div class="flex justify-center">
                 <p class="text-xl"><%= @login_user.name %>さん</p>
-              
             </div>
             <% if @company_profile != nil %>
               <% if @company_profile.category_id == 1 %>
@@ -45,7 +44,8 @@
             <div class="pt-4 flex items-center">
               <span class="material-icons">location_on</span><p class="ml-2">所在地：</p><%= @place %>
             </div>
-            <% if @check_request %>
+            <% @request = @check_requests.reject{|request| @check_contracts.include?(request.job_id)} %>
+            <% if @request.present? %>
               <%= link_to job_path(@check_request.job_id), data: {"turbolinks" => false} do %>
                 <div class="bg-white rounded-md shadow mt-4 mx-4 border-2 hover:border-yellow-300">
                   <div class="p-4 h-auto">
