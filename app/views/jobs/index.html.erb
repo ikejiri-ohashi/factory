@@ -8,9 +8,9 @@
     </div>
     <div class="col-span-1">
       <% if user_signed_in? %>
-        <div class="bg-white rounded-md m-4 pb-4 shadow">
+        <div class="bg-white rounded-md m-4 shadow">
           <%= link_to user_path(@login_user), data: {"turbolinks" => false} do %>
-            <div class="p-4 hover:bg-gray-50 active:bg-gray-100">
+            <div class="p-4 hover:bg-gray-100 active:bg-gray-200 rounded-md">
               <div class="flex items-center mb-6">
                 <span class="material-icons">person</span><b class="ml-2">ログインユーザー</b>
               </div>
@@ -22,7 +22,7 @@
                 <% end %>
               </div>
               <div class="flex justify-center">
-                  <p class="text-xl"><%= @login_user.name %>さん</p>
+                <p class="text-xl"><%= @login_user.name %>さん</p>
               </div>
               <% if @company_profile != nil %>
                 <% if @company_profile.category_id == 1 %>
@@ -49,18 +49,20 @@
           <% end %>
           <% @requests = @check_requests.reject{|request| @check_contracts.include?(request.job_id)} %>
           <% if @requests.present? %>
-            <div class="bg-white rounded-md shadow mx-4 border-2 hover:border-yellow-300">
-              <div class="flex items-center px-4 pt-4">
-                <span class="material-icons">announcement</span>
-                <p class="ml-2">加工依頼のリクエストが届いています！</p>
-              </div>
-              <% @requests.each do |request|%>
-                <%= link_to job_path(request.job_id), data: {"turbolinks" => false} do %>
-                  <div class="px-4 py-2 hover:bg-gray-50 active:bg-gray-100">
-                    <%= request.job.name %>
-                  </div>
+            <div class="pb-4">
+              <div class="bg-white rounded-md shadow mx-4 border-2 hover:border-yellow-300">
+                <div class="flex items-center px-4 pt-4">
+                  <span class="material-icons">announcement</span>
+                  <p class="ml-2">加工依頼のリクエストが届いています！</p>
+                </div>
+                <% @requests.each do |request|%>
+                  <%= link_to job_path(request.job_id), data: {"turbolinks" => false} do %>
+                    <div class="px-4 py-2 hover:bg-gray-50 active:bg-gray-100 rounded-md">
+                      <%= request.job.name %>
+                    </div>
+                  <% end %>
                 <% end %>
-              <% end %>
+              </div>
             </div>
           <% end %>
         </div>
