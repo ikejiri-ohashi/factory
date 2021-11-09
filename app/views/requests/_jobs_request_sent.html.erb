@@ -1,0 +1,10 @@
+<p class="text-sm p-4">このユーザーに送信したリクエスト</p>
+<% jobs_request_sent.each do |job|%>
+  <%= link_to job_path(job.job_id), data: {"turbolinks" => false} do %>
+    <div class="px-4 py-2 hover:bg-gray-50 active:bg-gray-100">
+      <div class="flex display-start items-center">
+          <p class=""><%= job.job.name %></p>
+      </div>
+    </div>
+  <% end %>
+<% end %>

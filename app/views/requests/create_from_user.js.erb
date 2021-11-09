@@ -1,1 +1,2 @@
 $("#send_request").html("<%= j(render partial: "requests/send_request", locals: {current_user_job: @current_user_job, check_contract: @check_contract, message: " "}) %>");
+$("#jobs_request_sent").html("<%= j(render partial: "requests/jobs_request_sent", locals: {jobs_request_sent: @jobs_request_sent}) %>");

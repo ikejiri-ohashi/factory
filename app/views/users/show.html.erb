@@ -39,6 +39,9 @@
             <div id="send_request">
               <%= render partial: "requests/send_request", locals: {current_user_job: @current_user_job, current_user_job: @current_user_job, message: @message} %>
             </div>
+            <div id="jobs_request_sent">
+              <%= render partial: "requests/jobs_request_sent", locals: {jobs_request_sent: @jobs_request_sent} %>
+            </div>
           <% end %>
         </div>
       </div>
