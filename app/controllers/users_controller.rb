@@ -3,13 +3,27 @@ class UsersController < ApplicationController
     @user = User.find_by(id: params[:id])
     @jobs = Job.where(user_id: params[:id])
     @company_profile = CompanyProfile.find_by(user_id: params[:id])
-    @follows = Follow.where(user_id: params[:id]).includes(:user, :follow)
-    @followers = Follow.where(follow_id: params[:id]).includes(:user, :follow)
+    
+    
     @check_follow = Follow.find_by(user_id: current_user.id, follow_id: params[:id]) if user_signed_in?
     @check_contract = Contract.all.pluck(:job_id)
     @got_requests = Request.where(request_id: params[:id]).includes(:job)
     @send_requests = Request.where(user_id: params[:id]).pluck(:job_id)
     @current_user_job = Job.where(user_id: current_user.id) if user_signed_in?
+  end
+
+  def user_info
+    @user = User.find_by(id: params[:id])
+    @company_profile = CompanyProfile.find_by(user_id: params[:id])
+    @check_follow = Follow.find_by(user_id: current_user.id, follow_id: params[:id]) if user_signed_in?
+  end
+
+  def user_follow
+    @follows = Follow.where(user_id: params[:id]).includes(:user, :follow)
+  end
+
+  def user_follower
+    @followers = Follow.where(follow_id: params[:id]).includes(:user, :follow)
   end
 
   def select_jobs

@@ -26,5 +26,8 @@ Rails.application.routes.draw do
     get '/select_favorites/:id' => 'users#select_favorites', as: 'select_favorites'
     get '/select_contracts/:id' => 'users#select_contracts', as: 'select_contracts'
     get '/select_accepts/:id' => 'users#select_accepts', as: 'select_accepts'
+    get '/user_info/:id' => 'users#user_info', as: 'user_info'
+    get '/user_follow/:id' => 'users#user_follow', as: 'user_follow'
+    get '/user_follower/:id' => 'users#user_follower', as: 'user_follower'
   end
 end

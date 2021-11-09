@@ -1,0 +1,48 @@
+<div class="user_info mx-auto">
+  <div class="mt-4 px-16 flex justify-center">
+    <% if user.profile_image? %>
+      <%= image_tag user.profile_image.url class: "w-16" %>
+    <% else %>
+      <%= image_tag avatar_url(user) %>
+    <% end %>
+  </div>
+  <div class="pt-4 flex justify-center">
+    <p class="text-2xl"><%= user.name %></p>
+  </div>
+</div>
+<div class="setting_or_follow mx-auto pt-4">
+  <% if user == current_user %>
+    <div class="mt-4 flex justify-center">
+      <%= link_to "設定を変更する", edit_user_registration_path, class: "px-3 py-2 text-blue-500 border border-blue-500 font-semibold rounded hover:bg-blue-100" %>
+    </div>
+    <% if company_profile.nil? %>
+      <div class="mt-4 flex justify-center">
+        <%= link_to "プロフィールを追加する", new_company_profile_path, class: "px-3 py-2 text-blue-500 border border-blue-500 font-semibold rounded hover:bg-blue-100" %>
+      </div>
+    <% else %>
+      <div class="mt-4 flex justify-center">
+        <%= link_to "プロフィールを編集する", edit_company_profile_path, class: "px-3 py-2 text-blue-500 border border-blue-500 font-semibold rounded hover:bg-blue-100" %>
+      </div>
+    <% end %>
+  <% else %>
+    <div id="follow_button">
+      <%= render partial: "follows/check_follow", locals: {check_follow: check_follow } %>
+    </div>
+  <% end %>
+</div>
+<div class="grid grid-cols-2">
+  <%= link_to user_user_follow_path(user_id: params[:id]), data: {"turbolinks" => false}, method: :get, remote: true do %>
+    <div class="bg-gray-100 border-t-2 border-gray-100 hover:border-blue-500 active:bg-gray-200">
+      <div class="flex items-center p-4">
+        <p class="mx-auto text-sm">フォロー中</p>
+      </div>
+    </div>
+  <% end %>
+  <%= link_to user_user_follower_path(user_id: params[:id]), data: {"turbolinks" => false}, method: :get, remote: true do %>
+    <div class="bg-gray-100 border-t-2 border-gray-100 hover:border-blue-500 active:bg-gray-200">
+      <div class="flex items-center p-4">
+        <p class="mx-auto text-sm">フォロワー</p>
+      </div>
+    </div>
+  <% end %>
+</div>

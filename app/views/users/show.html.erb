@@ -5,62 +5,8 @@
   </div>
   <div class="lg:grid grid-cols-3">
     <div class="bg-white rounded-md shadow mt-4 mx-4">
-      <div class="user_info mx-auto">
-        <div class="mt-4 px-16 flex justify-center">
-          <% if @user.profile_image? %>
-            <%= image_tag @user.profile_image.url class: "w-16" %>
-          <% else %>
-            <%= image_tag avatar_url(@user) %>
-          <% end %>
-        </div>
-        <div class="pt-4 flex justify-center">
-          <p class="text-2xl"><%= @user.name %></p>
-        </div>
-      </div>
-      <div class="setting_or_follow mx-auto pt-4">
-        <% if @user == current_user %>
-          <div class="mt-4 flex justify-center">
-            <%= link_to "設定を変更する", edit_user_registration_path, class: "px-3 py-2 text-blue-500 border border-blue-500 font-semibold rounded hover:bg-blue-100" %>
-          </div>
-          <% if @company_profile.nil? %>
-            <div class="mt-4 flex justify-center">
-              <%= link_to "プロフィールを追加する", new_company_profile_path, class: "px-3 py-2 text-blue-500 border border-blue-500 font-semibold rounded hover:bg-blue-100" %>
-            </div>
-          <% else %>
-            <div class="mt-4 flex justify-center">
-              <%= link_to "プロフィールを編集する", edit_company_profile_path, class: "px-3 py-2 text-blue-500 border border-blue-500 font-semibold rounded hover:bg-blue-100" %>
-            </div>
-          <% end %>
-        <% else %>
-          <div id="follow_button">
-            <%= render partial: "follows/check_follow", locals: {check_follow: @check_follow, message: @message } %>
-          </div>
-        <% end %>
-      </div>
-      <div class="request">
-        <% if @user == current_user %>
-          <div class="accepted_requests rounded-md shadow border-2 border-yellow-300 mx-4 my-4">
-            <div class="flex items-center px-4 pt-4">
-              <span class="material-icons">announcement</span>
-              <p class="ml-2"><b>受け取ったリクエスト</b></p>
-            </div>
-            <% @got_requests_no_contract = @got_requests.reject{|request| @check_contract.include?(request.job_id)} %>
-            <% if @got_requests_no_contract.empty? %>
-              <p class="text-sm p-4">リクエストはありません</p>
-            <% end %>
-            <% @got_requests_no_contract.each do |request|%>
-              <%= link_to job_path(request.job_id), data: {"turbolinks" => false} do %>
-                <div class="flex hover:bg-gray-100 active:bg-gray-200 px-4 py-2">
-                  <%= request.job.name %>
-                </div>
-              <% end %>
-            <% end %>
-          </div>
-        <% elsif user_signed_in? %>
-          <div id="send_request">
-            <%= render partial: "requests/send_request", locals: {current_user_job: @current_user_job, current_user_job: @current_user_job, message: @message} %>
-          </div>
-        <% end %>
+      <div id="user_info">
+        <%= render partial: "users/info", locals: { user: @user, company_profile: @company_profile, check_follow: @check_follow } %>
       </div>
     </div>
     <div class="col-span-2 h-auto bg-white rounded-md shadow mt-4 mx-4">
@@ -102,29 +48,30 @@
   </div>
   <div class="lg:grid grid-cols-3">
     <div class="bg-white rounded-md shadow mt-4 mx-4 hover:rounded-md">
-      <div class="follows flex">
-        <div class="h-auto w-6/12">
-          <p class="text-base px-4 pt-4"><b>フォロー中</b></p>
-          <% @follows.each do | user |%>
-            <%= link_to user_path(user.follow_id), data: {"turbolinks" => false} do %>
-              <div class="flex display-start items-center px-4 py-2 hover:bg-gray-50 active:bg-gray-100">
-                  <% if user.follow.profile_image? %>
-                    <%= image_tag user.follow.profile_image.url, class: "w-8" %>
-                  <% else %>
-                    <%= image_tag avatar_url(user.follow), class: "w-8" %>
-                  <% end %>
-                <p class="ml-2 text-sm"><%= user.follow.name %></p>
-              </div>
+      <div class="request">
+        <% if @user == current_user %>
+          <div class="accepted_requests rounded-md shadow border-2 border-yellow-300 mx-4 my-4">
+            <div class="flex items-center px-4 pt-4">
+              <span class="material-icons">announcement</span>
+              <p class="ml-2"><b>受け取ったリクエスト</b></p>
+            </div>
+            <% @got_requests_no_contract = @got_requests.reject{|request| @check_contract.include?(request.job_id)} %>
+            <% if @got_requests_no_contract.empty? %>
+              <p class="text-sm p-4">リクエストはありません</p>
             <% end %>
-          <% end %>
-        </div>
-        <hr>
-        <div class="h-auto w-6/12">
-          <p class="text-base px-4 pt-4"><b>フォロワー</b></p>
-          <div id="follower_index">
-            <%= render partial: "follows/follows", locals: {followers: @followers } %>
+            <% @got_requests_no_contract.each do |request|%>
+              <%= link_to job_path(request.job_id), data: {"turbolinks" => false} do %>
+                <div class="flex hover:bg-gray-100 active:bg-gray-200 px-4 py-2">
+                  <%= request.job.name %>
+                </div>
+              <% end %>
+            <% end %>
           </div>
-        </div>
+        <% elsif user_signed_in? %>
+          <div id="send_request">
+            <%= render partial: "requests/send_request", locals: {current_user_job: @current_user_job, current_user_job: @current_user_job, message: @message} %>
+          </div>
+        <% end %>
       </div>
     </div>
     <div class="col-span-2 bg-white rounded-md shadow mt-4 mx-4">
