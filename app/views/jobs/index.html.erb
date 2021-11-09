@@ -57,7 +57,7 @@
                 </div>
                 <% @requests.each do |request|%>
                   <%= link_to job_path(request.job_id), data: {"turbolinks" => false} do %>
-                    <div class="px-4 py-2 hover:bg-gray-50 active:bg-gray-100 rounded-md">
+                    <div class="px-4 py-2 hover:bg-gray-100 active:bg-gray-200 rounded-md">
                       <%= request.job.name %>
                     </div>
                   <% end %>
@@ -75,7 +75,7 @@
           <% end %>
           <% @login_user_jobs.each do |job| %>
             <%= link_to job_path(job.id), data: {"turbolinks" => false} do %>
-              <div class="flex display-start items-center p-4 hover:bg-gray-50 active:bg-gray-100 hover:rounded-md">
+              <div class="flex display-start items-center p-4 hover:bg-gray-100 active:bg-gray-200 hover:rounded-md">
                   <%= job.name %>
               </div>
             <% end %>
@@ -92,11 +92,11 @@
       </div>
       <div class="bg-white h-auto m-4 rounded-md shadow">
         <div class="flex items-center px-4 pt-4">
-          <span class="material-icons">done</span><b class="ml-2">募集終了した依頼</b>
+          <span class="material-icons">done</span><b class="ml-2">契約が決定した依頼</b>
         </div>
         <% @view_contracts.each do |contract| %>
           <%= link_to job_path(contract.job_id), data: {"turbolinks" => false} do %>
-            <div class="flex display-start items-center p-4 hover:bg-gray-50 active:bg-gray-100 hover:rounded-md">
+            <div class="flex display-start items-center p-4 hover:bg-gray-100 active:bg-gray-200 hover:rounded-md">
               <%= contract.job.name %>
             </div>
           <% end %>
@@ -109,7 +109,7 @@
         </div>
         <% @job_ranks.each.with_index(1) do | job, i | %>
           <%= link_to job_path(job.id), data: {"turbolinks" => false} do %>
-            <div class="flex display-start items-center p-4 hover:bg-gray-50 active:bg-gray-100 hover:rounded-md">
+            <div class="flex display-start items-center p-4 hover:bg-gray-100 active:bg-gray-200 hover:rounded-md">
               <div class="flex-shrink-0">
                 <b><%= i %>位 </b>
               </div>

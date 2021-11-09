@@ -1,6 +1,6 @@
 <div class="grid grid-cols-2">
   <%= link_to jobs_back_index_path, data: {"turbolinks" => false}, method: :get, remote: true do %>
-    <div class="bg-white rounded-t-md h-auto border border-white">
+    <div class="bg-white rounded-t-md h-auto border-b-2 border-white">
       <div class="flex items-center p-4">
         <span class="material-icons">manage_search</span>
         <p class="ml-2 text-md">受注する依頼を探す</p>
@@ -91,7 +91,10 @@
 <% end %>
 <% @no_contract_jobs = @other_jobs.reject{|job| contracts.include?(job.id) }%>
 <div class="p-4 flex justify-between">
-  <p class="text-sm">※おすすめ以外の依頼が表示されます。</p>
+  <div>
+    <p class="text-sm text-gray-500">上記以外のものが表示されます。</p>
+    <p class="text-sm text-gray-500">契約済みの投稿やあなたの投稿は表示されません。</p>
+  </div>
   <div class="flex items-center">
     <p class="text-sm">検索結果</p><p class="ml-2"><%= @no_contract_jobs.count %>件</p>
   </div>
@@ -103,7 +106,7 @@
   <%= image_tag("factory_resarch.png", class:"mx-auto w-80") %>
 <% end %>
 <% @no_contract_jobs.each do |job|%>
-  <div class="flex justify-between hover:bg-gray-50 active:bg-gray-100">
+  <div class="flex justify-between hover:bg-gray-100 active:bg-gray-200 rounded-md">
   <div class="w-11/12">
     <div class="text-sm flex justify-between items-center p-4">
       <div class="flex display-start items-center">

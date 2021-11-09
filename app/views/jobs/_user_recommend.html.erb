@@ -39,7 +39,7 @@
         <%= f.submit "検索する", class:"cursor-pointer px-3 py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-700" %>
       </div>
     <% end %>
-    <div class="m-4 px-4 border border-gray-600 hover:bg-gray-50 active:bg-gray-100">
+    <div class="m-4 px-4 border border-gray-600 hover:bg-gray-100 active:bg-gray-200">
       <%= link_to job_path(selected_job.id), data: {"turbolinks" => false} do %>
         <div class="flex display-start items-center pt-4">
           <span class="material-icons">work</span><p class="ml-2 flex-shrink-0">選択した依頼：</p>
@@ -57,7 +57,7 @@
     <% @recommend_users.each do |recommend_user| %>
       <hr>
       <%= link_to user_path(recommend_user.user_id), data: {"turbolinks" => false} do %>
-        <div class="hover:bg-gray-50 active:bg-gray-100 px-4">
+        <div class="hover:bg-gray-100 active:bg-gray-200 px-4">
           <div class="flex justify-between pt-4">
             <div class="flex display-start items-center">
                 <% if recommend_user.user.profile_image? %>
@@ -122,7 +122,7 @@
 <% @users_has_profiles.each do | user |%>
   <hr>
   <%= link_to user_path(user.user_id), data: {"turbolinks" => false} do %>
-    <div class="hover:bg-gray-50 active:bg-gray-100 px-4">
+    <div class="hover:bg-gray-100 active:bg-gray-200 px-4">
       <div class="flex justify-between pt-4">
         <div class="flex display-start items-center">
             <% if user.user.profile_image? %>
@@ -156,7 +156,7 @@
 <% @users_no_profiles.each do | user |%>
   <hr>
   <%= link_to user_path(user.id), data: {"turbolinks" => false} do %>
-    <div class="hover:bg-gray-50 active:bg-gray-100 px-4">
+    <div class="hover:bg-gray-100 active:bg-gray-200 px-4">
       <div class="flex display-start items-center pt-4">
           <% if user.profile_image? %>
             <%= image_tag user.profile_image.url, class: "w-8" %>
