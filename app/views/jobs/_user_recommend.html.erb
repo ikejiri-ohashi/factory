@@ -24,10 +24,9 @@
   <% end %>
 </div>
 <div class="flex items-center p-4">
-  <span class="material-icons">sentiment_satisfied_alt</span><b class="ml-2">あなたにおすすめのユーザー</b>
+  <span class="material-icons">person_search</span><b class="ml-2">マッチ度が高いユーザーを探す</b>
 </div>
-<p class="text-sm mx-2 px-4 pt-4">ここではあなたが投稿した加工依頼とマッチ度が高いユーザーを表示します。</p>
-<p class="text-sm mx-2 p-4">依頼の納品場所と同じ県に工場があり、依頼の加工を得意としているユーザーを検索することができます。</p>
+<p class="text-sm mx-2 px-4 pt-4">ここではあなたの投稿に登録された納品場所と同じ県に工場があり、あなたの投稿に登録された加工技術を得意としているユーザーを検索することができます。</p>
 <% if user_signed_in? %>
   <% @none_contract_jobs = user_posted_jobs.reject{|job| contracts.include?(job.id) } %>
   <% if recommend_user != nil && selected_job != nil %>
@@ -54,6 +53,15 @@
       <% end %>
     </div>
     <% @recommend_users = recommend_user.reject{|profile| profile.user_id == current_user.id } %>
+    <% if @recommend_users.empty? %>
+      <div class="flex items-center px-4">
+        <span class="material-icons">sentiment_neutral</span><p class="ml-2 text-sm py-4">マッチ度の高いユーザーは見つかりませんでした。</p>
+      </div>
+    <% else %>
+      <div class="flex items-center p-4">
+        <span class="material-icons">sentiment_satisfied_alt</span><b class="ml-2">あなたにおすすめのユーザー</b>
+      </div>
+    <% end %>
     <% @recommend_users.each do |recommend_user| %>
       <hr>
       <%= link_to user_path(recommend_user.user_id), data: {"turbolinks" => false} do %>
@@ -70,7 +78,7 @@
             <% @judge_request = @send_requests.select{|request| request.request_id == recommend_user.user_id && request.job_id == selected_job.id } %>
             <% unless @judge_request.empty? %>
               <div class="flex items-center rounded-md border-2 border-green-500">
-                <span class="material-icons">done</span><p class="mx-2 text-sm">リクエスト送信済み</p>
+                <span class="material-icons">done</span><p class="mx-2 text-sm">リクエストは送信済みです</p>
               </div>
             <% end %>
           </div>
@@ -84,15 +92,6 @@
       <% end %>
     <% end %>
     <% @already_recommended = @recommend_users.pluck(:user_id) %>
-    <% if @recommend_users.empty? %>
-      <div class="flex items-center px-4">
-        <span class="material-icons">sentiment_neutral</span><p class="ml-2 text-sm py-4">マッチ度の高いユーザーは見つかりませんでした。</p>
-      </div>
-    <% else %>
-      <div class="flex items-center px-4">
-        <span class="material-icons">saved_search</span><p class="ml-2 text-sm py-4">上記がマッチ度の高いのユーザーとしてヒットしました！</p>
-      </div>
-    <% end %>
   <% else %>
     <%= form_with url: jobs_recommend_path do |f| %>
       <div class="pt-4 flex justify-center">

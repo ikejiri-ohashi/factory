@@ -71,7 +71,9 @@
             <span class="material-icons">work</span><b class="ml-2">あなたが最近投稿した依頼</b>
           </div>
           <% if @login_user_jobs.empty? %>
-            <p class="text-sm">投稿した依頼はありません</p>
+            <div class="p-4">
+              <p class="text-sm">投稿した依頼はありません</p>
+            </div>
           <% end %>
           <% @login_user_jobs.each do |job| %>
             <%= link_to job_path(job.id), data: {"turbolinks" => false} do %>
@@ -84,11 +86,11 @@
         </div>
       <% end %>
       <div class="bg-white h-auto mx-4 mt-4 p-4 rounded-md shadow">
-        <div class="flex items-center">
+        <div class="flex items-center pb-4">
           <%= image_tag("information.png", class:"w-6") %><b class="ml-2">このサービスについて</b>
         </div>
-        <p class="p-2">このサービスでは金属製品の加工依頼を投稿し、加工ができる業者を募集することができます。</p>
-        <p class="p-2">ユーザーは加工依頼の投稿と、<br>他ユーザーが投稿した依頼の受注ができます。</p>
+        <p class="text-sm pb-4">このサービスでは金属製品の加工依頼を投稿し、加工ができる業者を募集することができます。</p>
+        <p class="text-sm">加工依頼の投稿や他ユーザーが投稿した依頼の受注をすることができます。</p>
       </div>
       <div class="bg-white h-auto m-4 rounded-md shadow">
         <div class="flex items-center px-4 pt-4">
