@@ -1,3 +1,33 @@
+<div class="grid grid-cols-4">
+  <%= link_to user_select_jobs_path(user_id: params[:id]), data: {"turbolinks" => false}, method: :get, remote: true do %>
+    <div class="bg-gray-100 rounded-tl-md hover:border-b-2 border-blue-500 active:bg-gray-200">
+      <div class="flex items-center p-4">
+        <p class="mx-auto text-sm">投稿済み</p>
+      </div>
+    </div>
+  <% end %>
+  <%= link_to user_select_favorites_path(user_id: params[:id]), data: {"turbolinks" => false}, method: :get, remote: true do %>
+    <div class="bg-white border-b-2 border-blue-500">
+      <div class="flex items-center p-4">
+        <p class="mx-auto text-sm">お気に入り</p>
+      </div>
+    </div>
+  <% end %>
+  <%= link_to user_select_contracts_path(user_id: params[:id]), data: {"turbolinks" => false}, method: :get, remote: true do %>
+    <div class="bg-gray-100 hover:border-b-2 border-blue-500 active:bg-gray-200">
+      <div class="flex items-center p-4">
+        <p class="mx-auto text-sm">発注履歴</p>
+      </div>
+    </div>
+  <% end %>
+  <%= link_to user_select_accepts_path(user_id: params[:id]), data: {"turbolinks" => false}, method: :get, remote: true do %>
+    <div class="bg-gray-100 rounded-tr-md hover:border-b-2 border-blue-500 active:bg-gray-200">
+      <div class="flex items-center p-4">
+        <p class="mx-auto text-sm">受注履歴</p>
+      </div>
+    </div>
+  <% end %>
+</div>
 <div class="favorite pb-2">
   <div class="flex items-center px-4 pt-4">
     <%= image_tag("star.png", class:"w-6") %>
