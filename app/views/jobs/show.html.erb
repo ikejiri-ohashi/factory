@@ -40,7 +40,7 @@
         <div class="flex items-center px-4">
           <span class="material-icons">notes</span><p class="ml-2">備考：</p>
         </div>
-        <div class="pb-4 whitespace-pre-line">
+        <div class="px-4 pb-4 whitespace-pre-line">
           <%= @job.memo %>
         </div>
         <% if @job.job_image? %>
@@ -51,7 +51,7 @@
             <%= image_tag @job.job_image.url %>
           </div>
         <% else %>
-          <div class="py-4 flex items-center">
+          <div class="px-4 flex items-center">
             <span class="material-icons">photo_camera</span><p class="ml-2">参考画像：画像は登録されていません</p>
           </div>
         <% end %>
