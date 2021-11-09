@@ -1,0 +1,48 @@
+<div class="grid grid-cols-4">
+  <%= link_to user_select_jobs_path(user_id: params[:id]), data: {"turbolinks" => false}, method: :get, remote: true do %>
+    <div class="bg-gray-100 rounded-tl-md hover:border-b-2 border-blue-500 active:bg-gray-200">
+      <div class="flex items-center p-4">
+        <p class="mx-auto text-sm">投稿済み</p>
+      </div>
+    </div>
+  <% end %>
+  <%= link_to user_select_favorites_path(user_id: params[:id]), data: {"turbolinks" => false}, method: :get, remote: true do %>
+    <div class="bg-gray-100 hover:border-b-2 border-blue-500 active:bg-gray-200">
+      <div class="flex items-center p-4">
+        <p class="mx-auto text-sm">お気に入り</p>
+      </div>
+    </div>
+  <% end %>
+  <%= link_to user_select_contracts_path(user_id: params[:id]), data: {"turbolinks" => false}, method: :get, remote: true do %>
+    <div class="bg-gray-100 hover:border-b-2 border-blue-500 active:bg-gray-200">
+      <div class="flex items-center p-4">
+        <p class="mx-auto text-sm">発注履歴</p>
+      </div>
+    </div>
+  <% end %>
+  <%= link_to user_select_accepts_path(user_id: params[:id]), data: {"turbolinks" => false}, method: :get, remote: true do %>
+    <div class="bg-white rounded-tr-md h-auto border-b-2 border-blue-500">
+      <div class="flex items-center p-4">
+        <p class="mx-auto text-sm">受注履歴</p>
+      </div>
+    </div>
+  <% end %>
+</div>
+<div class="accepts pb-2">
+  <div class="flex items-center px-4 pt-4">
+    <span class="material-icons">task</span>
+    <p class="ml-2"><b>受注した他ユーザーの依頼</b></p>
+  </div>
+  <% if accepts.empty? %>
+    <div class="flex px-4 py-2 hover:bg-gray-50">
+      <p class="text-sm text-gray-500">受注した他ユーザーの依頼はありません</p>
+    </div>
+  <% end %>
+  <% accepts.each do |accept|%>
+    <%= link_to job_path(accept.job_id), data: {"turbolinks" => false} do %>
+      <div class="flex px-4 py-2 hover:bg-gray-50">
+        <%= accept.job.name %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

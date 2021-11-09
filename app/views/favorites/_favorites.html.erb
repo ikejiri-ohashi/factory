@@ -1,4 +1,4 @@
-<div class="flex justify-end items-center">
+<div class="flex justify-center">
   <div class=" rounded-full p-2 hover:bg-yellow-100">
     <% if user_signed_in? %>
       <% unless check_current_user_favorite.include?(job) %>
@@ -10,5 +10,5 @@
       <%= link_to image_tag("star_outline.png", class:"w-6"), new_user_session_path %>
     <% end %>
   </div>
-  <p class="pr-2"><%= count_favorites.count(job) %></p>
 </div>
+<p class="flex justify-center text-sm pb-2"><%= count_favorites.count(job) %></p>

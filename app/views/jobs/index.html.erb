@@ -8,56 +8,62 @@
     </div>
     <div class="col-span-1">
       <% if user_signed_in? %>
-        <%= link_to user_path(@login_user), data: {"turbolinks" => false} do %>
-          <div class="bg-white rounded-md m-4 p-4 shadow hover:bg-gray-50 active:bg-gray-100">
-            <div class="flex items-center mb-6">
-              <span class="material-icons">person</span><b class="ml-2">ログインユーザー</b>
-            </div>
-            <div class="flex justify-center mb-6">
-              <% if @login_user.profile_image? %>
-                <%= image_tag @login_user.profile_image.url, class: "w-16" %>
-              <% else %>
-                <%= image_tag avatar_url(@login_user), class: "w-16" %>
-              <% end %>
-            </div>
-            <div class="flex justify-center">
+        <div class="bg-white rounded-md m-4 shadow">
+          <%= link_to user_path(@login_user), data: {"turbolinks" => false} do %>
+            <div class="p-4 hover:bg-gray-100 active:bg-gray-200 rounded-md">
+              <div class="flex items-center mb-6">
+                <span class="material-icons">person</span><b class="ml-2">ログインユーザー</b>
+              </div>
+              <div class="flex justify-center mb-6">
+                <% if @login_user.profile_image? %>
+                  <%= image_tag @login_user.profile_image.url, class: "w-16" %>
+                <% else %>
+                  <%= image_tag avatar_url(@login_user), class: "w-16" %>
+                <% end %>
+              </div>
+              <div class="flex justify-center">
                 <p class="text-xl"><%= @login_user.name %>さん</p>
-              
-            </div>
-            <% if @company_profile != nil %>
-              <% if @company_profile.category_id == 1 %>
+              </div>
+              <% if @company_profile != nil %>
+                <% if @company_profile.category_id == 1 %>
+                  <% @category = "未登録" %>
+                <% else %>
+                  <% @category = @company_profile.category.name %>
+                <% end %>
+                <% if @company_profile.place_id == 1 %>
+                  <% @place = "未登録" %>
+                <% else %>
+                  <% @place = @company_profile.place.name %>
+                <% end %>
+              <% else %>
                 <% @category = "未登録" %>
-              <% else %>
-                <% @category = @company_profile.category.name %>
-              <% end %>
-              <% if @company_profile.place_id == 1 %>
                 <% @place = "未登録" %>
-              <% else %>
-                <% @place = @company_profile.place.name %>
               <% end %>
-            <% else %>
-              <% @category = "未登録" %>
-              <% @place = "未登録" %>
-            <% end %>
-            <div class="pt-4 flex items-center">
-              <span class="material-icons">build</span><p class="ml-2">得意技術：</p><%= @category %>
+              <div class="pt-4 flex items-center">
+                <span class="material-icons">build</span><p class="ml-2">得意技術：</p><%= @category %>
+              </div>
+              <div class="pt-4 flex items-center">
+                <span class="material-icons">location_on</span><p class="ml-2">所在地：</p><%= @place %>
+              </div>
             </div>
-            <div class="pt-4 flex items-center">
-              <span class="material-icons">location_on</span><p class="ml-2">所在地：</p><%= @place %>
-            </div>
-            <% if @check_request %>
-              <%= link_to job_path(@check_request.job_id), data: {"turbolinks" => false} do %>
-                <div class="bg-white rounded-md shadow mt-4 mx-4 border-2 hover:border-yellow-300">
-                  <div class="p-4 h-auto">
-                    <div class="flex items-center mb-4">
-                      <span class="material-icons">announcement</span>
-                      <p class="ml-2">加工依頼のリクエストが届いています！</p>
-                    </div>
-                      <%= @check_request.job.name %>
-                  </div>
+          <% end %>
+          <% @requests = @check_requests.reject{|request| @check_contracts.include?(request.job_id)} %>
+          <% if @requests.present? %>
+            <div class="pb-4">
+              <div class="bg-white rounded-md shadow mx-4 border-2 hover:border-yellow-300">
+                <div class="flex items-center px-4 pt-4">
+                  <span class="material-icons">announcement</span>
+                  <p class="ml-2">加工依頼のリクエストが届いています！</p>
                 </div>
-              <% end %>
-            <% end %>
+                <% @requests.each do |request|%>
+                  <%= link_to job_path(request.job_id), data: {"turbolinks" => false} do %>
+                    <div class="px-4 py-2 hover:bg-gray-100 active:bg-gray-200 rounded-md">
+                      <%= request.job.name %>
+                    </div>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
           <% end %>
         </div>
         <div class="bg-white rounded-md m-4 shadow">
@@ -69,7 +75,7 @@
           <% end %>
           <% @login_user_jobs.each do |job| %>
             <%= link_to job_path(job.id), data: {"turbolinks" => false} do %>
-              <div class="flex display-start items-center p-4 hover:bg-gray-50 active:bg-gray-100 hover:rounded-md">
+              <div class="flex display-start items-center p-4 hover:bg-gray-100 active:bg-gray-200 hover:rounded-md">
                   <%= job.name %>
               </div>
             <% end %>
@@ -78,19 +84,19 @@
         </div>
       <% end %>
       <div class="bg-white h-auto mx-4 mt-4 p-4 rounded-md shadow">
-        <div class="m-2 flex items-center">
+        <div class="flex items-center">
           <%= image_tag("information.png", class:"w-6") %><b class="ml-2">このサービスについて</b>
         </div>
         <p class="p-2">このサービスでは金属製品の加工依頼を投稿し、加工ができる業者を募集することができます。</p>
         <p class="p-2">ユーザーは加工依頼の投稿と、<br>他ユーザーが投稿した依頼の受注ができます。</p>
       </div>
       <div class="bg-white h-auto m-4 rounded-md shadow">
-        <div class="m-2 flex items-center px-4 pt-4">
-          <span class="material-icons">done</span><b class="ml-2">募集終了した依頼</b>
+        <div class="flex items-center px-4 pt-4">
+          <span class="material-icons">done</span><b class="ml-2">契約が決定した依頼</b>
         </div>
         <% @view_contracts.each do |contract| %>
           <%= link_to job_path(contract.job_id), data: {"turbolinks" => false} do %>
-            <div class="flex display-start items-center p-4 hover:bg-gray-50 active:bg-gray-100 hover:rounded-md">
+            <div class="flex display-start items-center p-4 hover:bg-gray-100 active:bg-gray-200 hover:rounded-md">
               <%= contract.job.name %>
             </div>
           <% end %>
@@ -98,12 +104,12 @@
         <% end %>
       </div>
       <div class="bg-white h-auto mx-4 rounded-md shadow">
-        <div class="m-2 flex items-center px-4 pt-4">
+        <div class="flex items-center px-4 pt-4">
           <span class="material-icons">trending_up</span><b class="ml-2">お気に入り数ランキング</b>
         </div>
         <% @job_ranks.each.with_index(1) do | job, i | %>
           <%= link_to job_path(job.id), data: {"turbolinks" => false} do %>
-            <div class="flex display-start items-center p-4 hover:bg-gray-50 active:bg-gray-100 hover:rounded-md">
+            <div class="flex display-start items-center p-4 hover:bg-gray-100 active:bg-gray-200 hover:rounded-md">
               <div class="flex-shrink-0">
                 <b><%= i %>位 </b>
               </div>
