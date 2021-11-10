@@ -8,7 +8,7 @@ class UsersController < ApplicationController
     @got_requests = Request.where(request_id: params[:id]).includes(:job)
     @send_requests = Request.where(user_id: params[:id]).pluck(:job_id)
     @current_user_job = Job.where(user_id: current_user.id).order('created_at DESC') if user_signed_in?
-    @jobs_request_sent = Request.where(request_id: params[:id], user_id: current_user.id).includes(:job).order('created_at DESC')
+    @jobs_request_sent = Request.where(request_id: params[:id], user_id: current_user.id).includes(:job).order('created_at DESC') if user_signed_in?
     @params_id = params[:id].to_i
   end
 

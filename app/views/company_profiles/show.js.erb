@@ -1,1 +1,1 @@
-$("#company_profile").html("<%= j(render partial: "company_profiles/profiles", locals: {company_profile: @company_profile}) %>");
+$("#company_profile").html("<%= j(render partial: "company_profiles/profiles", locals: {company_profile: @company_profile, params_id: @params_id}) %>");

@@ -5,6 +5,7 @@ class CompanyProfilesController < ApplicationController
 
   def new
     @company_profile = CompanyProfile.new
+    @params_id = params[:user_id].to_i
   end
 
   def create
@@ -14,6 +15,7 @@ class CompanyProfilesController < ApplicationController
   end
 
   def edit
+    @params_id = params[:user_id].to_i
   end
 
   def update
@@ -24,6 +26,7 @@ class CompanyProfilesController < ApplicationController
 
   def show
     @company_profile = CompanyProfile.find_by(user_id: params[:id])
+    @params_id = params[:user_id].to_i
   end
 
   private
