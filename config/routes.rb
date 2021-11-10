@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get '/pre_recommend' => 'jobs#pre_recommend', as: 'jobs_pre_recommend'
   get '/back_index' => 'jobs#back_index', as: 'jobs_back_index'
   post '/recommend' => 'jobs#recommend', as: 'jobs_recommend'
+  get '/user_research' => 'jobs#user_research', as: 'user_research'
   resources :jobs, only: [:new, :create, :show, :destroy] do
     resources :comments, only: [:create, :destroy]
     post 'favorite/:id' => 'favorites#create', as: 'create_favorite'

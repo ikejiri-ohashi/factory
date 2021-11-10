@@ -81,6 +81,29 @@ class JobsController < ApplicationController
                                            place_id: @selected_job.place_id).includes(:user)
   end
 
+  def user_research
+    @users_profile = CompanyProfile.order('created_at DESC').includes(:user)
+    @users = User.order('created_at DESC')
+    @category_params = params[:category_id].to_i
+    @place_params = params[:place_id].to_i
+    if @category_params.in?([ 0, 1 ])
+      @category_params = nil
+    end
+    if @place_params.in?([ 0, 1 ])
+      @place_params = nil
+    end
+
+    if @category_params.present? && @place_params.present?
+      @research_profiles = CompanyProfile.where(category_id: @category_params, place_id: @place_params).order('created_at DESC').includes(:user)
+    elsif @category_params.present?
+      @research_profiles = CompanyProfile.where(category_id: @category_params).order('created_at DESC').includes(:user)
+    elsif @place_params.present?
+      @research_profiles = CompanyProfile.where(place_id: @place_params).order('created_at DESC').includes(:user)
+    else
+      @research_profiles = @jobs
+    end
+  end
+
   def new
     @job = Job.new
   end
