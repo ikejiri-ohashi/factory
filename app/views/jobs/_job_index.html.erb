@@ -66,6 +66,9 @@
     <div class='flex justify-center pt-4'>
       <%= f.submit "条件を指定して検索する", class:"cursor-pointer px-3 py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-700" %>
     </div>
+    <div class='flex justify-center pt-4'>
+      <p class="text-sm mx-2 pt-4">※どちらか1つのみでも検索できます</p>
+    </div>
   <% end %>
 </div>
 <hr>
@@ -93,7 +96,7 @@
 <div class="p-4 flex justify-between">
   <div>
     <p class="text-sm text-gray-500">上記のおすすめ以外の投稿が表示されます。</p>
-    <p class="text-sm text-gray-500">契約済みの投稿やあなたの投稿は表示されません。</p>
+    <p class="text-sm text-gray-500">※契約済みの投稿やあなたの投稿は表示されません。</p>
   </div>
   <div class="flex items-center">
     <p class="text-sm">検索結果</p><p class="ml-2"><%= @no_contract_jobs.count %>件</p>
