@@ -10,6 +10,7 @@ class CompanyProfilesController < ApplicationController
   def create
     @company_profile = CompanyProfile.new(company_profile_params)
     @company_profile.save
+    @params_id = params[:user_id].to_i
   end
 
   def edit
@@ -18,6 +19,7 @@ class CompanyProfilesController < ApplicationController
   def update
     @company_profile.update(company_profile_params)
     @company_profile.save
+    @params_id = params[:user_id].to_i
   end
 
   def show

@@ -1,4 +1,4 @@
-<%= form_with model: @company_profile, url: company_profile_path, method: :put do |f| %>
+<%= form_with model: @company_profile, url: user_company_profile_path, method: :put do |f| %>
   <div class="p-4 rounded-md border-2 border-blue-500">
     <div class="flex items-center">
       <span class="material-icons">edit</span>
@@ -40,7 +40,4 @@
     </div>
     <p class="flex justify-center"><%= f.submit "プロフィールを更新する", class:"cursor-pointer px-3 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-700" %></p>
 <% end %>
-  <div class="pt-4 flex justify-center">
-    <%= link_to "編集をキャンセルする", company_profile_path, class: "px-3 py-2 text-blue-500 border border-blue-500 font-semibold rounded hover:bg-blue-100", remote: true %>
-  </div>
 </div>
