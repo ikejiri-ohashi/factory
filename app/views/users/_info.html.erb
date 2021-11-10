@@ -13,18 +13,9 @@
   </div>
   <div class="setting_or_follow mx-auto pt-4">
     <% if user == current_user %>
-      <div class="flex justify-center">
+      <div class="flex justify-center py-4">
         <%= link_to "設定を変更する", edit_user_registration_path, class: "px-3 py-2 text-blue-500 border border-blue-500 font-semibold rounded hover:bg-blue-100" %>
       </div>
-      <% if company_profile.nil? %>
-        <div class="py-4 flex justify-center">
-          <%= link_to "プロフィールを追加する", new_company_profile_path, class: "px-3 py-2 text-blue-500 border border-blue-500 font-semibold rounded hover:bg-blue-100" %>
-        </div>
-      <% else %>
-        <div class="py-4 flex justify-center">
-          <%= link_to "プロフィールを編集する", edit_company_profile_path, class: "px-3 py-2 text-blue-500 border border-blue-500 font-semibold rounded hover:bg-blue-100" %>
-        </div>
-      <% end %>
     <% else %>
       <div id="follow_button">
         <%= render partial: "follows/check_follow", locals: {check_follow: check_follow } %>

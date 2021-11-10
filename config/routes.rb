@@ -17,7 +17,7 @@ Rails.application.routes.draw do
     resources :contracts, only: [:create]
     resources :requests, only: [:create, :destroy]
   end
-  resources :company_profiles, only: [:new, :create, :edit, :update]
+  resources :company_profiles, only: [:new, :create, :edit, :update, :show]
   resources :users, only: [:show] do
     post 'follow/:id' => 'follows#create', as: 'create_follow'
     delete 'follow/:id' => 'follows#destroy', as: 'destroy_follow'
