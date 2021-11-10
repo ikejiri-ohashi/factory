@@ -22,11 +22,14 @@
 <% if research_profiles.nil? %>
 
 <% else %>
+  <% if user_signed_in?%>
+    <% research_profiles = research_profiles.reject{|profile| profile.user_id == current_user.id } %>
+  <% end %>
   <% if research_profiles.present? %>
     <div class="flex items-center p-4">
       <span class="material-icons">sentiment_satisfied_alt</span><b class="ml-2">ヒットしたユーザー</b>
     </div>
-    <% @research_profiles.each do |profiles| %>
+    <% research_profiles.each do |profiles| %>
       <hr>
       <%= link_to user_path(profiles.user_id), data: {"turbolinks" => false} do %>
         <div class="hover:bg-gray-100 active:bg-gray-200 px-4">
@@ -48,6 +51,11 @@
           </div>
         </div>
       <% end %>
+    <% end %>
+    <% if user_signed_in?%>
+      <div class='flex justify-center pt-4'>
+        <p class="text-sm mx-2 pb-4">※ログインユーザーは表示されません</p>
+      </div>
     <% end %>
     <% @already_showed = @research_profiles.pluck(:user_id) %>
   <% else %>
