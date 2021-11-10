@@ -16,6 +16,7 @@ class UsersController < ApplicationController
     @user = User.find_by(id: params[:id])
     @company_profile = CompanyProfile.find_by(user_id: params[:id])
     @check_follow = Follow.find_by(user_id: current_user.id, follow_id: params[:id]) if user_signed_in?
+    @params_id = params[:id].to_i
   end
 
   def user_follow

@@ -13,7 +13,7 @@
   </div>
   <div class="profile_or_follow mx-auto pt-4">
     <% if user_signed_in? %>
-      <% if @params_id == current_user.id %>
+      <% if params_id == current_user.id %>
         <div id="profile_button">
           <%= render partial: "company_profiles/profile_button", locals: {company_profile: @company_profile, params_id: params_id } %>
         </div>
