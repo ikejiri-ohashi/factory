@@ -9,10 +9,6 @@
       <%= f.collection_select(:category_id, Category.all, :id, :name, {}, {class:"form-select"}) %>
     </div>
     <hr>
-    <div class="p-4">
-      <p class="pb-3">2番目に得意な加工</p>
-      <%= f.collection_select(:sub_category_id, SubCategory.all, :id, :name, {}, {class:"form-select"}) %>
-    </div>
     <hr>
     <div class="p-4">
       <p class="pb-3">得意な加工についての説明</p>

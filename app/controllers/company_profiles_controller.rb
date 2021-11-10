@@ -32,7 +32,7 @@ class CompanyProfilesController < ApplicationController
   private
 
   def company_profile_params
-    params.require(:company_profile).permit(:category_id, :sub_category_id, :content, :self_introduction, :place_id, :company_url,
+    params.require(:company_profile).permit(:category_id, :content, :self_introduction, :place_id, :company_url,
                                             :contact).merge(user_id: current_user.id)
   end
 
