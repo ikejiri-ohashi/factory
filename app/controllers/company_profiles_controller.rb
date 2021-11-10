@@ -4,41 +4,35 @@ class CompanyProfilesController < ApplicationController
   before_action :move_to_index, only: [:edit, :update]
 
   def new
-    @check_profile = CompanyProfile.find_by(user_id: current_user.id)
-    if @check_profile.nil?
-      @company_profile = CompanyProfile.new
-    else
-      redirect_to root_path
-    end
+    @company_profile = CompanyProfile.new
+    @params_id = params[:user_id].to_i
   end
 
   def create
     @company_profile = CompanyProfile.new(company_profile_params)
-    if @company_profile.save
-      redirect_to "https://www.factory-app.com/users/#{@company_profile.user_id}"
-      # redirect_to user_url(@company_profile.user_id)
-    else
-      render :new
-    end
+    @company_profile.save
+    @params_id = params[:user_id].to_i
   end
 
   def edit
+    @params_id = params[:user_id].to_i
   end
 
   def update
     @company_profile.update(company_profile_params)
-    if @company_profile.save
-      redirect_to "https://www.factory-app.com/users/#{@company_profile.user_id}"
-      # redirect_to user_url(@company_profile.user_id)
-    else
-      render :edit
-    end
+    @company_profile.save
+    @params_id = params[:user_id].to_i
+  end
+
+  def show
+    @company_profile = CompanyProfile.find_by(user_id: params[:id])
+    @params_id = params[:user_id].to_i
   end
 
   private
 
   def company_profile_params
-    params.require(:company_profile).permit(:category_id, :sub_category_id, :content, :self_introduction, :place_id, :company_url,
+    params.require(:company_profile).permit(:category_id, :content, :self_introduction, :place_id, :company_url,
                                             :contact).merge(user_id: current_user.id)
   end
 

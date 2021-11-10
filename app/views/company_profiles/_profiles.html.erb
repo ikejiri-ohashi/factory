@@ -1,0 +1,52 @@
+<% if company_profile.nil? %>
+  <div class="p-4 h-auto">
+    <p class="text-sm text-gray-500">プロフィールはまだ登録されていません</p>
+  </div>
+<% else %>
+  <div class="p-4 h-auto">
+    <% if message.present? %>
+      <% if message == "create" %>
+        <div class="mb-4 flex justify-center rounded-md border-2 border-green-500">
+          <span class="material-icons">done</span><p class="mx-2">プロフィールを追加しました</p>
+        </div>
+      <% elsif message == "update" %>
+        <div class="mb-4 flex justify-center rounded-md border-2 border-green-500">
+          <span class="material-icons">done</span><p class="mx-2">プロフィールを更新しました</p>
+        </div>
+      <% end %>
+    <% end %>
+    <div class="mb-4 p-2 border-4">
+      <% if company_profile.category_id != 1 %>
+        <p class="text-xl m-2">得意技術：<%= company_profile.category.name %></p>
+      <% else %>
+        <p class="text-xl m-2">得意技術：</p>
+      <% end %>
+      <hr>
+      <p class="m-2">得意技術について</p>
+      <div class="whitespace-pre-line">
+        <%= company_profile.content %>
+      </div>
+    </div>
+    <p class="mx-2">企業紹介：</p>
+    <div class="whitespace-pre-line pb-4">
+      <%= company_profile.self_introduction %>
+    </div>
+    <hr>
+    <div class="m-2">
+      <% if company_profile.place_id != 1 %>
+        企業所在地：<%= company_profile.place.name %>
+      <% else %>
+        <p>企業所在地：</p>
+      <% end %>
+    </div>
+    <hr>
+    <div class="m-2">
+      ホームページ：<%= company_profile.company_url %>
+    </div>
+    <hr>
+    <div class="m-2">
+      連絡先：<%= company_profile.contact %>
+    </div>
+    <hr>
+  </div>
+<% end %>

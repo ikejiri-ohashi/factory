@@ -11,18 +11,15 @@
       <p class="text-2xl"><%= user.name %></p>
     </div>
   </div>
-  <div class="setting_or_follow mx-auto pt-4">
-    <% if user == current_user %>
-      <div class="flex justify-center">
-        <%= link_to "設定を変更する", edit_user_registration_path, class: "px-3 py-2 text-blue-500 border border-blue-500 font-semibold rounded hover:bg-blue-100" %>
-      </div>
-      <% if company_profile.nil? %>
-        <div class="py-4 flex justify-center">
-          <%= link_to "プロフィールを追加する", new_company_profile_path, class: "px-3 py-2 text-blue-500 border border-blue-500 font-semibold rounded hover:bg-blue-100" %>
+  <div class="profile_or_follow mx-auto pt-4">
+    <% if user_signed_in? %>
+      <% if params_id == current_user.id %>
+        <div id="profile_button">
+          <%= render partial: "company_profiles/profile_button", locals: {company_profile: @company_profile, params_id: params_id } %>
         </div>
       <% else %>
-        <div class="py-4 flex justify-center">
-          <%= link_to "プロフィールを編集する", edit_company_profile_path, class: "px-3 py-2 text-blue-500 border border-blue-500 font-semibold rounded hover:bg-blue-100" %>
+        <div id="follow_button">
+          <%= render partial: "follows/check_follow", locals: {check_follow: check_follow } %>
         </div>
       <% end %>
     <% else %>

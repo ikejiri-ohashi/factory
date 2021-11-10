@@ -6,38 +6,18 @@
   <div class="lg:grid grid-cols-3">
     <div class="col-span-1">
       <div id="user_info">
-        <%= render partial: "users/info", locals: { user: @user, company_profile: @company_profile, check_follow: @check_follow } %>
+        <%= render partial: "users/info", locals: { user: @user, company_profile: @company_profile, check_follow: @check_follow, params_id: @params_id } %>
       </div>
       <div class="bg-white rounded-md shadow mt-4 mx-4 hover:rounded-md">
         <div class="request">
           <% if @user == current_user %>
-            <div class="accepted_requests rounded-md shadow">
-              <% @got_requests_no_contract = @got_requests.reject{|request| @check_contract.include?(request.job_id)} %>
-              <% if @got_requests_no_contract.empty? %>
-                <div class="flex items-center px-4 pt-4">
-                  <span class="material-icons">announcement</span>
-                  <p class="ml-2"><b>受け取ったリクエスト</b></p>
-                </div>
-                <p class="text-sm p-4">リクエストはありません</p>
-              <% else %>
-                <div class="border-2 border-yellow-300 rounded-md">
-                  <div class="flex items-center px-4 pt-4">
-                    <span class="material-icons">announcement</span>
-                    <p class="ml-2"><b>受け取ったリクエスト</b></p>
-                  </div>
-                  <% @got_requests_no_contract.each do |request|%>
-                    <%= link_to job_path(request.job_id), data: {"turbolinks" => false} do %>
-                      <div class="flex hover:bg-gray-100 active:bg-gray-200 px-4 py-2">
-                        <%= request.job.name %>
-                      </div>
-                    <% end %>
-                  <% end %>
-                </div>
-              <% end %>
-            </div>
+            <%= render partial: "requests/accepted_requests", locals: { got_requests: @got_requests, check_contract: @check_contract} %>
           <% elsif user_signed_in? %>
             <div id="send_request">
               <%= render partial: "requests/send_request", locals: {current_user_job: @current_user_job, current_user_job: @current_user_job, message: @message} %>
+            </div>
+            <div id="jobs_request_sent">
+              <%= render partial: "requests/jobs_request_sent", locals: {jobs_request_sent: @jobs_request_sent, check_contract: @check_contract} %>
             </div>
           <% end %>
         </div>
@@ -45,40 +25,9 @@
     </div>
     <div class="col-span-2">
       <div class="bg-white rounded-md shadow mt-4 mx-4">
-        <% if @company_profile.nil? %>
-          <div class="p-4 h-auto">
-            <p class="text-sm text-gray-500">プロフィールはまだ登録されていません</p>
-          </div>
-        <% else %>
-          <div class="p-4 h-auto">
-            <div class="mb-4 p-2 border-4">
-              <p class="text-xl m-2">得意加工：<%= @company_profile.category.name %></p>
-              <p class="text-ml m-2">得意加工２：<%= @company_profile.sub_category.name %></p>
-              <hr>
-              <p class="m-2">得意技術について</p>
-              <div class="whitespace-pre-line">
-                <%= @company_profile.content %>
-              </div>
-            </div>
-            <p class="mx-2">企業紹介：</p>
-            <div class="whitespace-pre-line pb-4">
-              <%= @company_profile.self_introduction %>
-            </div>
-            <hr>
-            <div class="m-2">
-              企業所在地：<%= @company_profile.place.name %>
-            </div>
-            <hr>
-            <div class="m-2">
-              ホームページ：<%= @company_profile.company_url %>
-            </div>
-            <hr>
-            <div class="m-2">
-              連絡先：<%= @company_profile.contact %>
-            </div>
-            <hr>
-          </div>
-        <% end %>
+        <div id="company_profile">
+          <%= render partial: "company_profiles/profiles", locals: { company_profile: @company_profile, params_id: @params_id, message: @message } %>
+        </div>
       </div>
       <div class="bg-white rounded-md shadow mt-4 mx-4">
         <div id="select">

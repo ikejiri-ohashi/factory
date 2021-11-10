@@ -1,0 +1,9 @@
+<% if company_profile.present? %>
+  <div class="flex justify-center pb-4">
+    <%= link_to "プロフィールを編集する", edit_user_company_profile_path(user_id: params_id, id: params_id), class: "px-3 py-2 text-blue-500 border border-blue-500 font-semibold rounded hover:bg-blue-100", remote: true %>
+  </div>
+<% else %>
+  <div class="py-4 flex justify-center">
+    <%= link_to "プロフィールを追加する", new_user_company_profile_path(user_id: @params_id), class: "px-3 py-2 text-blue-500 border border-blue-500 font-semibold rounded hover:bg-blue-100", remote: true %>
+  </div>
+<% end %>

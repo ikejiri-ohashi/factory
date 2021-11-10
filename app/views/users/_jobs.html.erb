@@ -31,7 +31,10 @@
 <div class="posted_contract pb-2">
   <div class="flex items-center px-4 pt-4">
     <span class="material-icons">work</span>
-    <p class="ml-2"><b>投稿した依頼</b></p>
+    <p class="ml-2 mr-4"><b>投稿した依頼</b></p>
+    <p class="text-sm pr-1">※リクエストを送信した投稿には</p>
+    <span class="material-icons">send</span>
+    <p class="text-sm pl-1">のマークがついています。</p>
   </div>
   <% @non_contract_jobs = jobs.reject{ |job| check_contract.include?(job.id) } %>
   <% if @non_contract_jobs.empty? %>
