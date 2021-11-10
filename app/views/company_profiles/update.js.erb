@@ -1,1 +1,2 @@
 $("#company_profile").html("<%= j(render partial: "company_profiles/profiles", locals: {company_profile: @company_profile, params_id: @params_id, message: "update"}) %>");
+$("#profile_button").html("<%= j(render partial: "company_profiles/profile_button", locals: {company_profile: @company_profile, params_id: @params_id }) %>");
