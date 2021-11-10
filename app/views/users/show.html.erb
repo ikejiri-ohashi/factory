@@ -24,8 +24,15 @@
       </div>
     </div>
     <div class="col-span-2">
-      <div id="company_profile">
-        <%= render partial: "company_profiles/profiles", locals: { company_profile: @company_profile } %>
+      <div class="bg-white rounded-md shadow mt-4 mx-4">
+        <div id="company_profile">
+          <%= render partial: "company_profiles/profiles", locals: { company_profile: @company_profile } %>
+        </div>
+        <% if @company_profile.present? %>
+          <div class="py-4 flex justify-center">
+            <%= link_to "プロフィールを編集する", edit_company_profile_path, class: "px-3 py-2 text-blue-500 border border-blue-500 font-semibold rounded hover:bg-blue-100", remote: true %>
+          </div>
+        <% end %>
       </div>
       <div class="bg-white rounded-md shadow mt-4 mx-4">
         <div id="select">
