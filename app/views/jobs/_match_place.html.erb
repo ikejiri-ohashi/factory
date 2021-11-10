@@ -8,45 +8,41 @@
   </div>
   <hr>
   <% @recommend_users_place_jobs.each do |recommend|%>
-    <div class="flex justify-between hover:bg-gray-100 active:bg-gray-200">
-      <div class="w-11/12">
-        <div class="text-sm flex justify-between items-center p-4">
-          <div class="flex display-start items-center">
-            <%= link_to user_path(recommend.user.id), data: {"turbolinks" => false} do %>
-              <% if recommend.user.profile_image? %>
-                <%= image_tag recommend.user.profile_image.url, class: "w-8" %>
-              <% else %>
-                <%= image_tag avatar_url(recommend.user), class: "w-8" %>
-              <% end %>
+    <div class="relative hover:bg-gray-100 active:bg-gray-200">
+      <div class="text-sm flex justify-between items-center p-4">
+        <div class="flex display-start items-center">
+          <%= link_to user_path(recommend.user.id), data: {"turbolinks" => false} do %>
+            <% if recommend.user.profile_image? %>
+              <%= image_tag recommend.user.profile_image.url, class: "w-8" %>
+            <% else %>
+              <%= image_tag avatar_url(recommend.user), class: "w-8" %>
             <% end %>
-            <div class="flex">
-              <%= link_to user_path(recommend.user.id), data: {"turbolinks" => false} do %>
-                <p class="ml-2 hover:underline"><%= recommend.user.name %></p>
-              <% end %>
-              さんが<%= time_ago_in_words(recommend.created_at) %>前に投稿
-            </div>
+          <% end %>
+          <div class="flex">
+            <%= link_to user_path(recommend.user.id), data: {"turbolinks" => false} do %>
+              <p class="ml-2 hover:underline"><%= recommend.user.name %></p>
+            <% end %>
+            さんが<%= time_ago_in_words(recommend.created_at) %>前に投稿
           </div>
         </div>
-        <%= link_to job_path(recommend.id), data: {"turbolinks" => false} do %>
-          <div class="px-4 text-xl">
-            <%= recommend.name %>
-          </div>
-          <div class="p-4 flex items-center">
-            <span class="material-icons">build</span><p class="ml-2">必要技術：</p><%= recommend.category.name %>
-          </div>
-          <div class="px-4 flex items-center">
-            <span class="material-icons">location_on</span><p class="ml-2">納品場所：</p><%= recommend.place.name %><br>
-          </div>
-          <div class="flex items-center p-4">
-            <span class="material-icons">schedule</span><p class="ml-2">希望納期： </p><%= recommend.deadline.name %><br>
-          </div>
-        <% end %>
       </div>
-      <div class="flex flex-wrap content-end w-1/12">
+      <%= link_to job_path(recommend.id), data: {"turbolinks" => false} do %>
+        <div class="px-4 text-xl">
+          <%= recommend.name %>
+        </div>
+        <div class="p-4 flex items-center">
+          <span class="material-icons">build</span><p class="ml-2">必要技術：</p><%= recommend.category.name %>
+        </div>
+        <div class="px-4 flex items-center">
+          <span class="material-icons">location_on</span><p class="ml-2">納品場所：</p><%= recommend.place.name %><br>
+        </div>
+        <div class="flex items-center p-4">
+          <span class="material-icons">schedule</span><p class="ml-2">希望納期： </p><%= recommend.deadline.name %><br>
+        </div>
         <div id="favorite_button_<%= recommend.id %>">
           <%= render partial: "favorites/favorites", locals: {count_favorites: @count_favorites, check_current_user_favorite: @check_current_user_favorite, job: recommend.id} %>
         </div>
-      </div>
+      <% end %>
     </div>
   <% end %>
 <% end %>

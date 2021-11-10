@@ -106,8 +106,7 @@
   <%= image_tag("factory_resarch.png", class:"mx-auto w-80") %>
 <% end %>
 <% @no_contract_jobs.each do |job|%>
-  <div class="flex justify-between hover:bg-gray-100 active:bg-gray-200 rounded-md">
-  <div class="w-11/12">
+  <div class="relative hover:bg-gray-100 active:bg-gray-200 rounded-md">
     <div class="text-sm flex justify-between items-center p-4">
       <div class="flex display-start items-center">
         <%= link_to user_path(job.user.id), data: {"turbolinks" => false} do %>
@@ -142,13 +141,10 @@
       <div class="flex items-center p-4">
         <span class="material-icons">schedule</span><p class="ml-2">希望納期：</p><%= job.deadline.name %><br>
       </div>
+      <div id="favorite_button_<%= job.id %>">
+        <%= render partial: "favorites/favorites", locals: {count_favorites: @count_favorites, check_current_user_favorite: @check_current_user_favorite, job: job.id} %>
+      </div>
     <% end %>
-  </div>
-  <div class="flex flex-wrap content-end w-1/12">
-    <div id="favorite_button_<%= job.id %>">
-      <%= render partial: "favorites/favorites", locals: {count_favorites: @count_favorites, check_current_user_favorite: @check_current_user_favorite, job: job.id} %>
-    </div>
-  </div>
   </div>
   <hr>
 <% end %>
