@@ -76,46 +76,23 @@
   <% end %>
 </div>
 <hr>
-<% if user_signed_in? %>
-  <% if @company_profile != nil %>
-    <% @already_recommended_first = @none_login_user_jobs_and_recommend.pluck(:id) %>
-    <% @already_recommended_second = @recommend_users_place_jobs.pluck(:id) %>
-    <% @user_posted_job_ids = @user_posted_jobs.pluck(:id) %>
-    <% @total = @already_recommended_first.push(@already_recommended_second).push(@user_posted_job_ids).flatten! %>
-    <% @other_jobs = research_jobs.reject{|job| @total.include?(job.id)} %>
-    <% if @company_profile.nil? || @total.empty? %>
-      <% @not_recommend_jobs = jobs %>
-    <% end %>
-  <% else %>
-    <% @other_jobs = research_jobs %>
-  <% end %>
-<% else %>
-  <% if research_jobs.present? %>
-    <% @other_jobs = research_jobs %>
-  <% else %>
-    <% @other_jobs = [] %>
-  <% end %>
-<% end %>
-<% @no_contract_jobs = @other_jobs.reject{|job| contracts.include?(job.id) }%>
+<% @reserch_jobs_no_contract = research_jobs.reject{|job| contracts.include?(job.id) }%>
 <div class="p-4 flex justify-between">
-  <div>
-    <p class="text-sm text-gray-500">上記のおすすめ以外の投稿が表示されます。</p>
-    <p class="text-sm text-gray-500">※契約済みの投稿やあなたの投稿は表示されません。</p>
-  </div>
+  <p class="text-sm text-gray-500">※契約済みの投稿は表示されません。</p>
   <div class="flex items-center">
-    <p class="text-sm">検索結果</p><p class="ml-2"><%= @no_contract_jobs.count %>件</p>
+    <p class="text-sm">検索結果</p><p class="ml-2"><%= @reserch_jobs_no_contract.count %>件</p>
   </div>
 </div>
-<% if @no_contract_jobs.empty? %>
+<% if @reserch_jobs_no_contract.empty? %>
   <div class="flex justify-center my-4">
     <p class="text-sm"><b>受注可能な依頼は見つかりませんでした</b></p>
   </div>
   <%= image_tag("factory_resarch.png", class:"mx-auto w-80 pb-4") %>
   <hr>
 <% end %>
-<% @no_contract_jobs.each do |job|%>
+<% @reserch_jobs_no_contract.each do |job|%>
   <div class="relative hover:bg-gray-100 active:bg-gray-200 rounded-md">
-    <div class="text-sm flex justify-between items-center p-4">
+    <div class="text-sm flex justify-between items-center px-4 pt-4">
       <div class="flex display-start items-center">
         <%= link_to user_path(job.user.id), data: {"turbolinks" => false} do %>
           <% if job.user.profile_image? %>
@@ -137,7 +114,7 @@
       </div>
     </div>
     <%= link_to job_path(job.id), data: {"turbolinks" => false} do %>
-      <div class="px-4 text-xl">
+      <div class="px-4 pt-4 text-xl">
         <%= job.name %>
       </div>
       <div class="p-4 flex items-center">
@@ -159,12 +136,13 @@
 <div class="p-4 flex items-center">
   <span class="material-icons">work</span><b class="ml-2">その他の加工依頼一覧</b>
 </div>
-<% @shown_jobs_id = @no_contract_jobs.pluck(:id) %>
+<hr>
+<% @shown_jobs_id = @reserch_jobs_no_contract.pluck(:id) %>
 <% @other_jobs = jobs.reject{|job| @shown_jobs_id.include?(job.id)} %>
 <% @other_jobs_no_contract = @other_jobs.reject{|job| @contracts.include?(job.id)} %>
 <% @other_jobs_no_contract.each do |job|%>
   <div class="relative hover:bg-gray-100 active:bg-gray-200 rounded-md">
-    <div class="text-sm flex justify-between items-center p-4">
+    <div class="text-sm flex justify-between items-center px-4 pt-4">
       <div class="flex display-start items-center">
         <%= link_to user_path(job.user.id), data: {"turbolinks" => false} do %>
           <% if job.user.profile_image? %>
@@ -186,7 +164,7 @@
       </div>
     </div>
     <%= link_to job_path(job.id), data: {"turbolinks" => false} do %>
-      <div class="px-4 text-xl">
+      <div class="px-4 pt-4 text-xl">
         <%= job.name %>
       </div>
       <div class="p-4 flex items-center">

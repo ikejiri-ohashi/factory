@@ -11,7 +11,7 @@
   <hr>
   <% none_login_user_jobs_and_recommend.each do |recommend| %>
     <div class="relative hover:bg-gray-100 active:bg-gray-200">
-      <div class="text-sm flex items-center p-4">
+      <div class="text-sm flex items-center px-4 pt-4">
         <div class="flex items-center">
           <%= link_to user_path(recommend.user.id), data: {"turbolinks" => false} do %>
             <% if recommend.user.profile_image? %>
@@ -29,7 +29,7 @@
         </div>
       </div>
       <%= link_to job_path(recommend.id), data: {"turbolinks" => false} do %>
-        <div class="px-4 text-xl">
+        <div class="px-4 pt-4 text-xl">
           <%= recommend.name %>
         </div>
         <div class="p-4 flex items-center">
