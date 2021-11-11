@@ -14,29 +14,30 @@
         <%= f.collection_select(:place_id, Place.all, :id, :name, class:"form-select my-2") %>
       </div>
     </div>
-    <div class='flex justify-center pt-4'>
+    <div class='flex justify-center py-4'>
       <%= f.submit "条件を指定して検索する", class:"cursor-pointer px-3 py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-700" %>
     </div>
   <% end %>
   <div class='flex justify-center pt-4'>
-    <p class="text-sm mx-2 pt-4">※どちらか1つのみでも検索できます</p>
+    <p class="text-sm mx-2 pb-4">※どちらか1つのみでも検索できます</p>
   </div>
 </div>
+<hr>
 <% if research_profiles.nil? %>
-
 <% else %>
   <% if user_signed_in?%>
     <% research_profiles = research_profiles.reject{|profile| profile.user_id == current_user.id } %>
   <% end %>
-  <% if research_profiles.present? %>
-    <div class="flex justify-between">
-      <div class="flex items-center p-4">
-        <span class="material-icons">sentiment_satisfied_alt</span><b class="ml-2">ヒットしたユーザー</b>
-      </div>
-      <div class="flex items-center pr-4">
-        <p class="text-sm">検索結果</p><p class="ml-2"><%= research_profiles.count %>件</p>
-      </div>
+  <div class="p-4 flex justify-between">
+    <div>
+      <p class="text-sm text-gray-500">上記のおすすめ以外の投稿が表示されます。</p>
+      <p class="text-sm text-gray-500">※ログインユーザーは表示されません。</p>
     </div>
+    <div class="flex items-center">
+      <p class="text-sm">検索結果</p><p class="ml-2"><%= research_profiles.count %>件</p>
+    </div>
+  </div>
+  <% if research_profiles.present? %>
     <% research_profiles.each do |profiles| %>
       <hr>
       <%= link_to user_path(profiles.user_id), data: {"turbolinks" => false} do %>
@@ -60,26 +61,13 @@
         </div>
       <% end %>
     <% end %>
-    <% if user_signed_in?%>
-      <div class='flex justify-center pt-4'>
-        <p class="text-sm mx-2 pb-4">※ログインユーザーは表示されません</p>
-      </div>
-    <% end %>
     <% @already_showed = @research_profiles.pluck(:user_id) %>
   <% else %>
-    <div class="flex justify-between pt-4">
-      <div class="flex items-center p-4">
-        <p class="text-sm text-red-500">ユーザーはヒットしませんでした</p>
-      </div>
-      <div class="flex items-center pr-4">
-        <p class="text-sm">検索結果</p><p class="ml-2"><%= research_profiles.count %>件</p>
-      </div>
+    <div class="flex justify-center py-4">
+      <p class="text-sm"><b>ユーザーはヒットしませんでした</b></p>
     </div>
-    <% if user_signed_in?%>
-      <div class='flex justify-center pt-4'>
-        <p class="text-sm mx-2 pb-4">※ログインユーザーは表示されません</p>
-      </div>
-    <% end %>
+    <%= image_tag("factory_resarch.png", class:"mx-auto w-80 pb-4") %>
+    <hr>
   <% end %>
 <% end %>
 <% if @already_showed.nil? %>

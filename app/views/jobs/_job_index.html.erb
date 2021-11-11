@@ -16,6 +16,10 @@
     </div>
   <% end %>
 </div>
+<div class="flex items-center p-4">
+  <span class="material-icons">manage_search</span><b class="ml-2">マッチ度が高い投稿を探す</b>
+</div>
+<p class="text-sm mx-2 p-4">ここではあなたが登録した得意技術と会社所在地に基づき、<br>これらの条件と相性の良い投稿をおすすめとして表示されます。</p>
 <% if user_signed_in? %>
   <% unless job_recommends == nil %>
     <%# 契約済みの投稿とログインユーザー自身の投稿を排除し残った要素を集計 %>
@@ -29,8 +33,8 @@
     <% @not_recommend_jobs = match_place_jobs.reject{|job| @already_recommended.include?(job.id) } %>
   <% else %>
     <div class="p-4">
-      <p class="text-sm pb-4">あなたのプロフィールの情報を元におすすめが表示されます。</p>
-      <p class="text-sm">まずはユーザーページでプロフィールの登録をしてみましょう。</p>
+      <p class="text-sm mx-2">あなたのプロフィールの情報を元におすすめが表示されます。</p>
+      <p class="text-sm mx-2">まずはユーザーページでプロフィールの登録をしてみましょう。</p>
     </div>
   <% end %>
   <% if @company_profile != nil %>
@@ -106,9 +110,59 @@
   <div class="flex justify-center my-4">
     <p class="text-sm"><b>受注可能な依頼は見つかりませんでした</b></p>
   </div>
-  <%= image_tag("factory_resarch.png", class:"mx-auto w-80") %>
+  <%= image_tag("factory_resarch.png", class:"mx-auto w-80 pb-4") %>
+  <hr>
 <% end %>
 <% @no_contract_jobs.each do |job|%>
+  <div class="relative hover:bg-gray-100 active:bg-gray-200 rounded-md">
+    <div class="text-sm flex justify-between items-center p-4">
+      <div class="flex display-start items-center">
+        <%= link_to user_path(job.user.id), data: {"turbolinks" => false} do %>
+          <% if job.user.profile_image? %>
+            <%= image_tag job.user.profile_image.url, class: "w-8" %>
+          <% else %>
+            <%= image_tag avatar_url(job.user), class: "w-8" %>
+          <% end %>
+        <% end %>
+        <div class="flex">
+          <%= link_to user_path(job.user.id), data: {"turbolinks" => false} do %>
+            <p class="ml-2 hover:underline"><%= job.user.name %></p>
+          <% end %>
+          <%= link_to job_path(job.id), data: {"turbolinks" => false} do %>
+            <div class="">
+              さんが<%= time_ago_in_words(job.created_at) %>前に投稿
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <%= link_to job_path(job.id), data: {"turbolinks" => false} do %>
+      <div class="px-4 text-xl">
+        <%= job.name %>
+      </div>
+      <div class="p-4 flex items-center">
+        <span class="material-icons">build</span><p class="ml-2">必要技術：</p><%= job.category.name %>
+      </div>
+      <div class="px-4 flex items-center">
+        <span class="material-icons">location_on</span><p class="ml-2">納品場所：</p><%= job.place.name %><br>
+      </div>
+      <div class="flex items-center p-4">
+        <span class="material-icons">schedule</span><p class="ml-2">希望納期：</p><%= job.deadline.name %><br>
+      </div>
+      <div id="favorite_button_<%= job.id %>">
+        <%= render partial: "favorites/favorites", locals: {count_favorites: @count_favorites, check_current_user_favorite: @check_current_user_favorite, job: job.id} %>
+      </div>
+    <% end %>
+  </div>
+  <hr>
+<% end %>
+<div class="p-4 flex items-center">
+  <span class="material-icons">work</span><b class="ml-2">その他の加工依頼一覧</b>
+</div>
+<% @shown_jobs_id = @no_contract_jobs.pluck(:id) %>
+<% @other_jobs = jobs.reject{|job| @shown_jobs_id.include?(job.id)} %>
+<% @other_jobs_no_contract = @other_jobs.reject{|job| @contracts.include?(job.id)} %>
+<% @other_jobs_no_contract.each do |job|%>
   <div class="relative hover:bg-gray-100 active:bg-gray-200 rounded-md">
     <div class="text-sm flex justify-between items-center p-4">
       <div class="flex display-start items-center">
