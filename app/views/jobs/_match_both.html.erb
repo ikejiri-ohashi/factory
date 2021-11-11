@@ -1,13 +1,9 @@
-<hr>
 <% if none_login_user_jobs_and_recommend.empty? %>
   <div class="flex items-center p-4">
     <span class="material-icons">sentiment_neutral</span><p class="ml-2 text-sm">おすすめの依頼は見つかりませんでした。</p>
   </div>
   <hr>
 <% else %>
-  <div class="p-4 flex items-center">
-    <span class="material-icons">sentiment_satisfied_alt</span><b class="ml-2">あなたにおすすめの依頼</b>
-  </div>
   <hr>
   <% none_login_user_jobs_and_recommend.each do |recommend| %>
     <div class="relative hover:bg-gray-100 active:bg-gray-200">

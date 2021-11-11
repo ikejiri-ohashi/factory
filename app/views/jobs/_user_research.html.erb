@@ -6,11 +6,11 @@
   <%= form_with url: user_research_path(category_id: :category_id, place_id: :place_id), method: :get do |f| %>
     <div class="flex justify-around">
       <div class="category">
-        <p class="text-sm pb-2">必要技術</p>
+        <p class="text-sm pb-2">得意技術</p>
         <%= f.collection_select(:category_id, Category.all, :id, :name, class:"form-select my-2") %>
       </div>
       <div class="place">
-        <p class="text-sm pb-2">納品場所</p>
+        <p class="text-sm pb-2">会社所在地</p>
         <%= f.collection_select(:place_id, Place.all, :id, :name, class:"form-select my-2") %>
       </div>
     </div>
@@ -56,7 +56,7 @@
             <span class="material-icons">build</span><p class="ml-2">得意技術：</p><%= profiles.category.name %>
           </div>
           <div class="py-4 flex items-center">
-            <span class="material-icons">location_on</span><p class="ml-2">所在地：</p><%= profiles.place.name %>
+            <span class="material-icons">location_on</span><p class="ml-2">会社所在地：</p><%= profiles.place.name %>
           </div>
         </div>
       <% end %>
@@ -98,7 +98,7 @@
         <span class="material-icons">build</span><p class="ml-2">得意技術：</p><%= profile.category.name %>
       </div>
       <div class="py-4 flex items-center">
-        <span class="material-icons">location_on</span><p class="ml-2">所在地：</p><%= profile.place.name %>
+        <span class="material-icons">location_on</span><p class="ml-2">会社所在地：</p><%= profile.place.name %>
       </div>
     </div>
   <% end %>
@@ -124,7 +124,7 @@
         <span class="material-icons">build</span><p class="ml-2">得意技術：</p>未登録
       </div>
       <div class="py-4 flex items-center">
-        <span class="material-icons">location_on</span><p class="ml-2">所在地：</p>未登録
+        <span class="material-icons">location_on</span><p class="ml-2">会社所在地：</p>未登録
       </div>
   </div>
   <% end %>
