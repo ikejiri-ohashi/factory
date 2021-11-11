@@ -7,7 +7,7 @@
     <% if message.present? %>
       <% if message == "create" %>
         <div class="mb-4 flex justify-center rounded-md border-2 border-green-500">
-          <span class="material-icons">done</span><p class="mx-2">プロフィールを追加しました</p>
+          <span class="material-icons">done</span><p class="mx-2">プロフィールを登録しました</p>
         </div>
       <% elsif message == "update" %>
         <div class="mb-4 flex justify-center rounded-md border-2 border-green-500">
@@ -34,9 +34,9 @@
     <hr>
     <div class="m-2">
       <% if company_profile.place_id != 1 %>
-        企業所在地：<%= company_profile.place.name %>
+        会社所在地：<%= company_profile.place.name %>
       <% else %>
-        <p>企業所在地：</p>
+        <p>会社所在地：</p>
       <% end %>
     </div>
     <hr>

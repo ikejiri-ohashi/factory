@@ -1,0 +1,131 @@
+<hr>
+<div class="p-4 flex items-center">
+  <span class="material-icons">person_search</span><b class="ml-2">ユーザーを検索する</b>
+</div>
+<div class="research">
+  <%= form_with url: user_research_path(category_id: :category_id, place_id: :place_id), method: :get do |f| %>
+    <div class="flex justify-around">
+      <div class="category">
+        <p class="text-sm pb-2">必要技術</p>
+        <%= f.collection_select(:category_id, Category.all, :id, :name, class:"form-select my-2") %>
+      </div>
+      <div class="place">
+        <p class="text-sm pb-2">納品場所</p>
+        <%= f.collection_select(:place_id, Place.all, :id, :name, class:"form-select my-2") %>
+      </div>
+    </div>
+    <div class='flex justify-center py-4'>
+      <%= f.submit "条件を指定して検索する", class:"cursor-pointer px-3 py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-700" %>
+    </div>
+  <% end %>
+  <div class='flex justify-center pt-4'>
+    <p class="text-sm mx-2 pb-4">※どちらか1つのみでも検索できます</p>
+  </div>
+</div>
+<hr>
+<% if research_profiles.nil? %>
+<% else %>
+  <% if user_signed_in?%>
+    <% research_profiles = research_profiles.reject{|profile| profile.user_id == current_user.id } %>
+  <% end %>
+  <div class="p-4 flex justify-between">
+    <div>
+      <p class="text-sm text-gray-500">上記のおすすめ以外の投稿が表示されます。</p>
+      <p class="text-sm text-gray-500">※ログインユーザーは表示されません。</p>
+    </div>
+    <div class="flex items-center">
+      <p class="text-sm">検索結果</p><p class="ml-2"><%= research_profiles.count %>件</p>
+    </div>
+  </div>
+  <% if research_profiles.present? %>
+    <% research_profiles.each do |profiles| %>
+      <hr>
+      <%= link_to user_path(profiles.user_id), data: {"turbolinks" => false} do %>
+        <div class="hover:bg-gray-100 active:bg-gray-200 px-4">
+          <div class="flex justify-between pt-4">
+            <div class="flex display-start items-center">
+                <% if profiles.user.profile_image? %>
+                  <%= image_tag profiles.user.profile_image.url, class: "w-8" %>
+                <% else %>
+                  <%= image_tag avatar_url(profiles.user), class: "w-8" %>
+                <% end %>
+              <p class="ml-2 hover:underline"><%= profiles.user.name %></p>
+            </div>
+          </div>
+          <div class="pt-4 flex items-center">
+            <span class="material-icons">build</span><p class="ml-2">得意技術：</p><%= profiles.category.name %>
+          </div>
+          <div class="py-4 flex items-center">
+            <span class="material-icons">location_on</span><p class="ml-2">所在地：</p><%= profiles.place.name %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+    <% @already_showed = @research_profiles.pluck(:user_id) %>
+  <% else %>
+    <div class="flex justify-center py-4">
+      <p class="text-sm"><b>ユーザーはヒットしませんでした</b></p>
+    </div>
+    <%= image_tag("factory_resarch.png", class:"mx-auto w-80 pb-4") %>
+    <hr>
+  <% end %>
+<% end %>
+<% if @already_showed.nil? %>
+  <% @other_profiles = users_profile %>
+  <% @title = "新規登録ユーザー" %>
+<% else %>
+  <% @other_profiles = users_profile.reject{|profile| @already_showed.include?(profile.user_id) } %>
+  <% @title = "その他登録ユーザー" %>
+<% end %>
+<div class="p-4 flex items-center">
+  <span class="material-icons">people</span><b class="ml-2"><%= @title %></b>
+</div>
+<% @other_profiles.each do | profile |%>
+  <hr>
+  <%= link_to user_path(profile.user_id), data: {"turbolinks" => false} do %>
+    <div class="hover:bg-gray-100 active:bg-gray-200 px-4">
+      <div class="flex justify-between pt-4">
+        <div class="flex display-start items-center">
+            <% if profile.user.profile_image? %>
+              <%= image_tag profile.user.profile_image.url, class: "w-8" %>
+            <% else %>
+              <%= image_tag avatar_url(profile.user), class: "w-8" %>
+            <% end %>
+          <p class="pl-2"><%= profile.user.name %>
+        </div>
+      </div>
+      <div class="pt-4 flex items-center">
+        <span class="material-icons">build</span><p class="ml-2">得意技術：</p><%= profile.category.name %>
+      </div>
+      <div class="py-4 flex items-center">
+        <span class="material-icons">location_on</span><p class="ml-2">所在地：</p><%= profile.place.name %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+<% @shown_users_id = @other_profiles.pluck(:user_id) %>
+<% @shown_users_id.push(@already_showed).flatten! %>
+<% @other_users = users.reject{|user| @shown_users_id.include?(user.id)} %>
+<% @other_users.each do | user |%>
+  <hr>
+  <%= link_to user_path(user.id), data: {"turbolinks" => false} do %>
+    <div class="hover:bg-gray-100 active:bg-gray-200 px-4">
+      <div class="flex display-start items-center pt-4">
+          <% if user.profile_image? %>
+            <%= image_tag user.profile_image.url, class: "w-8" %>
+          <% else %>
+            <%= image_tag avatar_url(user), class: "w-8" %>
+          <% end %>
+        <div class="flex">
+          <p class="ml-2"><%= user.name %></p>
+        </div>
+      </div>
+      <div class="pt-4 flex items-center">
+        <span class="material-icons">build</span><p class="ml-2">得意技術：</p>未登録
+      </div>
+      <div class="py-4 flex items-center">
+        <span class="material-icons">location_on</span><p class="ml-2">所在地：</p>未登録
+      </div>
+  </div>
+  <% end %>
+<% end %>
