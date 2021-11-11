@@ -134,6 +134,17 @@ class JobsController < ApplicationController
     @user_profile = CompanyProfile.find_by(user_id: current_user.id)
   end
 
+  def edit
+    @job = Job.find_by(id: params[:id])
+    @params_id = params[:id].to_i
+  end
+
+  def update
+    @job = Job.find_by(id: params[:id])
+    @job.update(job_params)
+    @job.save
+  end
+
   def destroy
     @job.destroy
     # redirect_to root_url
