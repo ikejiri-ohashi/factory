@@ -6,7 +6,7 @@ class JobsController < ApplicationController
   def index
     @jobs = Job.order('created_at DESC').includes(:user)
     @contracts = Contract.pluck(:job_id)
-    @view_contracts = Contract.order('created_at DESC').includes(:job)
+    @view_contracts = Contract.order('created_at DESC').includes(:job).limit(10)
     @count_favorites = Favorite.pluck(:job_id)
     @job_ranks = Job.find(Favorite.group(:job_id).order('count(job_id) desc').limit(3).pluck(:job_id))
     return unless user_signed_in?

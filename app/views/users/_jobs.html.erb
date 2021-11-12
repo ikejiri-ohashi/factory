@@ -32,9 +32,7 @@
   <div class="flex items-center px-4 pt-4">
     <span class="material-icons">work</span>
     <p class="ml-2 mr-4"><b>投稿した依頼</b></p>
-    <p class="text-sm pr-1">※リクエストを送信した投稿には</p>
-    <span class="material-icons">send</span>
-    <p class="text-sm pl-1">のマークがついています。</p>
+    <p class="text-sm pr-1">※募集終了した依頼は「発注履歴」のタブに移動します。</p>
   </div>
   <% @non_contract_jobs = jobs.reject{ |job| check_contract.include?(job.id) } %>
   <% if @non_contract_jobs.empty? %>
@@ -52,4 +50,9 @@
       </div>
     <% end %>
   <% end %>
+  <div class="flex items-center px-4 pt-4">
+    <p class="text-sm pr-1">※他ユーザーにリクエストを送信した投稿には</p>
+    <span class="material-icons">send</span>
+    <p class="text-sm pl-1">のマークがついています。</p>
+  </div>
 </div>

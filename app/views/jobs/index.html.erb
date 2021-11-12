@@ -94,7 +94,7 @@
       </div>
       <div class="bg-white h-auto m-4 rounded-md shadow">
         <div class="flex items-center px-4 pt-4">
-          <span class="material-icons">done</span><b class="ml-2">契約が決定した依頼</b>
+          <span class="material-icons">done</span><b class="ml-2">最近契約された依頼</b>
         </div>
         <% @view_contracts.each do |contract| %>
           <%= link_to job_path(contract.job_id), data: {"turbolinks" => false} do %>
