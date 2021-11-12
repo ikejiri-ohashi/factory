@@ -11,12 +11,13 @@ Rails.application.routes.draw do
   get '/back_index' => 'jobs#back_index', as: 'jobs_back_index'
   post '/recommend' => 'jobs#recommend', as: 'jobs_recommend'
   get '/user_research' => 'jobs#user_research', as: 'user_research'
-  resources :jobs, only: [:new, :create, :show, :destroy] do
+  resources :jobs, only: [:new, :create, :show, :destroy, :edit, :update] do
     resources :comments, only: [:create, :destroy]
     post 'favorite/:id' => 'favorites#create', as: 'create_favorite'
     delete 'favorite/:id' => 'favorites#destroy', as: 'destroy_favorite'
     resources :contracts, only: [:create]
     resources :requests, only: [:create, :destroy]
+    get '/back_info' => 'jobs#back_info', as: 'jobs_back_info'
   end
   resources :users, only: [:show] do
     resources :company_profiles, only: [:new, :create, :edit, :update, :show]

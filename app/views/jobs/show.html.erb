@@ -1,62 +1,14 @@
 <%= render "shared/header" %>
 <input type="hidden" value=<%= @job.id %> id="hidden_job_id" />
 <div class="container mx-auto lg:px-8 xl:px-36">
+  <div id="update_message">
+    <%= render partial: "jobs/update_message", locals: {message: "" } %>
+  </div>
   <div class="lg:grid grid-cols-3">
     <div class="col-span-2">
       <div class="relative bg-white rounded-md shadow mt-4 mx-4">
-        <div class="flex justify-between">
-          <div class="flex items-start p-4">
-            <span class="material-icons">work</span>
-            <p class="ml-2"><b>依頼内容</b></p>
-          </div>
-          <% if @contract != nil && @contract.job_id == @job.id %>
-            <div class="flex items-center rounded-md border-2 border-green-500 m-4">
-              <span class="material-icons">done</span><p class="mx-2">募集は終了しました</p>
-            </div>
-          <% else %>
-            <% if current_user == @job.user %>
-              <div class="bg-gray-500 h-8 rounded-md flex items-center m-4">
-                <%= link_to image_tag("delete.png", class:"w-6"), job_path, class: "p-2", data: { confirm: "本当に削除しますか?" }, method: :delete %>
-              </div>
-            <% else %>
-              <div class="pt-2 px-2">
-                <div id="favorite_button_<%= @job.id %>">
-                  <%= render partial: "favorites/favorites", locals: {count_favorites: @count_favorites, check_current_user_favorite: @check_current_user_favorite, job: @job.id} %>
-                </div>
-              </div>
-            <% end %>
-          <% end %>
-        </div>
-        <p class="text-2xl px-4"><%= @job.name %></p>
-        <div class="p-4 flex items-center">
-          <span class="material-icons">build</span><p class="ml-2">必要技術：</p><%= @job.category.name %>
-        </div>
-        <div class="px-4 flex items-center">
-          <span class="material-icons">location_on</span><p class="ml-2">納品場所：</p><%= @job.place.name %><br>
-        </div>
-        <div class="p-4 flex items-center">
-          <span class="material-icons">schedule</span><p class="ml-2">希望納期：</p><%= @job.deadline.name %><br>
-        </div>
-        <div class="flex items-center px-4">
-          <span class="material-icons">notes</span><p class="ml-2">備考：</p>
-        </div>
-        <div class="px-4 pb-4 whitespace-pre-line">
-          <%= @job.memo %>
-        </div>
-        <% if @job.job_image? %>
-          <div class="flex items-center px-4">
-            <span class="material-icons">photo_camera</span><p class="ml-2">参考画像：</p>
-          </div>
-          <div class="mx-4 py-4 flex justify-center border-4">
-            <%= image_tag @job.job_image.url %>
-          </div>
-        <% else %>
-          <div class="px-4 flex items-center">
-            <span class="material-icons">photo_camera</span><p class="ml-2">参考画像：画像は登録されていません</p>
-          </div>
-        <% end %>
-        <div class="flex items-center p-4">
-          <span class="material-icons">contact_support</span><p class="ml-2">問い合わせ先：</p><%= @job.contact %><br>
+        <div id="job_show">
+          <%= render partial: "jobs/job_info", locals: {job: @job, contract: @contract, message: @message, params_id: @params_id} %>
         </div>
       </div>
       <div class="bg-white rounded-md shadow mt-4 mx-4 py-4">

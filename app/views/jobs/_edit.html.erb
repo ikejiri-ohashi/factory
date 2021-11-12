@@ -1,0 +1,46 @@
+<%= form_with model: @job, url: job_path, method: :put do |f| %>
+    <div class="p-4 rounded-md border-2 border-blue-500">
+    <div class="flex justify-around items-center pb-4">
+      <p class="flex justify-center"><%= f.submit "変更を保存する", class:"cursor-pointer px-3 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-700" %></p>
+      <%= link_to "編集をキャンセルする", job_jobs_back_info_path(job_id: 35, id: 35), class: "px-3 py-2 text-blue-500 border border-blue-500 font-semibold rounded hover:bg-blue-100", remote: true %>
+    </div>
+    <div class="flex items-start py-4">
+      <span class="material-icons">edit</span>
+      <p class="ml-2"><b>依頼を編集する</b></p>
+    </div>
+    <div class="px-4 pb-4">
+      <div class="form-text pb-4">仕事のタイトル（必須）</div>
+      <%= f.text_area :name, class:"w-full" %>
+    </div>
+    <hr>
+    <div class="p-4">
+      <div class="form-text pb-4">納品場所（必須）</div>
+      <%= f.collection_select(:place_id, Place.all, :id, :name, {}, {class:"form-select"}) %>
+    </div>
+    <hr>
+    <div class="p-4">
+      <div class="form-text pb-4">希望納期（必須）</div>
+      <%= f.collection_select(:deadline_id, Deadline.all, :id, :name, {}, {class:"form-select"}) %>
+    </div>
+    <hr>
+    <div class="p-4">
+      <div class="form-text pb-4">加工種別（必須）</div>
+      <%= f.collection_select(:category_id, Category.all, :id, :name, {}, {class:"form-select"}) %>
+    </div>
+    <hr>
+    <div class="p-4">
+      <div class="form-text pb-4">補足事項（任意）</div>
+      <%= f.text_area :memo, class:'w-full' %>
+    </div>
+    <hr>
+    <div class="p-4">
+      <div class="form-text pb-4">参考画像（任意）</div>
+      <%= f.file_field :job_image, class: "image" %>
+      <p class="text-sm pt-2">※投稿作成時の画像は保持されています。</p>
+    </div>
+    <hr>
+    <div class="px-4 pt-4">
+      <div class="form-text pb-4">見積書などの送付先（任意）</div>
+      <%= f.text_area :contact, class:'w-full' %>
+    </div>
+<% end %>

@@ -13,6 +13,9 @@ RUN apt-get update && apt-get install -y curl apt-transport-https wget && \
 
 RUN yarn add node-sass
 
+RUN apt-get update
+RUN apt-get install vim
+
 WORKDIR /app
 COPY Gemfile .
 COPY Gemfile.lock .

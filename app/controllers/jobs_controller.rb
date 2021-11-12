@@ -126,12 +126,30 @@ class JobsController < ApplicationController
     @count_favorites = Favorite.pluck(:job_id)
     @request = Request.new
     @send_requests = Request.where(job_id: params[:id]).includes(:user)
+    @params_id = params[:id].to_i
 
     return unless user_signed_in?
 
     @check_request = Request.find_by(job_id: params[:id], request_id: current_user.id)
     @check_current_user_favorite = Favorite.where(user_id: current_user.id).pluck(:job_id)
     @user_profile = CompanyProfile.find_by(user_id: current_user.id)
+  end
+
+  def edit
+    @job = Job.find_by(id: params[:id])
+  end
+
+  def back_info
+    @job = Job.find_by(id: params[:job_id])
+    @params_id = params[:job_id].to_i
+    @contract = Contract.find_by(job_id: params[:job_id])
+  end
+
+  def update
+    @job = Job.find_by(id: params[:id])
+    @job.update(job_params)
+    @job.save
+    @params_id = params[:id].to_i
   end
 
   def destroy
