@@ -1,6 +1,5 @@
 # Factory-app
 https://www.factory-app.com
-![11:12](https://user-images.githubusercontent.com/87586109/141444522-35aa591a-a828-481d-9634-a5008daec51a.png)
 ## 概要
 金属製品の加工をお願いしたい企業とその加工が可能な企業を繋ぐサービスです。
 ユーザーは加工の依頼を投稿したり、他の依頼を引き受けたりすることができます。
