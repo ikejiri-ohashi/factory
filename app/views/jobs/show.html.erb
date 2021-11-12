@@ -85,6 +85,7 @@
               <%= f.submit "リクエストを送信する", class:"cursor-pointer px-3 py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-700" %>
             </div>
           <% end %>
+          <p class="text-sm px-4 pt-4">※リクエストの送信は後で取り消すことができます。</p>
           <div id="request_button">
             <%= render partial: "requests/requests", locals: {send_requests: @send_requests, message: @message} %>
           </div>

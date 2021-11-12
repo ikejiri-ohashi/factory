@@ -1,22 +1,35 @@
-<% unless message.nil? %>
+<% if message == "create" %>
   <div class="mt-4 mx-4">
     <div class="flex rounded-md border-2 border-green-500">
       <span class="material-icons">done</span><p class="mx-2">リクエストを送信しました</p>
     </div>
   </div>
-<% end %>
-<p class="p-4">リクエストを送信済みのユーザー</p>
-<% send_requests.each do |request|%>
-  <%= link_to user_path(request.request.id), data: {"turbolinks" => false} do %>
-    <div class="px-4 py-2 hover:bg-gray-50 active:bg-gray-100">
-      <div class="flex display-start items-center">
-          <% if request.request.profile_image? %>
-            <%= image_tag request.request.profile_image.url, class: "w-8" %>
-          <% else %>
-            <%= image_tag avatar_url(request.request), class: "w-8" %>
-          <% end %>
-          <p class="ml-2"><%= request.request.name %></p>
-      </div>
+<% elsif message == "delete" %>
+  <div class="mt-4 mx-4">
+    <div class="flex rounded-md border-2 border-red-500">
+      <span class="material-icons">done</span><p class="mx-2">リクエストを削除しました</p>
     </div>
-  <% end %>
+  </div>
+<% end %>
+<p class="p-4 text-sm"><b>リクエスト送信済みのユーザー</b></p>
+<% send_requests.each do |request|%>
+  <div class="flex justify-between items-center">
+    <%= link_to user_path(request.request.id), data: {"turbolinks" => false} do %>
+      <div class="px-4 py-2 hover:bg-gray-50 active:bg-gray-100">
+        <div class="flex display-start items-center">
+            <% if request.request.profile_image? %>
+              <%= image_tag request.request.profile_image.url, class: "w-8" %>
+            <% else %>
+              <%= image_tag avatar_url(request.request), class: "w-8" %>
+            <% end %>
+            <p class="ml-2"><%= request.request.name %></p>
+        </div>
+      </div>
+    <% end %>
+    <%= link_to job_request_path(job_id: request.job_id, id: request.id), data: { confirm: "リクエストを取り消しますか?" }, method: :delete, remote: true do %>
+      <div class="mx-2 px-2 pb-1 pt-2 rounded-full hover:bg-gray-300">
+        <span class="material-icons">block</span>
+      </div>
+    <% end %>
+  </div>
 <% end %>
