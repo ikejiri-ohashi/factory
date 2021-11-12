@@ -1,6 +1,9 @@
 <%= render "shared/header" %>
 <input type="hidden" value=<%= @job.id %> id="hidden_job_id" />
 <div class="container mx-auto lg:px-8 xl:px-36">
+  <div id="update_message">
+    <%= render partial: "jobs/update_message", locals: {message: "" } %>
+  </div>
   <div class="lg:grid grid-cols-3">
     <div class="col-span-2">
       <div class="relative bg-white rounded-md shadow mt-4 mx-4">
