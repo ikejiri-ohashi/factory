@@ -74,8 +74,9 @@
   <% @other_profiles = users_profile %>
   <% @title = "新規登録ユーザー" %>
 <% else %>
+  <hr>
   <% @other_profiles = users_profile.reject{|profile| @already_showed.include?(profile.user_id) } %>
-  <% @title = "その他登録ユーザー" %>
+  <% @title = "その他の登録ユーザー" %>
 <% end %>
 <div class="p-4 flex items-center">
   <span class="material-icons">people</span><b class="ml-2"><%= @title %></b>
