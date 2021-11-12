@@ -43,16 +43,8 @@
   <% @non_contract_jobs.each do | job |%>
     <%= link_to job_path(job.id), data: {"turbolinks" => false} do %>
       <div class="flex items-center px-4 py-2 hover:bg-gray-50 active:bg-gray-100 hover:rounded-md">
-          <p class="mr-2"><%= job.name %></p>
-        <% if send_requests.include?(job.id)%>
-          <span class="material-icons">send</span>
-        <% end %>
+        <p class="mr-2"><%= job.name %></p>
       </div>
     <% end %>
   <% end %>
-  <div class="flex items-center px-4 pt-4">
-    <p class="text-sm pr-1">※他ユーザーにリクエストを送信した投稿には</p>
-    <span class="material-icons">send</span>
-    <p class="text-sm pl-1">のマークがついています。</p>
-  </div>
 </div>
