@@ -19,7 +19,7 @@
 <div class="flex items-center p-4">
   <span class="material-icons">sentiment_satisfied_alt</span><b class="ml-2">あなたにおすすめの依頼</b>
 </div>
-<p class="text-sm mx-2 p-4">ここではあなたが登録した得意技術と会社所在地に基づき、<br>これらの条件と合う依頼がおすすめとして表示されます。</p>
+<p class="text-sm p-4">ここではあなたが登録した得意技術と会社所在地に基づき、<br>これらの条件と合う依頼がおすすめとして表示されます。</p>
 <% if user_signed_in? %>
   <% unless job_recommends == nil %>
     <%# 契約済みの投稿とログインユーザー自身の投稿を排除し残った要素を集計 %>
