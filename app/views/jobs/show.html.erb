@@ -5,7 +5,7 @@
     <div class="col-span-2">
       <div class="relative bg-white rounded-md shadow mt-4 mx-4">
         <div id="job_show">
-          <%= render partial: "jobs/job_info", locals: {jobs: @jobs, contract: @contract} %>
+          <%= render partial: "jobs/job_info", locals: {job: @job, contract: @contract, message: @message, params_id: @params_id} %>
         </div>
       </div>
       <div class="bg-white rounded-md shadow mt-4 mx-4 py-4">

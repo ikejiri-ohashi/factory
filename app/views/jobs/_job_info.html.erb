@@ -1,51 +1,68 @@
-<div class="flex justify-center pb-4">
-  <%= link_to "依頼内容を編集する", edit_job_path, class: "px-3 py-2 text-blue-500 border border-blue-500 font-semibold rounded hover:bg-blue-100", remote: true %>
-</div>
+<% if message.present? %>
+  <div class="pt-4">
+    <div class="mx-4 flex justify-center rounded-md border-2 border-green-500">
+      <span class="material-icons">done</span><p class="mx-2">内容を変更しました</p>
+    </div>
+  </div>
+<% end %>
 <div class="flex justify-between">
-  <div class="flex items-start p-4">
+  <div class="flex items-start px-4 pt-4">
     <span class="material-icons">work</span>
     <p class="ml-2"><b>依頼内容</b></p>
   </div>
-  <% if @contract != nil && @contract.job_id == @job.id %>
-    <div class="flex items-center rounded-md border-2 border-green-500 m-4">
-      <span class="material-icons">done</span><p class="mx-2">募集は終了しました</p>
-    </div>
+  <% if contract.present? %>
+    <% if contract.job_id == job.id %>
+      <div class="flex items-center rounded-md border-2 border-green-500 m-4">
+        <span class="material-icons">done</span><p class="mx-2">募集は終了しました</p>
+      </div>
+    <% end %>
   <% else %>
-    <% if current_user == @job.user %>
-      <div class="bg-gray-500 h-8 rounded-md flex items-center m-4">
-        <%= link_to image_tag("delete.png", class:"w-6"), job_path, class: "p-2", data: { confirm: "本当に削除しますか?" }, method: :delete %>
+    <% if current_user == job.user %>
+      <div class="absolute top-0 right-0 flex p-2">
+        <%= link_to edit_job_path(id: params_id), remote: true do %>
+          <div class="px-2 pb-1 pt-2 rounded-full hover:bg-blue-100">
+            <span class="material-icons">edit</span>
+          </div>
+        <% end %>
+        <div>
+        <%= link_to job_path(id: params_id), data: { confirm: "本当に削除しますか?" }, method: :delete do %>
+          <div class="px-2 pb-1 pt-2 rounded-full hover:bg-gray-300">
+            <span class="material-icons">delete</span>
+          </div>
+        <% end %>
+        </div>
       </div>
     <% else %>
       <div class="pt-2 px-2">
-        <div id="favorite_button_<%= @job.id %>">
+        <div id="favorite_button_<%= job.id %>">
           <%= render partial: "favorites/favorites", locals: {count_favorites: @count_favorites, check_current_user_favorite: @check_current_user_favorite, job: @job.id} %>
         </div>
       </div>
     <% end %>
   <% end %>
 </div>
-<p class="text-2xl px-4"><%= @job.name %></p>
+<p class="text-2xl px-4 pt-4"><%= job.name %></p>
 <div class="p-4 flex items-center">
-  <span class="material-icons">build</span><p class="ml-2">必要技術：</p><%= @job.category.name %>
+  <span class="material-icons">build</span><p class="ml-2">必要技術：</p><%= job.category.name %>
 </div>
 <div class="px-4 flex items-center">
-  <span class="material-icons">location_on</span><p class="ml-2">納品場所：</p><%= @job.place.name %><br>
+  <span class="material-icons">location_on</span><p class="ml-2">納品場所：</p><%= job.place.name %><br>
 </div>
 <div class="p-4 flex items-center">
-  <span class="material-icons">schedule</span><p class="ml-2">希望納期：</p><%= @job.deadline.name %><br>
+  <span class="material-icons">schedule</span><p class="ml-2">希望納期：</p><%= job.deadline.name %><br>
 </div>
 <div class="flex items-center px-4">
   <span class="material-icons">notes</span><p class="ml-2">備考：</p>
 </div>
 <div class="px-4 pb-4 whitespace-pre-line">
-  <%= @job.memo %>
+  <%= job.memo %>
 </div>
-<% if @job.job_image? %>
+<% if job.job_image? %>
   <div class="flex items-center px-4">
     <span class="material-icons">photo_camera</span><p class="ml-2">参考画像：</p>
   </div>
   <div class="mx-4 py-4 flex justify-center border-4">
-    <%= image_tag @job.job_image.url %>
+    <%= image_tag job.job_image.url %>
   </div>
 <% else %>
   <div class="px-4 flex items-center">
@@ -53,5 +70,5 @@
   </div>
 <% end %>
 <div class="flex items-center p-4">
-  <span class="material-icons">contact_support</span><p class="ml-2">問い合わせ先：</p><%= @job.contact %><br>
+  <span class="material-icons">contact_support</span><p class="ml-2">問い合わせ先：</p><%= job.contact %><br>
 </div>

@@ -126,6 +126,7 @@ class JobsController < ApplicationController
     @count_favorites = Favorite.pluck(:job_id)
     @request = Request.new
     @send_requests = Request.where(job_id: params[:id]).includes(:user)
+    @params_id = params[:id].to_i
 
     return unless user_signed_in?
 
@@ -136,13 +137,19 @@ class JobsController < ApplicationController
 
   def edit
     @job = Job.find_by(id: params[:id])
-    @params_id = params[:id].to_i
+  end
+
+  def back_info
+    @job = Job.find_by(id: params[:job_id])
+    @params_id = params[:job_id].to_i
+    @contract = Contract.find_by(job_id: params[:job_id])
   end
 
   def update
     @job = Job.find_by(id: params[:id])
     @job.update(job_params)
     @job.save
+    @params_id = params[:id].to_i
   end
 
   def destroy

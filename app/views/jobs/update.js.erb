@@ -1,1 +1,1 @@
-$("#job_show").html("<%= j(render partial: "jobs/job_info", locals: {job: @job}) %>");
+$("#job_show").html("<%= j(render partial: "jobs/job_info", locals: {params_id: @params_id, job: @job, contract: @contract, message: "update"}) %>");
