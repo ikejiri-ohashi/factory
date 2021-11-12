@@ -1,11 +1,18 @@
-<p class="text-sm p-4">このユーザーに送信したリクエスト</p>
+<p class="text-sm p-4"><b>このユーザーに送信したリクエスト</b></p>
 <% @non_contract_jobs = jobs_request_sent.reject{ |request| check_contract.include?(request.job_id) } %>
 <% @non_contract_jobs.each do |job|%>
-  <%= link_to job_path(job.job_id), data: {"turbolinks" => false} do %>
-    <div class="px-4 py-2 hover:bg-gray-50 active:bg-gray-100 rounded-b-md">
-      <div class="flex display-start items-center">
-          <p class=""><%= job.job.name %></p>
+  <div class="flex justify-between items-center">
+    <%= link_to job_path(job.job_id), data: {"turbolinks" => false} do %>
+      <div class="px-4 py-2 hover:bg-gray-50 active:bg-gray-100 rounded-b-md">
+        <div class="flex display-start items-center">
+            <p class=""><%= job.job.name %></p>
+        </div>
       </div>
-    </div>
-  <% end %>
+    <% end %>
+    <%= link_to user_destroy_from_user_path(id: job.id, user_id: current_user.id), data: { confirm: "リクエストを取り消しますか?" }, method: :delete, remote: true do %>
+      <div class="mx-2 px-2 pb-1 pt-2 rounded-full hover:bg-gray-300">
+        <span class="material-icons">block</span>
+      </div>
+    <% end %>
+  </div>
 <% end %>

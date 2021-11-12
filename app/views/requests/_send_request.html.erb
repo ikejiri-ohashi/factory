@@ -4,13 +4,21 @@
     <span class="material-icons">send</span>
     <p class="ml-2">加工のリクエスト</p>
   </div>
-  <% unless message.nil? %>
-  <div class="flex rounded-md border-2 border-green-500 mx-4 mt-4">
-    <span class="material-icons">done</span><p class="mx-2">リクエストを送信しました</p>
-  </div>
-<% end %>
+  <% if message == "create_from_user" %>
+    <div class="mt-4 mx-4">
+      <div class="flex rounded-md border-2 border-green-500">
+        <span class="material-icons">done</span><p class="mx-2">リクエストを送信しました</p>
+      </div>
+    </div>
+  <% elsif message == "destroy_from_user" %>
+    <div class="mt-4 mx-4">
+      <div class="flex rounded-md border-2 border-red-500">
+        <span class="material-icons">done</span><p class="mx-2">リクエストを削除しました</p>
+      </div>
+    </div>
+  <% end %>
   <p class="text-sm p-4">このユーザーにあなたの依頼の引き受けをリクエストすることができます。</p>
-  <%= form_with url: user_create_from_user_path(user_id: current_user.id) do |f| %>
+  <%= form_with url: user_create_from_user_path(user_id: params_id) do |f| %>
     <div class="flex justify-center">
       <%= f.collection_select :job_id, @non_contract_jobs, :id, :name, {prompt: "選択してください"}, {class: 'form-select w-48'} %>
     </div>
@@ -18,4 +26,5 @@
       <%= f.submit "リクエストを送信する", class:"cursor-pointer px-3 py-2 bg-green-500 text-white font-semibold rounded hover:bg-green-700" %>
     </div>
   <% end %>
+  <p class="text-sm px-4">※リクエストの送信は後で取り消すことができます。</p>
 </div>
