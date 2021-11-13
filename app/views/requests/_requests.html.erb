@@ -13,9 +13,9 @@
 <% end %>
 <p class="p-4 text-sm"><b>リクエスト送信済みのユーザー</b></p>
 <% send_requests.each do |request|%>
-  <div class="flex justify-between items-center">
+  <div class="relative px-4 py-2 hover:bg-gray-100 active:bg-gray-200">
     <%= link_to user_path(request.request.id), data: {"turbolinks" => false} do %>
-      <div class="px-4 py-2 hover:bg-gray-50 active:bg-gray-100">
+      <div class="">
         <div class="flex display-start items-center">
             <% if request.request.profile_image? %>
               <%= image_tag request.request.profile_image.url, class: "w-8" %>
@@ -26,10 +26,12 @@
         </div>
       </div>
     <% end %>
-    <%= link_to job_request_path(job_id: request.job_id, id: request.id), data: { confirm: "リクエストを取り消しますか?" }, method: :delete, remote: true do %>
-      <div class="mx-2 px-2 pb-1 pt-2 rounded-full hover:bg-gray-300">
-        <span class="material-icons">block</span>
-      </div>
-    <% end %>
+    <div class="absolute inset-y-0 right-0 flex items-center">
+      <%= link_to job_request_path(job_id: request.job_id, id: request.id), data: { confirm: "リクエストを取り消しますか?" }, method: :delete, remote: true do %>
+        <div class="mx-2 px-2 pb-1 pt-2 rounded-full hover:bg-gray-300">
+          <span class="material-icons">block</span>
+        </div>
+      <% end %>
+    </div>
   </div>
 <% end %>
