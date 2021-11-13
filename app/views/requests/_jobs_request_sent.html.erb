@@ -1,11 +1,12 @@
-<p class="text-sm p-4">このユーザーに送信したリクエスト</p>
+<p class="text-sm p-4"><b>このユーザーに送信したリクエスト</b></p>
 <% @non_contract_jobs = jobs_request_sent.reject{ |request| check_contract.include?(request.job_id) } %>
 <% @non_contract_jobs.each do |job|%>
-  <%= link_to job_path(job.job_id), data: {"turbolinks" => false} do %>
-    <div class="px-4 py-2 hover:bg-gray-50 active:bg-gray-100 rounded-b-md">
-      <div class="flex display-start items-center">
-          <p class=""><%= job.job.name %></p>
+  <div class="relative p-4 hover:bg-gray-100 active:bg-gray-200 rounded-b-md">
+    <%= link_to job_path(job.job_id), data: {"turbolinks" => false} do %>
+      <div>
+      <%= job.job.name %>
       </div>
-    </div>
-  <% end %>
+      <%= render partial: "requests/delete", locals: {job: job} %>
+    <% end %>
+  </div>
 <% end %>

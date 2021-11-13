@@ -15,7 +15,7 @@ Rails.application.routes.draw do
     resources :comments, only: [:create, :destroy]
     post 'favorite/:id' => 'favorites#create', as: 'create_favorite'
     delete 'favorite/:id' => 'favorites#destroy', as: 'destroy_favorite'
-    resources :contracts, only: [:create]
+    resources :contracts, only: [:create, :destroy]
     resources :requests, only: [:create, :destroy]
     get '/back_info' => 'jobs#back_info', as: 'jobs_back_info'
   end
@@ -24,6 +24,7 @@ Rails.application.routes.draw do
     post 'follow/:id' => 'follows#create', as: 'create_follow'
     delete 'follow/:id' => 'follows#destroy', as: 'destroy_follow'
     post 'request_from_user/:id' => 'requests#create_from_user', as: 'create_from_user'
+    delete 'destroy_from_user/:id' => 'requests#destroy_from_user', as: 'destroy_from_user'
     get '/select_jobs/:id' => 'users#select_jobs', as: 'select_jobs'
     get '/select_favorites/:id' => 'users#select_favorites', as: 'select_favorites'
     get '/select_contracts/:id' => 'users#select_contracts', as: 'select_contracts'

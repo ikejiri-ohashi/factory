@@ -1,0 +1,7 @@
+<div class="absolute inset-y-0 right-0 flex items-center">
+  <%= link_to user_destroy_from_user_path(id: job.id, user_id: current_user.id), data: { confirm: "リクエストを取り消しますか?" }, method: :delete, remote: true do %>
+    <div class="mx-2 px-2 pb-1 pt-2 rounded-full hover:bg-gray-300">
+      <span class="material-icons">block</span>
+    </div>
+  <% end %>
+</div>

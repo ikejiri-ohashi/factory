@@ -14,7 +14,7 @@
             <%= render partial: "requests/accepted_requests", locals: { got_requests: @got_requests, check_contract: @check_contract} %>
           <% elsif user_signed_in? %>
             <div id="send_request">
-              <%= render partial: "requests/send_request", locals: {current_user_job: @current_user_job, current_user_job: @current_user_job, message: @message} %>
+              <%= render partial: "requests/send_request", locals: {current_user_job: @current_user_job, current_user_job: @current_user_job, message: @message, params_id: @params_id} %>
             </div>
             <div id="jobs_request_sent">
               <%= render partial: "requests/jobs_request_sent", locals: {jobs_request_sent: @jobs_request_sent, check_contract: @check_contract} %>
