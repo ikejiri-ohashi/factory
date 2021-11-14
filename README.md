@@ -18,16 +18,16 @@ Factory-appはこれを具現化するために制作しました。
 ## 使用技術
 - フロントエンド
   - HTML/CSS
-  - Jquery
+  - JQuery
   - TailwindCSS
 - バックエンド
   - Ruby(3.0.2)
   - Ruby on Rails(6.1.3)
   - MySQL(5.6)
   - Rubocop
-  - Rspec(テスト)
+  - RSpec(テスト)
 - インフラ・開発環境
-  - Docker/Docker-compose
+  - Docker/Docker-Compose
   - AWS（ECR,ECS(EC2起動タイプ),VPC,S3,Route53,ALB,RDS,ACM）
   - CircleCI（自動テストのみ）
 ## 工夫した点
