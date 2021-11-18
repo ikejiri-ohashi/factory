@@ -1,6 +1,6 @@
 # Factory-app
 https://www.factory-app.com
-[![](https://img.youtube.com/vi/FGENKszDdQs/0.jpg)](https://www.youtube.com/watch?v=FGENKszDdQs)
+[![画像をクリックするとYoutubeに飛びます](https://img.youtube.com/vi/FGENKszDdQs/0.jpg)](https://www.youtube.com/watch?v=FGENKszDdQs)
 ## 概要
 金属製品の加工をお願いしたい企業とその加工が可能な企業を繋ぐサービスです。
 ## 制作背景
