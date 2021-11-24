@@ -23,7 +23,7 @@ Factory-appは解決策を具現化するためのポートフォリオとして
   - RSpec(テスト)
 - インフラ・開発環境
   - Docker/Docker-Compose
-  - AWS（ECR,ECS(EC2起動タイプ),VPC,S3,Route53,ALB,RDS,ACM）
+  - AWS（ECR,ECS,VPC,S3,Route53,ALB,RDS,ACM）
   - CircleCI（自動テストのみ）
 ## 工夫した点
 ### 非同期通信を用いて画面遷移の回数を削減
