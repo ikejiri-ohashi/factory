@@ -26,7 +26,7 @@ RUN bundle install
 RUN yarn install
 COPY . /app
 
-# RUN rails webpacker:install
+RUN bin/rails webpacker:install:react
 RUN NODE_ENV=production ./bin/webpack
 
 EXPOSE 3000

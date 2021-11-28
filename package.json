@@ -24,6 +24,7 @@
     "webpack-dev-server": "^3"
   },
   "dependencies": {
+    "@babel/preset-react": "^7.16.0",
     "@fullhuman/postcss-purgecss": "^4.0.3",
     "@rails/actioncable": "^6.1.4-1",
     "@rails/activestorage": "^6.1.4-1",
@@ -33,9 +34,14 @@
     "@tailwindcss/forms": "^0.3.4",
     "@tailwindcss/line-clamp": "^0.2.2",
     "@tailwindcss/typography": "^0.4.1",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "jquery": "^3.6.0",
     "postcss": "^8.2.10",
     "postcss-loader": "^4.0.3",
+    "prop-types": "^15.7.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-on-rails": "12.4.0",
     "sass": "^1.32.7",
     "tailwindcss": "^2.2.16",
     "turbolinks": "^5.2.0",
