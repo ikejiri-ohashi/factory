@@ -67,4 +67,4 @@ gem "aws-sdk-s3"
 gem 'rexml', '~> 3.2', '>= 3.2.4'
 gem 'carrierwave', '~> 1.3', '>= 1.3.1'
 gem 'react_on_rails'
-gem 'mini_racer', platforms: :ruby
+gem 'mini_racer',       '~> 0.3.1'
